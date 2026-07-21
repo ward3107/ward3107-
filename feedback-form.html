@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>משוב קצר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral: #FF6B5B;
+    --coral-deep: #E8503F;
+    --sun: #FFC145;
+    --mint: #4FD1A5;
+    --grape: #A78BFA;
+    --cream: #FFFBF3;
+    --cream-shadow: #F2E4CC;
+    --ink: #33261F;
+    --ink-soft: #7A6A5D;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html,body{ min-height:100%; }
+
+  body{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 40px 20px;
+    overflow-x:hidden;
+    font-family:'Heebo', sans-serif;
+    color: var(--ink);
+    background: linear-gradient(135deg, #FFE3D8 0%, #FFD9A0 45%, #FFEFC2 100%);
+  }
+
+  .blob{
+    position:fixed;
+    border-radius:50%;
+    filter: blur(50px);
+    opacity:0.55;
+    pointer-events:none;
+    z-index:0;
+  }
+  .blob.b1{ width:340px; height:340px; background: var(--coral); top:-90px; right:-90px; }
+  .blob.b2{ width:300px; height:300px; background: var(--grape); bottom:-100px; left:-80px; opacity:0.4; }
+  .blob.b3{ width:220px; height:220px; background: var(--mint); bottom:10%; right:-60px; opacity:0.35; }
+
+  .drift{
+    position:fixed;
+    border-radius:50%;
+    pointer-events:none;
+    animation: float 9s ease-in-out infinite;
+    z-index:1;
+  }
+  .drift:nth-child(4){ width:14px; height:14px; background: var(--sun); top:14%; left:10%; animation-delay:0s; }
+  .drift:nth-child(5){ width:10px; height:10px; background: var(--coral); top:65%; left:88%; animation-delay:1.5s; }
+  .drift:nth-child(6){ width:12px; height:12px; background: var(--grape); top:82%; left:16%; animation-delay:3s; }
+  .drift:nth-child(7){ width:8px; height:8px; background: var(--mint); top:10%; left:85%; animation-delay:4.5s; }
+
+  @keyframes float{
+    0%,100%{ transform: translateY(0px) rotate(0deg); }
+    50%{ transform: translateY(-24px) rotate(20deg); }
+  }
+
+  .stage{ position:relative; width:100%; max-width: 480px; z-index:2; }
+
+  .heading{ text-align:center; margin-bottom: 30px; }
+
+  .eyebrow{
+    display:inline-block;
+    font-size: 13px;
+    font-weight:600;
+    letter-spacing: 0.03em;
+    color: var(--coral-deep);
+    background: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(232,80,63,0.18);
+  }
+
+  h1{
+    font-family:'Rubik', sans-serif;
+    font-weight:800;
+    font-size: clamp(30px, 6.5vw, 44px);
+    color: var(--ink);
+    line-height:1.25;
+  }
+  h1 .pop{ color: var(--coral-deep); }
+
+  .underline-svg{ display:block; margin: 8px auto 0; width: 200px; height: 16px; }
+  .underline-svg path{
+    fill:none; stroke: var(--sun); stroke-width: 5; stroke-linecap: round;
+    stroke-dasharray: 220; stroke-dashoffset: 220;
+    animation: draw 1s ease-out 0.35s forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  .sub{ margin-top: 14px; color: var(--ink-soft); font-size: 15px; }
+
+  .note{
+    position:relative;
+    background: var(--cream);
+    border-radius: 22px;
+    padding: 36px 28px 30px;
+    box-shadow:
+      0 20px 45px rgba(232,80,63,0.18),
+      0 4px 12px rgba(0,0,0,0.06);
+    opacity:0;
+    animation: rise 0.65s cubic-bezier(.2,.9,.3,1.3) 0.15s forwards;
+    border: 2px solid #fff;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(18px) scale(0.97); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  label{
+    display:block; font-size: 14px; font-weight:600;
+    color: var(--ink-soft); margin-bottom: 8px; margin-top: 22px;
+  }
+  label:first-of-type{ margin-top:0; }
+
+  input[type="text"], textarea, select{
+    width:100%;
+    font-family:'Heebo', sans-serif;
+    font-size: 16px;
+    color: var(--ink);
+    background: #FFF6E9;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 12px 14px;
+    outline:none;
+    transition: border-color 0.2s ease, transform 0.15s ease;
+    resize: vertical;
+  }
+  textarea{ min-height: 78px; line-height:1.5; }
+
+  select{
+    appearance:none; -webkit-appearance:none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%237A6A5D'><path d='M5 8l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    background-size: 16px;
+    padding-left: 34px;
+    cursor:pointer;
+  }
+
+  input[type="text"]:focus, textarea:focus, select:focus{
+    border-color: var(--coral);
+    transform: translateY(-1px);
+  }
+  input::placeholder, textarea::placeholder{ color: #b8a894; }
+
+  .consent{ display:flex; align-items:flex-start; gap:10px; margin-top: 24px; }
+  .consent input[type="checkbox"]{
+    width: 20px; height:20px; margin-top:2px; flex-shrink:0;
+    accent-color: var(--coral); cursor:pointer;
+  }
+  .consent label{ margin:0; font-size: 13px; font-weight:400; color: var(--ink-soft); line-height:1.5; cursor:pointer; }
+
+  button{
+    display:block; width:100%; margin-top: 28px;
+    font-family:'Rubik', sans-serif; font-weight:700; font-size: 16px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--coral), var(--coral-deep));
+    border: none; border-radius: 14px; padding: 15px;
+    cursor:pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 8px 20px rgba(232,80,63,0.4);
+  }
+  button:hover{ transform: translateY(-2px); box-shadow: 0 12px 26px rgba(232,80,63,0.5); }
+  button:active{ transform: translateY(1px); }
+  button:disabled{ opacity:0.6; cursor:default; transform:none; }
+  button:focus-visible{ outline: 3px solid var(--sun); outline-offset:2px; }
+
+  .error{ color:#D1453A; font-size:13px; margin-top:10px; display:none; font-weight:500; }
+
+  .thanks{ display:none; text-align:center; padding: 20px 6px 6px; }
+  .thanks.show{ display:block; }
+
+  .check-circle{
+    width:72px; height:72px; margin:0 auto 14px;
+    border-radius:50%;
+    background: linear-gradient(135deg, var(--mint), #34B98A);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 10px 24px rgba(79,209,165,0.4);
+    transform: scale(0);
+    animation: pop 0.5s cubic-bezier(.3,1.5,.4,1) forwards;
+  }
+  @keyframes pop{ to{ transform: scale(1); } }
+  .check-circle svg{ width:34px; height:34px; }
+  .check-circle path{
+    fill:none; stroke:#fff; stroke-width:4; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray: 40; stroke-dashoffset:40;
+    animation: draw2 0.4s ease-out 0.4s forwards;
+  }
+  @keyframes draw2{ to{ stroke-dashoffset:0; } }
+
+  .thanks h2{ font-family:'Rubik', sans-serif; font-weight:800; font-size: 24px; margin-bottom: 8px; color: var(--coral-deep); }
+  .thanks p{ color: var(--ink-soft); font-size: 14px; line-height:1.6; }
+
+  .admin-toggle{
+    display:block; text-align:center; margin-top: 20px; font-size: 12px;
+    color: rgba(51,38,31,0.4); cursor:pointer; background:none; border:none; width:100%;
+    font-family:'Heebo', sans-serif;
+  }
+  .admin-toggle:hover{ color: rgba(51,38,31,0.65); }
+
+  .admin-panel{
+    display:none; margin-top: 16px; background: var(--cream); border-radius: 16px;
+    padding: 20px; max-height: 320px; overflow-y:auto;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+  }
+  .admin-panel.show{ display:block; }
+  .admin-item{ border-bottom: 1px solid var(--cream-shadow); padding: 12px 0; }
+  .admin-item:last-child{ border-bottom:none; }
+  .admin-item .n{ font-weight:700; font-size:14px; }
+  .admin-item .h{ font-size:12px; color: var(--ink-soft); margin-top:2px; }
+  .admin-item .q{ font-size:13px; margin-top:6px; line-height:1.5; }
+  .admin-empty{ font-size:13px; color: var(--ink-soft); text-align:center; padding:10px 0; }
+
+  #confettiCanvas{ position:fixed; inset:0; pointer-events:none; z-index:50; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="drift"></div>
+  <div class="drift"></div>
+  <div class="drift"></div>
+  <div class="drift"></div>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="stage">
+    <div class="heading">
+      <span class="eyebrow">רגע אחד 🎉</span>
+      <h1>מילה קצרה <span class="pop">עליי?</span></h1>
+      <svg class="underline-svg" viewBox="0 0 200 16">
+        <path d="M6,9 C 55,2 145,14 194,7"/>
+      </svg>
+      <p class="sub">שלוש שאלות, פחות מדקה — ותודה מראש 🙏</p>
+    </div>
+
+    <div class="note" id="note">
+      <div class="form-body" id="formBody">
+        <form id="feedbackForm">
+          <label for="fname">איך קוראים לך?</label>
+          <input type="text" id="fname" name="fname" placeholder="לדוגמה: נור" required>
+
+          <label for="fhelp">במה עזרתי לך?</label>
+          <select id="fhelp" name="fhelp" required>
+            <option value="" disabled selected>בחר/י אפשרות</option>
+            <option value="הסבר והכוונה על בינה מלאכותית (AI)">הסבר והכוונה על בינה מלאכותית (AI)</option>
+            <option value="עזרה טכנית (אתר, קוד, אוטומציה)">עזרה טכנית (אתר, קוד, אוטומציה)</option>
+            <option value="ייעוץ לעסק / פרילנס">ייעוץ לעסק / פרילנס</option>
+            <option value="הדרכה בכלים דיגיטליים (Claude, ChatGPT וכו')">הדרכה בכלים דיגיטליים (Claude, ChatGPT וכו')</option>
+            <option value="עזרה בלימודים / שיעורי בית">עזרה בלימודים / שיעורי בית</option>
+            <option value="פתרון בעיה טכנית דחופה">פתרון בעיה טכנית דחופה</option>
+            <option value="ייעוץ כללי / שיחה">ייעוץ כללי / שיחה</option>
+            <option value="אחר">אחר</option>
+          </select>
+
+          <label for="fquote">משפט שתשמח/י שאצטט</label>
+          <select id="fquote" name="fquote" required>
+            <option value="" disabled selected>בחר/י אפשרות</option>
+            <option value="הסביר בצורה ברורה וסבלנית, ממש עזר לי להבין.">"הסביר בצורה ברורה וסבלנית, ממש עזר לי להבין."</option>
+            <option value="עזרה מהירה ומדויקת, בדיוק מה שהייתי צריך.">"עזרה מהירה ומדויקת, בדיוק מה שהייתי צריך."</option>
+            <option value="ידע טכני מרשים ונכונות לעזור בלי תנאים.">"ידע טכני מרשים ונכונות לעזור בלי תנאים."</option>
+            <option value="בזכותו הבנתי דברים שהיו נראים לי מסובכים.">"בזכותו הבנתי דברים שהיו נראים לי מסובכים."</option>
+            <option value="זמין תמיד ועונה בסבלנות, גם על שאלות 'מטופשות'.">"זמין תמיד ועונה בסבלנות, גם על שאלות 'מטופשות'."</option>
+            <option value="לא רק פתר לי את הבעיה, גם לימד אותי להבין לבד בפעם הבאה.">"לא רק פתר לי את הבעיה, גם לימד אותי להבין לבד בפעם הבאה."</option>
+            <option value="פשוט אדם טוב שנותן מזמנו בלי לבקש כלום בתמורה.">"פשוט אדם טוב שנותן מזמנו בלי לבקש כלום בתמורה."</option>
+            <option value="__other__">אכתוב במילים שלי</option>
+          </select>
+          <textarea id="fquoteOther" name="fquoteOther" placeholder="כתוב/י כאן בחופשיות..." style="display:none; margin-top:10px;"></textarea>
+
+          <div class="consent">
+            <input type="checkbox" id="fconsent" name="fconsent" required>
+            <label for="fconsent">אני מסכים/ה שהמשוב שלי יפורסם (עם השם הפרטי שכתבתי)</label>
+          </div>
+
+          <div class="error" id="formError">אופס, נראה שחסר משהו — אפשר למלא את כל השדות ולאשר את ההסכמה?</div>
+
+          <button type="submit" id="submitBtn">שלח משוב</button>
+        </form>
+      </div>
+
+      <div class="thanks" id="thanks">
+        <div class="check-circle">
+          <svg viewBox="0 0 34 34"><path d="M8 17 L14 24 L27 10"/></svg>
+        </div>
+        <h2>תודה רבה, מכל הלב! 💛</h2>
+        <p>זה ממש נוגע ללב שלקחת/ה מהזמן שלך בשבילי.<br>אני מעריך את זה יותר ממה שאתה/את חושב/ת — תודה שהיית/ה שם.</p>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  const form = document.getElementById('feedbackForm');
+  const thanksEl = document.getElementById('thanks');
+  const formBody = document.getElementById('formBody');
+  const errorEl = document.getElementById('formError');
+  const submitBtn = document.getElementById('submitBtn');
+  const quoteSelect = document.getElementById('fquote');
+  const quoteOther = document.getElementById('fquoteOther');
+
+  quoteSelect.addEventListener('change', () => {
+    quoteOther.style.display = (quoteSelect.value === '__other__') ? 'block' : 'none';
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('fname').value.trim();
+    const help = document.getElementById('fhelp').value;
+    let quote = quoteSelect.value;
+    const consent = document.getElementById('fconsent').checked;
+
+    if(quote === '__other__'){ quote = quoteOther.value.trim(); }
+
+    if(!name || !help || !quote || !consent){
+      errorEl.style.display = 'block';
+      return;
+    }
+    errorEl.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'שולח...';
+
+    const entry = { name, help, quote, consent: true, ts: Date.now() };
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVeMuzdFYYpW_O1sgXPfiUppgJpWIknp3jvWrUjzisUbP-rvg4RzfFoP032CGj6D0I/exec';
+
+    try{
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(entry)
+      });
+    }catch(err){ console.error('Submit error:', err); }
+
+    formBody.style.display = 'none';
+    thanksEl.classList.add('show');
+    launchConfetti();
+  });
+
+  // Confetti burst reward moment
+  function launchConfetti(){
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const colors = ['#FF6B5B','#FFC145','#4FD1A5','#A78BFA','#FF9A76'];
+    const cx = window.innerWidth/2, cy = window.innerHeight/2.4;
+    const pieces = Array.from({length: 90}, () => ({
+      x: cx, y: cy,
+      vx: (Math.random()-0.5) * 14,
+      vy: (Math.random()-1.6) * 14,
+      size: 5 + Math.random()*5,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      rot: Math.random()*360,
+      vr: (Math.random()-0.5)*12,
+      life: 0
+    }));
+    let frame = 0;
+    function tick(){
+      frame++;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      pieces.forEach(p => {
+        p.vy += 0.35; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life++;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI/180);
+        ctx.globalAlpha = Math.max(0, 1 - p.life/70);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
+        ctx.restore();
+      });
+      if(frame < 80){ requestAnimationFrame(tick); }
+      else{ ctx.clearRect(0,0,canvas.width,canvas.height); }
+    }
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      requestAnimationFrame(tick);
+    }
+  }
+</script>
+
+</body>
+</html>
