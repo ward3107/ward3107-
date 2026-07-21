@@ -1,5 +1,5 @@
-# ward3107-
-### Hi, I'm Ward 👋
+# Was-
+### Hi, I'm Waseem 👋
 
 Full-stack developer building edtech products for the Israeli education system — with a day job as an English teacher and technology coordinator (רכז תקשוב), which keeps my code grounded in real classroom needs.
 
