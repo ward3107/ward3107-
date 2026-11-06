@@ -7,6 +7,7 @@ import { formatDecimal, formatIls, formatYears } from '@/lib/format';
 import { deleteQuote, exportQuotesJson, importQuotesJson, loadQuotes, newId, upsertQuote } from '@/lib/storage';
 import type { SavedQuote } from '@/lib/types';
 import { validateInputs } from '@/lib/validation';
+import { asset } from '@/lib/paths';
 import { SiteHeader } from './SiteHeader';
 
 const dateTime = new Intl.DateTimeFormat('he-IL', { dateStyle: 'medium', timeStyle: 'short' });
@@ -83,7 +84,7 @@ export function SavedQuotes() {
           <div className="card empty">
             <h2>עדיין אין הצעות שמורות</h2>
             <p className="muted">צרו הצעה ולחצו על ״שמירה״ כדי שתופיע כאן.</p>
-            <Link className="button button-primary" href="/">יצירת הצעה</Link>
+            <a className="button button-primary" href={asset('/')}>יצירת הצעה</a>
           </div>
         ) : (
           <ul className="quote-list">
@@ -107,7 +108,7 @@ export function SavedQuotes() {
                     </dl>
                   ) : <p className="muted">נתונים לא תקינים</p>}
                   <div className="quote-actions">
-                    <Link className="button" href={`/?id=${quote.id}`}>עריכה</Link>
+                    <a className="button" href={asset(`/?id=${quote.id}`)}>עריכה</a>
                     <Link className="button" href={`/proposal?id=${quote.id}`}>תצוגה</Link>
                     <button type="button" className="button button-quiet" onClick={() => duplicate(quote)}>שכפול</button>
                     <button type="button" className="button button-danger" onClick={() => remove(quote)}>מחיקה</button>

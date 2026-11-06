@@ -19,7 +19,17 @@ npm run dev        # http://localhost:3000
 npm run check      # typecheck + lint + tests + build
 ```
 
-האתר הוא סטטי לגמרי (`output: 'export'`), והבנייה נוצרת בתיקיית `out/`. אפשר להעלות אותו ל־Vercel (Root Directory: `solar-quote`), ל־GitHub Pages או לכל אחסון סטטי. לפריסה בתת־נתיב יש להגדיר `NEXT_PUBLIC_BASE_PATH`, למשל `/solar-quote`.
+האתר הוא סטטי לגמרי (`output: 'export'`), והבנייה נוצרת בתיקיית `out/`.
+
+## פריסה ל־GitHub Pages
+
+הפריסה מוגדרת ב־`.github/workflows/pages.yml`: בכל push ל־`main` שנוגע ב־`solar-quote/` נבנה האתר עם `NEXT_PUBLIC_BASE_PATH=/<שם הריפו>/solar-quote` ומתפרסם. ב־PR רץ רק שלב הבנייה, בלי פריסה.
+
+הגדרה חד־פעמית: בריפו, **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+הכתובת אחרי הפריסה הראשונה: `https://ward3107.github.io/ward3107-/solar-quote/`
+
+לפריסה בשרת אחר (Vercel, Netlify) אפשר להשתמש ב־`npm run build` ובתיקיית `out/`. בתת־נתיב יש להגדיר `NEXT_PUBLIC_BASE_PATH`.
 
 ## תאימות לגרסה הישנה
 

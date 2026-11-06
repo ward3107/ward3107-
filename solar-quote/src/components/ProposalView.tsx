@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { createExampleDraft } from '@/lib/defaults';
 import { calculateQuote, calculateScenarios } from '@/lib/finance';
@@ -54,7 +53,7 @@ export function ProposalView() {
 
   if (!source) return <main id="main" className="shell" aria-busy="true"><p className="muted loading">טוען את ההצעה…</p></main>;
 
-  const editHref = source.mode === 'saved' && source.id ? `/?id=${source.id}` : '/';
+  const editHref = asset(source.mode === 'saved' && source.id ? `/?id=${source.id}` : '/');
 
   async function copyLink() {
     if (!source) return;
@@ -77,15 +76,15 @@ export function ProposalView() {
     <>
       <header className="toolbar no-print">
         <div className="shell toolbar-inner">
-          <Link className="brand brand-compact" href="/">
+          <a className="brand brand-compact" href={asset('/')}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={asset('/icon.svg')} width={34} height={34} alt="" />
             <strong lang="en" dir="ltr">Solar Quote</strong>
-          </Link>
+          </a>
           <nav aria-label="פעולות בהצעה">
             {source.mode === 'shared'
               ? <button type="button" className="button" onClick={importShared}>פתיחת עותק לעריכה</button>
-              : <Link className="button" href={editHref}>חזרה לעריכה</Link>}
+              : <a className="button" href={editHref}>חזרה לעריכה</a>}
             <button type="button" className="button" onClick={() => void copyLink()}>העתקת קישור</button>
             <button type="button" className="button button-primary" disabled={!computed} onClick={() => window.print()}>
               הדפסה / שמירה כ־PDF
@@ -105,7 +104,7 @@ export function ProposalView() {
         ) : (
           <div className="shell">
             <p className="notice" data-kind="error" role="alert">
-              לא ניתן להציג את ההצעה כי חלק מהנתונים אינם תקינים. <Link href={editHref}>חזרה לעריכה</Link>
+              לא ניתן להציג את ההצעה כי חלק מהנתונים אינם תקינים. <a href={editHref}>חזרה לעריכה</a>
             </p>
           </div>
         )}
