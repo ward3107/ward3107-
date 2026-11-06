@@ -147,7 +147,7 @@ export function QuoteEditor() {
       setStatus({ kind: 'error', text: 'יש לתקן את השדות המסומנים לפני יצירת קישור.' });
       return;
     }
-    const url = buildShareUrl(draft, window.location.origin, basePath);
+    const url = await buildShareUrl(draft, window.location.origin, basePath);
     try {
       await navigator.clipboard.writeText(url);
       setStatus({ kind: 'success', text: 'הקישור הועתק. הוא פותח תצוגה לקריאה בלבד, בלי הלוגו וההדמיה.' });

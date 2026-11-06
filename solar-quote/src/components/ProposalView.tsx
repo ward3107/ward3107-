@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { createExampleDraft } from '@/lib/defaults';
 import { calculateQuote, calculateScenarios } from '@/lib/finance';
 import { basePath } from '@/lib/paths';
-import { decodeDraft, buildShareUrl } from '@/lib/share';
+import { buildShareUrl, decodeShareHash } from '@/lib/share';
 import { loadDraft, loadQuotes, saveDraft } from '@/lib/storage';
 import type { QuoteDraft } from '@/lib/types';
 import { validateInputs } from '@/lib/validation';
@@ -18,14 +18,10 @@ interface Source {
   id?: string;
 }
 
-function resolveSource(): Source {
+async function resolveSource(): Promise<Source> {
   const params = new URLSearchParams(window.location.search);
-  const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
-  const shared = hash.get('d');
-  if (shared) {
-    const draft = decodeDraft(shared);
-    if (draft) return { draft, mode: 'shared' };
-  }
+  const shared = await decodeShareHash(window.location.hash);
+  if (shared) return { draft: shared, mode: 'shared' };
   if (params.get('demo') === '1') return { draft: createExampleDraft(), mode: 'demo' };
   const id = params.get('id');
   const saved = id ? loadQuotes().find((quote) => quote.id === id) : undefined;
@@ -38,7 +34,11 @@ export function ProposalView() {
   const [source, setSource] = useState<Source | null>(null);
   const [message, setMessage] = useState('');
 
-  useEffect(() => { setSource(resolveSource()); }, []);
+  useEffect(() => {
+    let active = true;
+    void resolveSource().then((next) => { if (active) setSource(next); });
+    return () => { active = false; };
+  }, []);
 
   const computed = useMemo(() => {
     if (!source || Object.keys(validateInputs(source.draft.inputs)).length > 0) return null;
@@ -57,7 +57,7 @@ export function ProposalView() {
 
   async function copyLink() {
     if (!source) return;
-    const url = buildShareUrl(source.draft, window.location.origin, basePath);
+    const url = await buildShareUrl(source.draft, window.location.origin, basePath);
     try {
       await navigator.clipboard.writeText(url);
       setMessage('הקישור הועתק. הוא פותח תצוגה לקריאה בלבד, בלי הלוגו וההדמיה.');

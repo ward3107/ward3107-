@@ -1,37 +1,85 @@
 import { describe, expect, it } from 'vitest';
-import { createExampleDraft } from '@/lib/defaults';
-import { decodeDraft, encodeDraft } from '@/lib/share';
+import { createBlankDraft, createExampleDraft, emptyDetails, exampleInputs } from '@/lib/defaults';
+import {
+  buildShareUrl, decodeCompact, decodeLegacy, decodeShareHash, encodeCompact, encodeLegacy, shareDetailKeys,
+  shareInputKeys,
+} from '@/lib/share';
 import { isImageDataUrl, sanitizeDraft } from '@/lib/sanitize';
 import { addDaysIso, formatIsoDate } from '@/lib/format';
 
 describe('share links', () => {
-  it('round-trips a draft, including Hebrew text', () => {
+  it('round-trips a draft, including Hebrew text', async () => {
     const draft = createExampleDraft('2026-11-06');
     draft.inputs.panelCount = 40;
     draft.details.customerName = 'משפחת כהן — "בדיקה" 😀';
-    const decoded = decodeDraft(encodeDraft(draft));
-    expect(decoded).toEqual(draft);
+    expect(await decodeCompact(await encodeCompact(draft))).toEqual(draft);
   });
 
-  it('keeps links short by omitting defaults and images', () => {
+  it('is much shorter than the legacy format and url-safe', async () => {
     const draft = createExampleDraft('2026-11-06');
     draft.details.logo = 'data:image/png;base64,AAAA';
-    const encoded = encodeDraft(draft);
-    expect(encoded.length).toBeLessThan(1500);
-    expect(decodeDraft(encoded)!.details.logo).toBe('');
+    const compact = await encodeCompact(draft);
+    expect(compact).toMatch(/^[A-Za-z0-9_-]+$/);
+    expect(compact.length).toBeLessThan(encodeLegacy(draft).length * 0.6);
+    expect((await decodeCompact(compact))!.details.logo).toBe('');
   });
 
-  it('is url-safe', () => {
-    expect(encodeDraft(createExampleDraft('2026-11-06'))).toMatch(/^[A-Za-z0-9_-]+$/);
+  it('stays tiny when only a few fields changed', async () => {
+    const draft = createBlankDraft({}, '2026-11-06');
+    draft.inputs.panelCount = 40;
+    expect((await encodeCompact(draft)).length).toBeLessThan(80);
   });
 
-  it('rejects garbage', () => {
-    expect(decodeDraft('not-valid')).toBeNull();
-    expect(decodeDraft('')).toBeNull();
-    expect(decodeDraft('e30')).toBeNull(); // {} without version
-    expect(decodeDraft('A'.repeat(30_000))).toBeNull();
+  it('still decodes links created with the legacy format', async () => {
+    const draft = createExampleDraft('2026-11-06');
+    draft.inputs.panelCount = 12;
+    expect(decodeLegacy(encodeLegacy(draft))).toEqual(draft);
+    expect(await decodeShareHash(`#d=${encodeLegacy(draft)}`)).toEqual(draft);
+    expect(await decodeShareHash(`#z=${await encodeCompact(draft)}`)).toEqual(draft);
+  });
+
+  it('builds a link in the compact format', async () => {
+    const url = await buildShareUrl(createExampleDraft('2026-11-06'), 'https://example.com', '/base');
+    expect(url).toMatch(/^https:\/\/example\.com\/base\/proposal#z=[A-Za-z0-9_-]+$/);
+  });
+
+  it('keeps the wire format stable (append-only key lists)', () => {
+    expect(shareInputKeys.slice(0, 5)).toEqual(['panelCount', 'panelWatts', 'productionHoursPerKwpPerYear', 'pricePerKwpIls', 'discountPercent']);
+    expect(shareDetailKeys.slice(0, 3)).toEqual(['projectName', 'customerName', 'customerAddress']);
+    // Every model field must be shareable, otherwise a shared link would silently lose it.
+    expect([...shareInputKeys].sort()).toEqual(Object.keys(exampleInputs).sort());
+    const textKeys = Object.keys(emptyDetails).filter((key) => key !== 'logo' && key !== 'rendering');
+    expect([...shareDetailKeys].sort()).toEqual(textKeys.sort());
+  });
+
+  it('rejects garbage and out-of-range entries', async () => {
+    expect(await decodeShareHash('#z=not-valid')).toBeNull();
+    expect(await decodeShareHash('#z=')).toBeNull();
+    expect(await decodeShareHash('')).toBeNull();
+    expect(await decodeShareHash(`#z=${'A'.repeat(30_000)}`)).toBeNull();
+    expect(decodeLegacy('e30')).toBeNull();
+    expect(decodeLegacy('A'.repeat(30_000))).toBeNull();
+    // Unknown indexes and wrong types are ignored instead of throwing.
+    const payload = bytesToB64Url(await deflateText(JSON.stringify([[[999, 1], [0, 'x'], 'bad'], [[999, 'y'], [1, 5]]])));
+    const draft = (await decodeCompact(payload))!;
+    expect(draft.inputs.panelCount).toBe(exampleInputs.panelCount);
+    expect(draft.details.customerName).toBe('');
+  });
+
+  it('refuses a decompression bomb', async () => {
+    const bomb = bytesToB64Url(await deflateText(JSON.stringify([[], [[0, 'a'.repeat(5_000_000)]]])));
+    expect(bomb.length).toBeLessThan(20_000);
+    expect(await decodeCompact(bomb)).toBeNull();
   });
 });
+
+async function deflateText(text: string): Promise<Uint8Array> {
+  const stream = new Blob([new TextEncoder().encode(text)]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+
+const bytesToB64Url = (bytes: Uint8Array) =>
+  btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
 describe('sanitizeDraft', () => {
   it('drops unknown keys, bad numbers and oversized text', () => {
