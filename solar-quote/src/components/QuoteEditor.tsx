@@ -20,6 +20,8 @@ import { NumberField, TextAreaField, TextField } from './Field';
 import { ImageField } from './ImageField';
 import { AnnualTable, ChartPanel, ComparisonPanel, KpiGrid, ScenarioTable } from './Results';
 import { SiteHeader } from './SiteHeader';
+import { WhatsAppButton } from './WhatsAppButton';
+import { useShareUrl } from '@/lib/useShareUrl';
 
 type Tab = 'calc' | 'details' | 'equipment' | 'brand';
 type Status = { kind: 'info' | 'success' | 'error'; text: string } | null;
@@ -103,6 +105,7 @@ export function QuoteEditor() {
   const warnings = useMemo(() => (current && valid ? getWarnings(current.inputs) : []), [current, valid]);
 
   const dirty = draft !== null && snapshot(draft) !== savedJson;
+  const shareLink = useShareUrl(draft, valid);
 
   const update = useCallback((change: (draft: QuoteDraft) => QuoteDraft) => {
     setLoaded((current) => (current ? { ...current, draft: change(current.draft) } : current));
@@ -404,6 +407,7 @@ export function QuoteEditor() {
                 פתיחת ההצעה ללקוח
               </Link>
               <button type="button" className="button" onClick={save}>שמירה</button>
+              <WhatsAppButton link={valid ? shareLink : null} />
               <button type="button" className="button" onClick={() => void copyLink()}>העתקת קישור</button>
               <p className="muted autosave">{dirty ? 'נשמר אוטומטית כטיוטה' : 'כל השינויים נשמרו'}</p>
             </div>

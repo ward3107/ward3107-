@@ -10,7 +10,9 @@ import { loadDraft, loadQuotes, saveDraft } from '@/lib/storage';
 import type { QuoteDraft } from '@/lib/types';
 import { validateInputs } from '@/lib/validation';
 import { ProposalDocument } from './ProposalDocument';
+import { useShareUrl } from '@/lib/useShareUrl';
 import { ThemeToggle } from './ThemeToggle';
+import { WhatsAppButton } from './WhatsAppButton';
 import { asset } from '@/lib/paths';
 
 interface Source {
@@ -36,6 +38,7 @@ async function resolveSource(): Promise<Source> {
 export function ProposalView() {
   const [source, setSource] = useState<Source | null>(null);
   const [message, setMessage] = useState('');
+  const shareLink = useShareUrl(source?.draft ?? null, true, 0);
 
   useEffect(() => {
     let active = true;
@@ -94,6 +97,7 @@ export function ProposalView() {
             {source.mode === 'shared'
               ? <button type="button" className="button" onClick={importShared}>פתיחת עותק לעריכה</button>
               : <a className="button" href={editHref}>חזרה לעריכה</a>}
+            <WhatsAppButton link={shareLink} />
             <button type="button" className="button" onClick={() => void copyLink()}>העתקת קישור</button>
             <button type="button" className="button button-primary" disabled={!computed} onClick={() => window.print()}>
               הדפסה / שמירה כ־PDF
