@@ -460,3 +460,8 @@ fieldset.card > legend + * { clear: both; }
   .p-option-total { font-size: 1.45rem; }
   .paper h3 { break-after: avoid; }
 }
+
+/* ───────── WhatsApp share ───────── */
+.button-whatsapp { background: #11803f; border-color: #11803f; color: #fff; }
+.button-whatsapp:hover { background: #11803f; border-color: #11803f; color: #fff; filter: brightness(1.12); }
+.button-whatsapp:disabled { background: var(--surface-2); border-color: var(--line); color: var(--ink-2); }
