@@ -28,7 +28,12 @@ export function SavedQuotes() {
   const refresh = () => setQuotes(loadQuotes());
 
   function duplicate(quote: SavedQuote) {
-    const copy = { inputs: quote.inputs, details: { ...quote.details, projectName: `${quote.details.projectName} (עותק)`.trim() } };
+    const copy = {
+      inputs: quote.inputs,
+      details: { ...quote.details, projectName: `${quote.details.projectName} (עותק)`.trim() },
+      variants: quote.variants,
+      recommended: quote.recommended,
+    };
     const { result } = upsertQuote(copy, newId());
     setMessage(result.ok ? { kind: 'success', text: 'ההצעה שוכפלה.' } : { kind: 'error', text: 'לא נותר מקום לשמירה בדפדפן.' });
     refresh();
@@ -97,6 +102,7 @@ export function SavedQuotes() {
                     <h2 dir="auto">{title}</h2>
                     <p className="muted" dir="auto">
                       {[quote.details.customerName, quote.details.companyName].filter(Boolean).join(' · ') || 'ללא לקוח'}
+                      {quote.variants?.length ? ` · ${quote.variants.length + 1} חלופות` : ''}
                       {' · '}עודכנה {dateTime.format(new Date(quote.updatedAt))}
                     </p>
                   </div>

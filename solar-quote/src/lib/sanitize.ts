@@ -1,5 +1,6 @@
 import { emptyDetails, exampleInputs } from './defaults';
-import type { DetailKey, InputKey, QuoteDetails, QuoteDraft, QuoteInputs } from './types';
+import { MAX_NAME_LENGTH, MAX_OPTIONS, variantDetailKeys, variantInputKeys } from './options';
+import type { DetailKey, InputKey, QuoteDetails, QuoteDraft, QuoteInputs, QuoteVariant } from './types';
 
 export const MAX_TEXT_LENGTH = 2000;
 export const MAX_IMAGE_CHARS = 900_000;
@@ -44,5 +45,32 @@ export function sanitizeDraft(raw: unknown): QuoteDraft | null {
       details[key] = value.slice(0, MAX_TEXT_LENGTH);
     }
   }
-  return { inputs, details };
+
+  const draft: QuoteDraft = { inputs, details };
+  const rawVariants = Array.isArray(raw.variants) ? (raw.variants as unknown[]).slice(0, MAX_OPTIONS - 1) : [];
+  const variants: QuoteVariant[] = [];
+  for (const item of rawVariants) {
+    if (!isRecord(item)) continue;
+    const variantInputs = {} as QuoteVariant['inputs'];
+    const source = isRecord(item.inputs) ? item.inputs : {};
+    for (const key of variantInputKeys) {
+      const value = source[key];
+      variantInputs[key] = typeof value === 'number' && Number.isFinite(value) ? value : inputs[key];
+    }
+    const variantDetails = {} as QuoteVariant['details'];
+    const text = isRecord(item.details) ? item.details : {};
+    for (const key of variantDetailKeys) {
+      const value = text[key];
+      variantDetails[key] = typeof value === 'string' ? value.slice(0, MAX_TEXT_LENGTH) : details[key];
+    }
+    const name = typeof item.name === 'string' ? item.name.slice(0, MAX_NAME_LENGTH) : '';
+    variants.push({ name, inputs: variantInputs, details: variantDetails });
+  }
+  if (variants.length > 0) {
+    draft.variants = variants;
+    const recommended = raw.recommended;
+    draft.recommended = typeof recommended === 'number' && Number.isInteger(recommended) && recommended >= 0 && recommended <= variants.length
+      ? recommended : null;
+  }
+  return draft;
 }

@@ -33,6 +33,8 @@ export type InputKey = keyof QuoteInputs;
 
 /** Free-text and branding details of a proposal. */
 export interface QuoteDetails {
+  /** Name of the first option. Only shown when the proposal has several options. */
+  optionName: string;
   projectName: string;
   customerName: string;
   customerAddress: string;
@@ -63,6 +65,28 @@ export type DetailKey = keyof QuoteDetails;
 export interface QuoteDraft {
   inputs: QuoteInputs;
   details: QuoteDetails;
+  /**
+   * Additional options (at most two). The draft's own `inputs`/`details` are the first option, so
+   * proposals without options keep working unchanged.
+   */
+  variants?: QuoteVariant[];
+  /** Index (0–2) of the option to highlight as recommended. */
+  recommended?: number | null;
+}
+
+/** The fields that differ between options; everything else is shared by the whole proposal. */
+export type VariantInputKey =
+  | 'panelCount' | 'panelWatts' | 'pricePerKwpIls' | 'discountPercent' | 'annualMaintenanceIls'
+  | 'selfConsumptionPercent' | 'inverterReplacementYear' | 'inverterReplacementCostIls';
+
+export type VariantDetailKey =
+  | 'panelModel' | 'inverter' | 'storage' | 'mounting' | 'panelWarranty' | 'inverterWarranty'
+  | 'installationTime';
+
+export interface QuoteVariant {
+  name: string;
+  inputs: Pick<QuoteInputs, VariantInputKey>;
+  details: Pick<QuoteDetails, VariantDetailKey>;
 }
 
 export interface SavedQuote extends QuoteDraft {

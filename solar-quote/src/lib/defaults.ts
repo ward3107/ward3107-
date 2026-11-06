@@ -25,6 +25,7 @@ export const exampleInputs: QuoteInputs = {
 };
 
 export const emptyDetails: QuoteDetails = {
+  optionName: '',
   projectName: '',
   customerName: '',
   customerAddress: '',

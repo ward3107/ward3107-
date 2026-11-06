@@ -2,6 +2,7 @@
 
 import { useId, useState, type PointerEvent } from 'react';
 import type { QuoteResult } from '@/lib/finance';
+import type { OptionResult } from '@/lib/options';
 import { formatIls, formatInteger } from '@/lib/format';
 
 const axisFormat = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 });
@@ -148,6 +149,58 @@ export function AnnualChart({ result }: { result: QuoteResult }) {
       </svg>
       <p className="chart-legend">
         <span><i className="swatch swatch-bar" /> תזרים נקי לשנה (ירידה הדרגתית בגלל התיישנות הפאנלים)</span>
+      </p>
+    </figure>
+  );
+}
+
+/** Cumulative position of every option on one axis. Options differ by colour and dash pattern. */
+export function CompareChart({ items }: { items: OptionResult[] }) {
+  const years = items[0]?.result.summary.years ?? 1;
+  const series = items.map(({ option, result }) => ({
+    option,
+    values: [-result.summary.investmentIls, ...result.rows.map((row) => row.positionIls)],
+    payback: result.summary.paybackYears,
+  }));
+  const all = series.flatMap((entry) => entry.values);
+  const { ticks, y, zero } = scale(Math.min(...all), Math.max(...all));
+  const x = (year: number) => M.left + (year / years) * plotW;
+  const hover = useHover(years + 1, 0);
+  const shown = hover.index ?? years;
+  const labelYears = [...new Set([0, Math.round(years / 4), Math.round(years / 2), Math.round((years * 3) / 4), years])];
+
+  return (
+    <figure className="chart">
+      <figcaption className="chart-readout chart-readout-multi" aria-live="off">
+        <span>{shown === 0 ? 'עם התקנה' : `שנה ${formatInteger(shown)}`}</span>
+        {series.map(({ option, values }) => (
+          <strong key={option.index} className={`opt-${option.index}`} data-negative={(values[shown] ?? 0) < 0 ? 'true' : undefined}>
+            <i className={`swatch swatch-line opt-${option.index}`} aria-hidden="true" />
+            <bdi>{option.name}</bdi>: {formatIls(values[shown] ?? 0)}
+          </strong>
+        ))}
+      </figcaption>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" direction="ltr" onPointerMove={hover.onMove} onPointerLeave={hover.onLeave}
+        aria-label={`השוואת מצב ההשקעה של ${series.length} חלופות לאורך ${years} שנים`}>
+        <Axis ticks={ticks} y={y} />
+        {series.map(({ option, values, payback }) => (
+          <g key={option.index} className={`opt-${option.index}`}>
+            <polyline className="line compare-line" points={values.map((value, year) => `${x(year).toFixed(1)},${y(value).toFixed(1)}`).join(' ')} />
+            {payback !== null && payback > 0 ? <circle className="compare-dot" cx={x(payback)} cy={zero} r={4.5} /> : null}
+          </g>
+        ))}
+        {hover.index !== null ? <line className="hover-line" x1={x(shown)} x2={x(shown)} y1={M.top} y2={H - M.bottom} /> : null}
+        <g className="chart-axis">
+          {labelYears.map((year) => <text key={year} x={x(year)} y={H - 8} textAnchor="middle">{year}</text>)}
+        </g>
+      </svg>
+      <p className="chart-legend">
+        {series.map(({ option, payback }) => (
+          <span key={option.index} className={`opt-${option.index}`}>
+            <i className={`swatch swatch-line opt-${option.index}`} aria-hidden="true" />
+            <bdi>{option.name}</bdi>{option.recommended ? ' ★' : ''}{payback !== null ? ` · איזון בשנה ${payback.toFixed(1)}` : ' · מחוץ לתקופה'}
+          </span>
+        ))}
       </p>
     </figure>
   );

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { createExampleDraft } from '@/lib/defaults';
 import { calculateQuote, calculateScenarios } from '@/lib/finance';
+import { resolveOptions } from '@/lib/options';
 import { basePath } from '@/lib/paths';
 import { buildShareUrl, decodeShareHash } from '@/lib/share';
 import { loadDraft, loadQuotes, saveDraft } from '@/lib/storage';
@@ -25,7 +26,9 @@ async function resolveSource(): Promise<Source> {
   if (params.get('demo') === '1') return { draft: createExampleDraft(), mode: 'demo' };
   const id = params.get('id');
   const saved = id ? loadQuotes().find((quote) => quote.id === id) : undefined;
-  if (saved) return { draft: { inputs: saved.inputs, details: saved.details }, mode: 'saved', id: saved.id };
+  if (saved) {
+    return { draft: { inputs: saved.inputs, details: saved.details, variants: saved.variants, recommended: saved.recommended }, mode: 'saved', id: saved.id };
+  }
   const draft = loadDraft();
   return draft ? { draft, mode: 'draft' } : { draft: createExampleDraft(), mode: 'demo' };
 }
@@ -41,8 +44,14 @@ export function ProposalView() {
   }, []);
 
   const computed = useMemo(() => {
-    if (!source || Object.keys(validateInputs(source.draft.inputs)).length > 0) return null;
-    return { result: calculateQuote(source.draft.inputs), scenarios: calculateScenarios(source.draft.inputs) };
+    if (!source) return null;
+    const options = resolveOptions(source.draft);
+    if (options.some((option) => Object.keys(validateInputs(option.inputs)).length > 0)) return null;
+    return options.map((option) => ({
+      option,
+      result: calculateQuote(option.inputs),
+      scenarios: calculateScenarios(option.inputs),
+    }));
   }, [source]);
 
   useEffect(() => {
@@ -99,7 +108,7 @@ export function ProposalView() {
           {source.mode === 'shared' ? <p className="notice" data-kind="info">זוהי תצוגה של הצעה ששותפה בקישור, לקריאה בלבד.</p> : null}
         </div>
         {computed ? (
-          <ProposalDocument draft={source.draft} result={computed.result} scenarios={computed.scenarios}
+          <ProposalDocument items={computed}
             sample={source.mode === 'demo'} reference={source.id ? source.id.slice(0, 8).toUpperCase() : undefined} />
         ) : (
           <div className="shell">
