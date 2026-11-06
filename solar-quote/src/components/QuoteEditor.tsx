@@ -5,6 +5,10 @@ import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } fr
 import { createBlankDraft, createExampleDraft } from '@/lib/defaults';
 import { calculateQuote, calculateScenarios } from '@/lib/finance';
 import { formatDecimal, formatIls, formatInteger } from '@/lib/format';
+import {
+  addOption, isOptionSpecific, MAX_OPTIONS, optionCount, removeOption, resolveOptions, setOptionDetail,
+  setOptionInput, setOptionName, setRecommended,
+} from '@/lib/options';
 import { basePath } from '@/lib/paths';
 import { buildShareUrl } from '@/lib/share';
 import {
@@ -14,7 +18,7 @@ import type { DetailKey, InputKey, QuoteDraft } from '@/lib/types';
 import { getWarnings, validateInputs } from '@/lib/validation';
 import { NumberField, TextAreaField, TextField } from './Field';
 import { ImageField } from './ImageField';
-import { AnnualTable, ChartPanel, KpiGrid, ScenarioTable } from './Results';
+import { AnnualTable, ChartPanel, ComparisonPanel, KpiGrid, ScenarioTable } from './Results';
 import { SiteHeader } from './SiteHeader';
 
 type Tab = 'calc' | 'details' | 'equipment' | 'brand';
@@ -26,6 +30,13 @@ const tabs: Array<{ id: Tab; label: string }> = [
   { id: 'equipment', label: 'ציוד ותנאים' },
   { id: 'brand', label: 'מיתוג' },
 ];
+
+/** The persisted shape of a draft, used to detect unsaved changes. */
+const snapshot = (draft: QuoteDraft) =>
+  JSON.stringify({ inputs: draft.inputs, details: draft.details, variants: draft.variants, recommended: draft.recommended });
+
+const allFinite = (draft: QuoteDraft) =>
+  [draft.inputs, ...(draft.variants ?? []).map((variant) => variant.inputs)].every((inputs) => Object.values(inputs).every(Number.isFinite));
 
 interface Loaded {
   draft: QuoteDraft;
@@ -39,14 +50,16 @@ export function QuoteEditor() {
   const [tab, setTab] = useState<Tab>('calc');
   const [status, setStatus] = useState<Status>(null);
   const [savedJson, setSavedJson] = useState('');
+  const [activeOption, setActiveOption] = useState(0);
   const draftRef = useRef<QuoteDraft | null>(null);
 
   useEffect(() => {
     const id = new URLSearchParams(window.location.search).get('id');
     const saved = id ? loadQuotes().find((quote) => quote.id === id) : undefined;
     const draft = saved ?? loadDraft() ?? createBlankDraft(loadCompany());
-    setLoaded({ draft: { inputs: draft.inputs, details: draft.details }, quoteId: saved?.id, revision: 0 });
-    setSavedJson(saved ? JSON.stringify({ inputs: saved.inputs, details: saved.details }) : '');
+    const plain: QuoteDraft = { inputs: draft.inputs, details: draft.details, variants: draft.variants, recommended: draft.recommended };
+    setLoaded({ draft: plain, quoteId: saved?.id, revision: 0 });
+    setSavedJson(saved ? snapshot(plain) : '');
   }, []);
 
   const draft = loaded?.draft ?? null;
@@ -54,7 +67,7 @@ export function QuoteEditor() {
 
   const flush = useCallback(() => {
     const current = draftRef.current;
-    if (current && Object.values(current.inputs).every(Number.isFinite)) saveDraft(current);
+    if (current && allFinite(current)) saveDraft(current);
   }, []);
 
   useEffect(() => {
@@ -68,30 +81,52 @@ export function QuoteEditor() {
     return () => window.removeEventListener('pagehide', flush);
   }, [flush]);
 
-  const issues = useMemo(() => (draft ? validateInputs(draft.inputs) : {}), [draft]);
-  const valid = draft !== null && Object.keys(issues).length === 0;
+  const options = useMemo(() => (draft ? resolveOptions(draft) : []), [draft]);
+  const active = Math.min(activeOption, Math.max(0, options.length - 1));
+  const current = options[active];
+  const issuesByOption = useMemo(() => options.map((option) => validateInputs(option.inputs)), [options]);
+  const issues = issuesByOption[active] ?? {};
+  const invalidOptions = issuesByOption.flatMap((found, index) => (Object.keys(found).length > 0 ? [index] : []));
+  const valid = draft !== null && invalidOptions.length === 0;
   const fresh = useMemo(() => {
-    if (!draft || !valid) return null;
-    return { result: calculateQuote(draft.inputs), scenarios: calculateScenarios(draft.inputs) };
-  }, [draft, valid]);
+    if (!valid) return null;
+    return options.map((option) => ({
+      option,
+      result: calculateQuote(option.inputs),
+      scenarios: calculateScenarios(option.inputs),
+    }));
+  }, [options, valid]);
   const [lastGood, setLastGood] = useState(fresh);
   useEffect(() => { if (fresh) setLastGood(fresh); }, [fresh]);
-  const shown = fresh ?? lastGood;
-  const warnings = useMemo(() => (draft && valid ? getWarnings(draft.inputs) : []), [draft, valid]);
+  const items = fresh ?? lastGood;
+  const shown = items?.[Math.min(active, items.length - 1)] ?? null;
+  const warnings = useMemo(() => (current && valid ? getWarnings(current.inputs) : []), [current, valid]);
 
-  const dirty = draft !== null && JSON.stringify(draft) !== savedJson;
+  const dirty = draft !== null && snapshot(draft) !== savedJson;
 
   const update = useCallback((change: (draft: QuoteDraft) => QuoteDraft) => {
     setLoaded((current) => (current ? { ...current, draft: change(current.draft) } : current));
   }, []);
-  const setInput = (key: InputKey) => (value: number) =>
-    update((current) => ({ ...current, inputs: { ...current.inputs, [key]: value } }));
-  const setDetail = (key: DetailKey) => (value: string) =>
-    update((current) => ({ ...current, details: { ...current.details, [key]: value } }));
+  const setInput = (key: InputKey) => (value: number) => update((d) => setOptionInput(d, active, key, value));
+  const setDetail = (key: DetailKey) => (value: string) => update((d) => setOptionDetail(d, active, key, value));
+
+  function addAlternative() {
+    if (!draft) return;
+    update((d) => addOption(d, active));
+    setActiveOption(optionCount(draft));
+    setStatus({ kind: 'info', text: 'נוספה חלופה חדשה כעותק של החלופה הנוכחית. עדכנו את הגודל, המחיר והציוד שלה.' });
+  }
+
+  function deleteAlternative() {
+    if (!current || !window.confirm(`למחוק את "${current.name}"?`)) return;
+    update((d) => removeOption(d, active));
+    setActiveOption(Math.max(0, active - 1));
+  }
 
   function replaceDraft(next: QuoteDraft, quoteId?: string) {
-    setLoaded((current) => ({ draft: next, quoteId, revision: (current?.revision ?? 0) + 1 }));
-    setSavedJson(quoteId ? JSON.stringify(next) : '');
+    setLoaded((previous) => ({ draft: next, quoteId, revision: (previous?.revision ?? 0) + 1 }));
+    setActiveOption(0);
+    setSavedJson(quoteId ? snapshot(next) : '');
     window.history.replaceState(null, '', `${basePath}/`);
   }
 
@@ -128,8 +163,8 @@ export function QuoteEditor() {
       return;
     }
     saveCompany(draft.details);
-    setLoaded((current) => (current ? { ...current, quoteId: quote.id } : current));
-    setSavedJson(JSON.stringify(draft));
+    setLoaded((previous) => (previous ? { ...previous, quoteId: quote.id } : previous));
+    setSavedJson(snapshot(draft));
     setStatus({ kind: 'success', text: 'ההצעה נשמרה בהצעות השמורות.' });
   }
 
@@ -165,15 +200,21 @@ export function QuoteEditor() {
     );
   }
 
+  const many = options.length > 1;
+  const tagFor = (key: InputKey | DetailKey) => (many ? (isOptionSpecific(key) ? 'לחלופה זו' : 'משותף') : undefined);
+  const inputs = current?.inputs ?? draft.inputs;
+  const details = current?.details ?? draft.details;
+  const rawName = active === 0 ? draft.details.optionName : (draft.variants?.[active - 1]?.name ?? '');
+
   const inputField = (key: InputKey, label: string, extra?: { unit?: string; hint?: string }) => (
-    <NumberField key={`${loaded?.revision}-${key}`} label={label} value={draft.inputs[key]}
-      onChange={setInput(key)} error={issues[key]} unit={extra?.unit} hint={extra?.hint} />
+    <NumberField key={`${loaded?.revision}-${active}-${key}`} label={label} value={inputs[key]}
+      onChange={setInput(key)} error={issues[key]} unit={extra?.unit} hint={extra?.hint} tag={tagFor(key)} />
   );
   const textField = (key: DetailKey, label: string, extra?: { hint?: string; type?: 'text' | 'date' | 'tel' | 'email'; autoComplete?: string }) => (
-    <TextField label={label} value={draft.details[key]} onChange={setDetail(key)} {...extra} />
+    <TextField label={label} value={details[key]} onChange={setDetail(key)} tag={tagFor(key)} {...extra} />
   );
   const areaField = (key: DetailKey, label: string, hint?: string, rows = 4) => (
-    <TextAreaField label={label} value={draft.details[key]} onChange={setDetail(key)} hint={hint} rows={rows} />
+    <TextAreaField label={label} value={details[key]} onChange={setDetail(key)} hint={hint} rows={rows} tag={tagFor(key)} />
   );
 
   return (
@@ -194,6 +235,39 @@ export function QuoteEditor() {
 
         <div className="workspace">
           <div className="form-col">
+            <section className="card option-card" aria-labelledby="options-title">
+              <div className="option-head">
+                <h2 id="options-title">חלופות בהצעה</h2>
+                <p className="muted">
+                  {many ? 'כל חלופה עורכת גודל, מחיר וציוד משלה. שאר השדות משותפים.' : 'אפשר להציע ללקוח עד שלוש חלופות באותה הצעה, למשל בסיסי, מומלץ ומורחב.'}
+                </p>
+              </div>
+              <div className="option-chips" role="group" aria-label="בחירת חלופה לעריכה">
+                {options.map((option) => (
+                  <button key={option.index} type="button" className="chip" aria-pressed={option.index === active}
+                    data-invalid={invalidOptions.includes(option.index) ? 'true' : undefined}
+                    onClick={() => setActiveOption(option.index)}>
+                    {option.name}{option.recommended ? ' ★' : ''}{invalidOptions.includes(option.index) ? ' ⚠' : ''}
+                  </button>
+                ))}
+                {options.length < MAX_OPTIONS ? (
+                  <button type="button" className="chip chip-add" onClick={addAlternative}>＋ הוספת חלופה</button>
+                ) : null}
+              </div>
+              {many ? (
+                <div className="option-edit">
+                  <TextField key={`${loaded?.revision}-${active}-name`} label="שם החלופה" value={rawName}
+                    placeholder={current?.name} maxLength={40} onChange={(value) => update((d) => setOptionName(d, active, value))} />
+                  <label className="check">
+                    <input type="checkbox" checked={current?.recommended ?? false}
+                      onChange={(event) => update((d) => setRecommended(d, event.target.checked ? active : null))} />
+                    <span>סימון כחלופה מומלצת</span>
+                  </label>
+                  <button type="button" className="button button-danger" onClick={deleteAlternative}>מחיקת החלופה</button>
+                </div>
+              ) : null}
+            </section>
+
             <div className="tabs" role="tablist" aria-label="חלקי הטופס">
               {tabs.map((item) => (
                 <button key={item.id} role="tab" type="button" id={`tab-${item.id}`} aria-selected={tab === item.id}
@@ -203,11 +277,11 @@ export function QuoteEditor() {
               ))}
             </div>
 
-            <div key={loaded?.revision} role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`} className="panel">
+            <div key={`${loaded?.revision}-${active}`} role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`} className="panel">
               {tab === 'calc' ? (
                 <>
                   <fieldset className="card">
-                    <legend><span className="step">1</span> המערכת</legend>
+                    <legend><span className="step">1</span> המערכת{many ? <span className="muted"> · {current?.name}</span> : null}</legend>
                     <div className="grid">
                       {inputField('panelCount', 'מספר פאנלים', { unit: 'יח׳' })}
                       {inputField('panelWatts', 'הספק לפאנל', { unit: 'W' })}
@@ -336,14 +410,21 @@ export function QuoteEditor() {
 
             <div aria-live="polite" className="status-region">
               {status ? <p className="notice" data-kind={status.kind} role={status.kind === 'error' ? 'alert' : 'status'}>{status.text}</p> : null}
-              {!valid ? <p className="notice" data-kind="error" role="alert">יש להשלים ערכים תקינים בשדות המסומנים. מוצג החישוב התקין האחרון.</p> : null}
+              {!valid ? (
+                <p className="notice" data-kind="error" role="alert">
+                  יש להשלים ערכים תקינים בשדות המסומנים
+                  {invalidOptions.some((index) => index !== active) ? ` (גם ב${options[invalidOptions.find((index) => index !== active) ?? 0]?.name ?? 'חלופה אחרת'})` : ''}.
+                  {' '}מוצג החישוב התקין האחרון.
+                </p>
+              ) : null}
               {warnings.map((warning) => <p key={warning} className="notice" data-kind="warn">{warning}</p>)}
             </div>
 
-            {shown ? (
+            {shown && items ? (
               <>
-                <KpiGrid result={shown.result} />
-                <ChartPanel result={shown.result} />
+                {items.length > 1 ? <ComparisonPanel items={items} activeIndex={active} /> : null}
+                <KpiGrid result={shown.result} title={items.length > 1 ? shown.option.name : undefined} />
+                <ChartPanel result={shown.result} compare={items.length > 1 ? items : undefined} />
                 <ScenarioTable scenarios={shown.scenarios} />
                 <AnnualTable result={shown.result} />
               </>
@@ -354,7 +435,7 @@ export function QuoteEditor() {
 
       {shown ? (
         <div className="mobile-bar no-print">
-          <div><small>סה״כ כולל מע״מ</small><strong>{formatIls(shown.result.price.totalIls)}</strong></div>
+          <div><small>{items && items.length > 1 ? `${shown.option.name} · כולל מע״מ` : 'סה״כ כולל מע״מ'}</small><strong>{formatIls(shown.result.price.totalIls)}</strong></div>
           <Link className="button button-primary" href="/proposal" onClick={openProposal}>פתיחת ההצעה</Link>
         </div>
       ) : null}

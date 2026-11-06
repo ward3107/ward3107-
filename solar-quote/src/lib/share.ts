@@ -1,12 +1,16 @@
 import { emptyDetails, exampleInputs } from './defaults';
+import { variantDetailKeys, variantInputKeys } from './options';
 import { sanitizeDraft } from './sanitize';
 import type { DetailKey, InputKey, QuoteDraft } from './types';
 
 /**
  * Share links carry the whole proposal in the URL hash, so nothing is stored on a server.
  *
- * Format `z` (current): a JSON array `[[inputIndex, value]…, [detailIndex, text]…]` of the values
- * that differ from the defaults, compressed with deflate and written as base64url.
+ * Format `z` (current): a JSON array `[inputs, details, variants, recommended]`. `inputs` and
+ * `details` are `[index, value]` pairs of the values that differ from the defaults. `variants` are
+ * the extra options as `[name, inputs, details]`, listing only what differs from the first option.
+ * It is compressed with deflate and written as base64url. Links made before options existed have
+ * only the first two elements and still decode.
  * Format `d` (legacy): the same data as readable JSON with key names. Still decoded so links that
  * were already sent keep working, and used as a fallback when compression is unavailable.
  *
@@ -26,7 +30,7 @@ export const shareDetailKeys: readonly DetailKey[] = [
   'projectName', 'customerName', 'customerAddress', 'companyName', 'proposalDate', 'validityDays',
   'panelModel', 'inverter', 'storage', 'mounting', 'panelWarranty', 'inverterWarranty',
   'installationTime', 'scopeIncluded', 'scopeExcluded', 'paymentTerms', 'notes', 'contactName',
-  'contactPhone', 'contactEmail',
+  'contactPhone', 'contactEmail', 'optionName',
 ];
 
 const MAX_ENCODED_CHARS = 20_000;
@@ -90,10 +94,30 @@ function changedValues(draft: QuoteDraft) {
   return { inputs, details };
 }
 
+type Pairs<T> = Array<[number, T]>;
+type VariantEntry = [string, Pairs<number>, Pairs<string>];
+
+/** Extra options as differences from the first option. */
+function variantEntries(draft: QuoteDraft): VariantEntry[] {
+  return (draft.variants ?? []).map((variant) => {
+    const inputs: Pairs<number> = [];
+    for (const key of variantInputKeys) {
+      if (variant.inputs[key] !== draft.inputs[key]) inputs.push([shareInputKeys.indexOf(key), variant.inputs[key]]);
+    }
+    const details: Pairs<string> = [];
+    for (const key of variantDetailKeys) {
+      if (variant.details[key] !== draft.details[key]) details.push([shareDetailKeys.indexOf(key), variant.details[key]]);
+    }
+    return [variant.name, inputs, details];
+  });
+}
+
 /** Compact format (`z`). */
 export async function encodeCompact(draft: QuoteDraft): Promise<string> {
   const { inputs, details } = changedValues(draft);
-  return bytesToBase64Url(await deflate(textEncoder.encode(JSON.stringify([inputs, details]))));
+  const payload: unknown[] = [inputs, details];
+  if (draft.variants?.length) payload.push(variantEntries(draft), draft.recommended ?? -1);
+  return bytesToBase64Url(await deflate(textEncoder.encode(JSON.stringify(payload))));
 }
 
 /** Legacy readable format (`d`). */
@@ -102,7 +126,19 @@ export function encodeLegacy(draft: QuoteDraft): string {
   const details: Record<string, string> = {};
   for (const [index, value] of changedValues(draft).inputs) inputs[shareInputKeys[index]!] = value;
   for (const [index, value] of changedValues(draft).details) details[shareDetailKeys[index]!] = value;
-  return bytesToBase64Url(textEncoder.encode(JSON.stringify({ v: 2, i: inputs, d: details })));
+  const payload: Record<string, unknown> = { v: 2, i: inputs, d: details };
+  if (draft.variants?.length) {
+    payload.x = draft.variants.map((variant, offset) => {
+      const base = variantEntries(draft)[offset]!;
+      const changedInputs: Record<string, number> = {};
+      for (const [index, value] of base[1]) changedInputs[shareInputKeys[index]!] = value;
+      const changedDetails: Record<string, string> = {};
+      for (const [index, value] of base[2]) changedDetails[shareDetailKeys[index]!] = value;
+      return { name: variant.name, inputs: changedInputs, details: changedDetails };
+    });
+    payload.r = draft.recommended ?? -1;
+  }
+  return bytesToBase64Url(textEncoder.encode(JSON.stringify(payload)));
 }
 
 export async function decodeCompact(encoded: string): Promise<QuoteDraft | null> {
@@ -122,7 +158,24 @@ export async function decodeCompact(encoded: string): Promise<QuoteDraft | null>
       const key = typeof entry[0] === 'number' ? shareDetailKeys[entry[0]] : undefined;
       if (key) details[key] = entry[1];
     }
-    return sanitizeDraft({ inputs, details });
+    const base = sanitizeDraft({ inputs, details });
+    if (!base || !Array.isArray(parsed[2])) return base;
+
+    const variants = (parsed[2] as unknown[]).slice(0, 2).map((entry) => {
+      const [name, rawInputs, rawDetails] = Array.isArray(entry) ? entry : [];
+      const changedInputs: Record<string, unknown> = {};
+      const changedDetails: Record<string, unknown> = {};
+      for (const pair of Array.isArray(rawInputs) ? rawInputs : []) {
+        const key = Array.isArray(pair) && typeof pair[0] === 'number' ? shareInputKeys[pair[0]] : undefined;
+        if (key) changedInputs[key] = pair[1];
+      }
+      for (const pair of Array.isArray(rawDetails) ? rawDetails : []) {
+        const key = Array.isArray(pair) && typeof pair[0] === 'number' ? shareDetailKeys[pair[0]] : undefined;
+        if (key) changedDetails[key] = pair[1];
+      }
+      return { name, inputs: changedInputs, details: changedDetails };
+    });
+    return sanitizeDraft({ inputs: base.inputs, details: base.details, variants, recommended: parsed[3] });
   } catch {
     return null;
   }
@@ -133,9 +186,11 @@ export function decodeLegacy(encoded: string): QuoteDraft | null {
     if (encoded.length > MAX_ENCODED_CHARS) return null;
     const parsed: unknown = JSON.parse(textDecoder.decode(base64UrlToBytes(encoded)));
     if (typeof parsed !== 'object' || parsed === null) return null;
-    const payload = parsed as { v?: unknown; i?: unknown; d?: unknown };
+    const payload = parsed as { v?: unknown; i?: unknown; d?: unknown; x?: unknown; r?: unknown };
     if (payload.v !== 2) return null;
-    return sanitizeDraft({ inputs: payload.i, details: payload.d });
+    const base = sanitizeDraft({ inputs: payload.i, details: payload.d });
+    if (!base || !Array.isArray(payload.x)) return base;
+    return sanitizeDraft({ inputs: base.inputs, details: base.details, variants: payload.x, recommended: payload.r });
   } catch {
     return null;
   }
