@@ -107,6 +107,10 @@
   .vid{background:var(--ink2);border-block:1px solid var(--line)}
   .vid-box{border:10px solid var(--y);border-radius:26px;overflow:hidden;background:#000;box-shadow:0 30px 90px rgba(255,214,10,.12);aspect-ratio:16/9}
   .vid-box video{width:100%;height:100%;object-fit:cover}
+  /* real photos (shown only when landing/media/photos/ files are listed in PHOTOS below) */
+  .gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .gal figure{border-radius:var(--r);overflow:hidden;border:3px solid var(--y);background:#000;aspect-ratio:4/3}
+  .gal img{width:100%;height:100%;object-fit:cover;display:block}
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
   .step{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:34px 28px 28px}
   .step::before{counter-increment:s;content:counter(s);position:absolute;top:-22px;inset-inline-start:24px;width:52px;height:52px;border-radius:14px;background:var(--y);color:#000;font-weight:900;font-size:1.7rem;display:grid;place-items:center;transform:rotate(-6deg)}
@@ -245,6 +249,15 @@
     </div>
   </section>
 
+  <!-- PHOTOS (hidden until real photos are added) -->
+  <section id="photos" hidden>
+    <div class="wrap">
+      <div class="kick rv" data-i18n="gal_k">المكان</div>
+      <h2 class="rv" data-i18n="gal_h">المكان والشاشات</h2>
+      <div class="gal" id="gal"></div>
+    </div>
+  </section>
+
   <!-- HOW -->
   <section>
     <div class="wrap">
@@ -350,6 +363,7 @@
     sub:'יש לכם חנות או עסק ורוצים שאנשים יכירו אתכם? פרסמו על <b>שני מסכי פרסום</b> ב<b>אבו עקל סנטר</b>',
     wa:'וואטסאפ',vat_short:'המחירים כוללים מע״מ',s1:'מסך 1',s2:'מסך 2',ad:'המודעה שלך',ad2:'המודעה שלך',cap:'אותה מודעה · באותו זמן',
     f1t:'שני מסכי פרסום',f1d:'המודעה שלכם מופיעה על שני המסכים בו-זמנית',f2t:'שניות',f2d:'משך המודעה כ-10 שניות',f3t:'סרטון פרסומי',f3d:'אפשרות להכנת סרטון פרסומי בבינה מלאכותית',
+    gal_k:'המקום',gal_h:'המקום והמסכים',
     vid_k:'המודעה',vid_h:'ככה המודעה שלכם נראית',how_k:'פשוט',how_h:'איך זה עובד?',
     st1t:'יוצרים קשר',st1d:'מתקשרים או שולחים וואטסאפ ומספרים לנו על העסק.',
     st2t:'הסרטון',st2d:'יש לכם סרטון מוכן? נציג אותו. רוצים שנכין לכם את הסרטון? נכין אותו בבינה מלאכותית.',
@@ -415,6 +429,14 @@
   document.querySelectorAll('.plan .wa-link').forEach(function(a){
     a.addEventListener('click',function(){document.getElementById('fPlan').value=a.dataset.plan;refreshWa()});
   });
+
+  // Real photos: drop files in landing/media/photos/ and list them here, e.g. ['screens-day.jpg','screens-night.jpg','center.jpg']
+  var PHOTOS=[];
+  if(PHOTOS.length){
+    var g=document.getElementById('gal');
+    PHOTOS.forEach(function(f){var fig=document.createElement('figure'),im=document.createElement('img');im.src='media/photos/'+f;im.loading='lazy';im.alt='';fig.appendChild(im);g.appendChild(fig)});
+    document.getElementById('photos').hidden=false;
+  }
 
   // reveal on scroll (alternating sides) + price count-up
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(en){

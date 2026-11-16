@@ -2,7 +2,7 @@
 <html dir="rtl">
 <head>
 <meta charset="utf-8">
-<title>LED promo — frame renderer (ar / he)</title>
+<title>LED promo — frame renderer (ar / he, landscape + portrait)</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Heebo:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
   /* Palette: signal-yellow on near-black (road-sign legibility). White for copy. No greys, no textures, no big white fills. */
@@ -13,7 +13,6 @@
   body.he{--font:'Heebo',sans-serif}
   #road{position:absolute;left:0;right:0;bottom:calc(var(--u)*34);height:calc(var(--u)*10);
     background:repeating-linear-gradient(90deg,var(--y) 0 calc(var(--u)*90),transparent calc(var(--u)*90) calc(var(--u)*150))}
-  /* traffic = the audience, passing by */
   .car{position:absolute;bottom:calc(var(--u)*50);width:calc(var(--u)*170);height:calc(var(--u)*66);will-change:transform}
   .car svg{width:100%;height:100%;overflow:visible}
   .scene{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;
@@ -47,7 +46,7 @@
   body.he .screen .txt{font-size:calc(var(--u)*80)}
   .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*30);margin-top:calc(var(--u)*34);width:100%;max-width:calc(var(--u)*1740)}
   .chip{background:var(--panel);border-top:calc(var(--u)*10) solid var(--y);padding:calc(var(--u)*18) calc(var(--u)*22) calc(var(--u)*20);border-radius:calc(var(--u)*12);display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*10)}
-  .chip .ci{width:calc(var(--u)*64);height:calc(var(--u)*64);border-radius:50%;border:calc(var(--u)*4) solid var(--y);display:grid;place-items:center}
+  .chip .ci{flex:none;width:calc(var(--u)*64);height:calc(var(--u)*64);border-radius:50%;border:calc(var(--u)*4) solid var(--y);display:grid;place-items:center}
   .chip .ci svg{width:calc(var(--u)*38);height:calc(var(--u)*38);stroke:var(--y);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .chip .ct{font-size:calc(var(--u)*44);font-weight:800;line-height:1.3}
   /* S3 */
@@ -60,16 +59,52 @@
   .pb .pn small{font-size:.5em;margin-inline-start:.12em}
   .pb .pu{font-size:calc(var(--u)*64);font-weight:800}
   .fine{margin-top:calc(var(--u)*38);max-width:calc(var(--u)*1600);font-size:calc(var(--u)*46);font-weight:800;color:var(--soft);line-height:1.55}
-  /* S4 */
-  .c1{font-size:calc(var(--u)*118);font-weight:900;line-height:1.2}
-  .c2{display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*22);font-size:calc(var(--u)*68);font-weight:800;color:var(--y);margin-top:calc(var(--u)*10)}
-  .c2 svg{width:calc(var(--u)*76);height:calc(var(--u)*76);overflow:visible}
-  .num{direction:ltr;display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*34);margin-top:calc(var(--u)*30);font-size:calc(var(--u)*250);font-weight:900;color:var(--y);line-height:1}
-  .num .d{width:calc(var(--u)*56);height:calc(var(--u)*16);background:var(--w);border-radius:calc(var(--u)*8)}
-  .ul{height:calc(var(--u)*18);background:var(--y);margin:calc(var(--u)*30) auto 0;border-radius:calc(var(--u)*9)}
-  .c3{margin-top:calc(var(--u)*34);font-size:calc(var(--u)*50);font-weight:900;color:var(--soft)}
+  /* S4: number first, QR second */
+  .c1{font-size:calc(var(--u)*100);font-weight:900;line-height:1.2}
+  .c2{display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*20);font-size:calc(var(--u)*58);font-weight:800;color:var(--y);margin-top:calc(var(--u)*6)}
+  .c2 svg{width:calc(var(--u)*64);height:calc(var(--u)*64);overflow:visible}
+  .num{direction:ltr;display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*30);margin-top:calc(var(--u)*22);font-size:calc(var(--u)*220);font-weight:900;color:var(--y);line-height:1}
+  .num .d{width:calc(var(--u)*48);height:calc(var(--u)*14);background:var(--w);border-radius:calc(var(--u)*7)}
+  .qrrow{display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*44);margin-top:calc(var(--u)*34)}
+  .qrbox{width:calc(var(--u)*290);height:calc(var(--u)*290);background:#fff;border-radius:calc(var(--u)*18);padding:calc(var(--u)*4);flex:none}
+  .qrbox img{display:block;width:100%;height:100%}
+  .qrcap{text-align:start}
+  .qc1{font-size:calc(var(--u)*60);font-weight:900;color:var(--y);line-height:1.2}
+  .qc2{margin-top:calc(var(--u)*10);font-size:calc(var(--u)*46);font-weight:800;color:var(--soft);line-height:1.3}
   #wipe{position:absolute;top:-10%;bottom:-10%;left:50%;width:170vw;margin-left:-85vw;background:var(--y);display:none;will-change:transform}
   #black{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+
+  /* ---------- PORTRAIT 9:16 (social). u = width/1080. Keeps the platform UI zones (top ~14%, bottom ~20%) clear. ---------- */
+  body.portrait .scene{padding:calc(var(--u)*270) calc(var(--u)*70) calc(var(--u)*390)}
+  body.portrait #road{bottom:calc(var(--u)*340)} body.portrait .car{bottom:calc(var(--u)*356)}
+  body.portrait #brand{top:calc(var(--u)*170);right:calc(var(--u)*50);font-size:calc(var(--u)*38)}
+  body.portrait #tag{top:calc(var(--u)*166);left:calc(var(--u)*50);font-size:calc(var(--u)*40)}
+  body.portrait .h1{white-space:normal;font-size:calc(var(--u)*138)}
+  body.he.portrait .h1{font-size:calc(var(--u)*118)}
+  body.portrait .q{font-size:calc(var(--u)*60);margin-top:calc(var(--u)*50)}
+  body.portrait #s2{padding-top:calc(var(--u)*270);padding-bottom:calc(var(--u)*390)}
+  body.portrait .s2h{font-size:calc(var(--u)*62);margin-bottom:calc(var(--u)*30)}
+  body.portrait .screens{flex-direction:column;gap:calc(var(--u)*34)}
+  body.portrait .sw{width:calc(var(--u)*860);height:calc(var(--u)*230)}
+  body.portrait .screen .txt{font-size:calc(var(--u)*92)}
+  body.he.portrait .screen .txt{font-size:calc(var(--u)*76)}
+  body.portrait .chips{grid-template-columns:1fr;gap:calc(var(--u)*18);margin-top:calc(var(--u)*30)}
+  body.portrait .chip{flex-direction:row;align-items:center;gap:calc(var(--u)*22);text-align:start;padding:calc(var(--u)*16) calc(var(--u)*24);border-top:none;border-inline-start:calc(var(--u)*10) solid var(--y)}
+  body.portrait .chip .ct{font-size:calc(var(--u)*42)}
+  body.portrait .prices{flex-direction:column;gap:calc(var(--u)*32);max-width:calc(var(--u)*900)}
+  body.portrait .pb{padding:calc(var(--u)*32) calc(var(--u)*30)}
+  body.portrait .pb .pq{font-size:calc(var(--u)*52);min-height:1.4em}
+  body.portrait .pb .pn{font-size:calc(var(--u)*168)}
+  body.portrait .pb .pu{font-size:calc(var(--u)*54)}
+  body.portrait .fine{font-size:calc(var(--u)*38);margin-top:calc(var(--u)*30)}
+  body.portrait .c1{font-size:calc(var(--u)*92)}
+  body.portrait .c2{font-size:calc(var(--u)*50)}
+  body.portrait .num{font-size:calc(var(--u)*126);gap:calc(var(--u)*20)}
+  body.portrait .num .d{width:calc(var(--u)*30);height:calc(var(--u)*10)}
+  body.portrait .qrrow{flex-direction:column;gap:calc(var(--u)*26);margin-top:calc(var(--u)*40)}
+  body.portrait .qrbox{width:calc(var(--u)*360);height:calc(var(--u)*360)}
+  body.portrait .qrcap{text-align:center}
+  body.portrait .qc1{font-size:calc(var(--u)*54)} body.portrait .qc2{font-size:calc(var(--u)*40)}
 </style>
 </head>
 <body>
@@ -108,13 +143,15 @@
 
 <section class="scene" id="s4">
   <div class="c1 a" id="c1" data-t="0.3" data-from="t"></div>
-  <div class="c2 a" id="c2" data-t="1.3" data-from="b" data-d="0.2">
+  <div class="c2 a" id="c2" data-t="1.0" data-from="b" data-d="0.2">
     <svg id="ph" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.6a1 1 0 01-.25 1z" fill="#ffd60a"/><path class="arc" d="M15 3.5a6.5 6.5 0 015.5 5.5" stroke="#ffd60a" stroke-width="1.8" stroke-linecap="round"/><path class="arc" d="M15 7a3.2 3.2 0 012.5 2.5" stroke="#ffd60a" stroke-width="1.8" stroke-linecap="round"/></svg>
     <span id="c2t"></span>
   </div>
   <div class="num" id="num"><span class="a" id="g1" data-t="0.4" data-from="l">054</span><i class="d a" id="d1" data-t="0.5" data-from="s"></i><span class="a" id="g2" data-t="0.6" data-from="r">451</span><i class="d a" id="d2" data-t="0.7" data-from="s"></i><span class="a" id="g3" data-t="0.8" data-from="l">3141</span></div>
-  <div class="ul a" id="ul" data-t="1.5" data-from="s"></div>
-  <div class="c3 a" id="c3" data-t="2.1" data-from="b" data-d="0.2"></div>
+  <div class="qrrow">
+    <div class="qrbox a" id="qr" data-t="1.6" data-from="b"><img src="qr-whatsapp.svg" alt=""></div>
+    <div class="qrcap a" id="qrcap" data-t="1.9" data-from="r"><div class="qc1" id="qc1"></div><div class="qc2" id="qc2"></div></div>
+  </div>
 </section>
 
 <div id="fx"></div>
@@ -133,22 +170,23 @@ const T = {
       scr:'إعلانك',chips:['إعلانك بيظهر على الشاشتين بنفس الوقت','مدة الإعلان حوالي 10 ثواني','إمكانية تجهيز فيديو إعلاني بالذكاء الاصطناعي'],
       pAq:'عندك فيديو جاهز؟',pAu:'بالشهر',pBq:'بدك نجهّز لك الفيديو؟',pBu:'للشهر الأول',
       fine:'الأسعار تشمل ضريبة القيمة المضافة.<br>عدد مرات ظهور الإعلان يعتمد على عدد الإعلانات في الدورة.',
-      c1:'للاستفسار والتفاصيل',c2:'تواصل معي على رقم العمل',c3:'أبو عقل سنتر · شاشتين إعلانيتين'},
+      c1:'للاستفسار والتفاصيل',c2:'تواصل معي على رقم العمل',qc1:'امسح الكود للتواصل',qc2:'أبو عقل سنتر · شاشتين إعلانيتين'},
   he:{brand:'אבו עקל סנטר',h1a:'הפרסום של העסק שלך',h1b:'מגיע לאנשים!',q:'יש לכם חנות או עסק ורוצים שאנשים יכירו אתכם?',
       s2h:'פרסמו על <span class="y">שני מסכי פרסום</span><br>ב<span class="y">אבו עקל סנטר</span>',
       scr:'המודעה שלך',chips:['המודעה שלכם מופיעה על שני המסכים בו-זמנית','משך המודעה כ-10 שניות','אפשרות להכנת סרטון פרסומי בבינה מלאכותית'],
       pAq:'יש לכם סרטון מוכן?',pAu:'לחודש',pBq:'רוצים שנכין לכם את הסרטון?',pBu:'לחודש הראשון',
       fine:'המחירים כוללים מע״מ.<br>מספר הופעות המודעה תלוי במספר המודעות במחזור.',
-      c1:'לבירורים ופרטים',c2:'צרו קשר במספר העבודה',c3:'אבו עקל סנטר · שני מסכי פרסום'}
+      c1:'לבירורים ופרטים',c2:'צרו קשר במספר העבודה',qc1:'סרקו וצרו קשר',qc2:'אבו עקל סנטר · שני מסכי פרסום'}
 }[LANG];
 const DUR = 18;
 const SC = [{id:'s1',a:0,b:3.9},{id:'s2',a:3.9,b:8.7},{id:'s3',a:8.7,b:13.3},{id:'s4',a:13.3,b:DUR}];
 const WIPE_HALF = 0.28;
-// impact moments: particle burst + small camera thump (x,y in 1920x1080 space)
-const IMPACTS = [{t:0.7,x:960,y:560},{t:4.95,x:960,y:520},{t:9.8,x:960,y:470},{t:14.55,x:960,y:640}];
+// impact moments: particle burst + camera thump. fx/fy are fractions of the frame (works for both orientations)
+const IMPACTS_L = [{t:0.7,fx:.5,fy:.52},{t:4.95,fx:.5,fy:.47},{t:9.8,fx:.5,fy:.44},{t:14.55,fx:.5,fy:.43}];
+const IMPACTS_P = [{t:0.7,fx:.5,fy:.45},{t:4.95,fx:.5,fy:.42},{t:9.8,fx:.5,fy:.42},{t:14.55,fx:.5,fy:.40}];
+let IMPACTS = IMPACTS_L, PORTRAIT = false;
 const NP = 18;
-// traffic: periods divide DUR so the loop is seamless
-const CARS = [{p:6,o:0},{p:9,o:3},{p:4.5,o:1.1},{p:6,o:3.7}];
+const CARS = [{p:6,o:0},{p:9,o:3},{p:4.5,o:1.1},{p:6,o:3.7}];   // periods divide DUR => seamless loop
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const outBack=x=>{x=clamp(x);const c1=1.9,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
 const outCubic=x=>1-Math.pow(1-clamp(x),3);
@@ -158,15 +196,16 @@ const rnd=n=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)}
 const CAR_SVG='<svg viewBox="0 0 170 66" fill="#08080b" stroke="#ffd60a" stroke-width="5" stroke-linejoin="round"><path d="M8 46V36c0-5 3-8 8-9l26-5 20-14c3-2 6-3 10-3h40c6 0 10 2 13 6l12 16 21 4c4 1 7 4 7 8v10z"/><path d="M52 24l14-10h36l12 10z" stroke-width="4"/><circle cx="46" cy="50" r="13"/><circle cx="130" cy="50" r="13"/></svg>';
 
 function setup(){
-  document.documentElement.lang=LANG; document.body.classList.toggle('he',LANG==='he');
-  document.documentElement.style.setProperty('--u',(innerWidth/1920)+'px');
+  PORTRAIT = innerHeight > innerWidth; IMPACTS = PORTRAIT ? IMPACTS_P : IMPACTS_L;
+  document.documentElement.lang=LANG; document.body.classList.toggle('he',LANG==='he'); document.body.classList.toggle('portrait',PORTRAIT);
+  document.documentElement.style.setProperty('--u',(innerWidth/(PORTRAIT?1080:1920))+'px');
   $('brandTxt').textContent=T.brand;
   $('h1a').textContent=T.h1a; $('h1bt').textContent=T.h1b; $('q').textContent=T.q;
   $('s2h').innerHTML=T.s2h;
   document.querySelectorAll('.screen .txt').forEach(e=>e.textContent=T.scr);
   T.chips.forEach((c,i)=>$('ch'+i).innerHTML='<div class="ci">'+ICONS[i]+'</div><div class="ct">'+c+'</div>');
   $('pAq').textContent=T.pAq; $('pAu').textContent=T.pAu; $('pBq').textContent=T.pBq; $('pBu').textContent=T.pBu;
-  $('fine').innerHTML=T.fine; $('c1').textContent=T.c1; $('c2t').textContent=T.c2; $('c3').textContent=T.c3;
+  $('fine').innerHTML=T.fine; $('c1').textContent=T.c1; $('c2t').textContent=T.c2; $('qc1').textContent=T.qc1; $('qc2').textContent=T.qc2;
   CARS.forEach((c,i)=>{const d=document.createElement('div');d.className='car';d.id='car'+i;d.innerHTML=CAR_SVG;$('cars').appendChild(d)});
   IMPACTS.forEach((im,k)=>{for(let i=0;i<NP;i++){const d=document.createElement('i');d.className='pt'+(i%2?' w':'');d.id=`pt${k}_${i}`;$('fx').appendChild(d)}});
   for(let i=0;i<10;i++){const d=document.createElement('i');d.className='sk';d.id='sk'+i;$('fx').appendChild(d)}
@@ -174,19 +213,16 @@ function setup(){
 const fmt=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');
 
 window.seek=function(t){
-  const W=innerWidth, Hh=innerHeight, u=W/1920;
-  $('road').style.backgroundPosition=(-t*350*u)+'px 0';   // 350px/s * 18s = 42 dash periods: seamless loop
-  // traffic
+  const W=innerWidth, Hh=innerHeight, u=W/(PORTRAIT?1080:1920);
+  $('road').style.backgroundPosition=(-t*350*u)+'px 0';   // 350*18/150 = 42 dash periods => seamless loop
   CARS.forEach((c,i)=>{const k=(((t+c.o)/c.p)%1+1)%1; const x=W+170*u-k*(W+340*u); $('car'+i).style.transform=`translateX(${x}px)`});
   const cur = SC.find(s=>t>=s.a && t<s.b) || SC[SC.length-1];
   SC.forEach(s=>{const el=$(s.id); el.classList.toggle('on',s===cur);
     if(s===cur){
-      // slow push-in (alive, not static) + thump on impacts
       const push=1+0.04*((t-s.a)/(s.b-s.a)); let sx=0,sy=0;
       IMPACTS.forEach(im=>{const dt=t-im.t; if(dt>=0&&dt<.5){const a=11*u*Math.exp(-dt*11); sx+=a*Math.sin(dt*70); sy+=a*Math.cos(dt*58)}});
       el.style.transform=`translate(${sx}px,${sy}px) scale(${push})`;
     }});
-  // entrances: each element slams in from its own side, alternating
   document.querySelectorAll('.a').forEach(el=>{
     const sc=el.closest('.scene'); if(!sc) return;
     const s=SC.find(x=>x.id===sc.id);
@@ -196,34 +232,26 @@ window.seek=function(t){
     const f=el.dataset.from; let tf='';
     const dx=W*0.85*(1-p);
     if(f==='l') tf=`translateX(${-dx}px)`; else if(f==='r') tf=`translateX(${dx}px)`;
-    else if(f==='b') tf=`translateY(${(1-outCubic(raw))*120}px)`; else if(f==='t') tf=`translateY(${-(1-p)*Hh*0.35}px)`;
+    else if(f==='b') tf=`translateY(${(1-outCubic(raw))*120*u}px)`; else if(f==='t') tf=`translateY(${-(1-p)*Hh*0.35}px)`;
     else if(f==='s') tf=`scale(${0.2+0.8*p})`;
-    // life after landing: price cards and tiles breathe
     if(el.id==='pA'||el.id==='pB'){ tf+=` translateY(${Math.sin(t*2.2+(el.id==='pB'?1.6:0))*6*u*clamp(raw-1)}px)`}
-    if(el.id==='ul') tf=`scaleX(${clamp(raw)})`, el.style.width=(1280*u)+'px';
-    if(el.id==='c2'||el.id==='c3') { /* handled via .a generic */ }
     el.style.opacity=vis; el.style.transform=tf;
   });
-  // phone tag (scenes 1-3)
   const tg=$('tag'), tIn=clamp((t-1.4)/0.5), tOut=t>=13.3-WIPE_HALF?0:1;
   tg.style.opacity=tIn*tOut; tg.style.transform=`translateY(${-(1-outCubic((t-1.4)/0.5))*80}px)`;
-  // screens: same-beat pulse + broadcast rings
   const ph=((t-4.9)%2.4+2.4)%2.4, pulse=t<4.9?0:0.55*Math.max(0,1-ph/1.0);
   const rk=t<4.9?1:clamp(ph/1.5);
   document.querySelectorAll('.sw').forEach(sw=>{
     sw.querySelector('.fill').style.opacity=pulse;
     const r=sw.querySelector('.ring'); r.style.opacity=t<4.9?0:0.7*(1-rk); r.style.transform=`scale(${1+0.16*outCubic(rk)})`;
   });
-  // price count-up
   const cu=(a,b)=>fmt(b*outCubic((t-a)/0.9));
   $('nA').textContent=t<8.9?'0':cu(9.0,1250);
   $('nB').textContent=t<8.9?'0':cu(9.25,1750);
-  // ringing phone + number pulse (last scene)
   const rt=t-14.9, ringOn=rt>0&&(rt%1.4)<0.6;
   $('ph').style.transform=`rotate(${ringOn?Math.sin(rt*60)*14:0}deg)`;
   document.querySelectorAll('.arc').forEach((a,i)=>a.style.opacity=ringOn?(0.35+0.65*Math.abs(Math.sin(rt*14+i*1.2))):0.25);
   $('num').style.transform=`scale(${t>15.0?1+0.028*Math.abs(Math.sin(Math.PI*(t-15.0)/1.4)):1})`;
-  // particle bursts where things collide / land
   IMPACTS.forEach((im,k)=>{
     const dt=t-im.t, kk=dt/0.9;
     for(let i=0;i<NP;i++){
@@ -232,21 +260,19 @@ window.seek=function(t){
       const ang=(i/NP)*Math.PI*2+rnd(k*31+i)*0.5, sp=(260+rnd(k*7+i*3)*420)*u;
       const d=sp*(1-Math.pow(1-clamp(kk),2))*0.9;
       el.style.opacity=1-kk;
-      el.style.transform=`translate(${(im.x*u)+Math.cos(ang)*d}px,${(im.y*u)+Math.sin(ang)*d}px) rotate(${45+kk*200}deg) scale(${1-0.6*kk})`;
+      el.style.transform=`translate(${(im.fx*W)+Math.cos(ang)*d}px,${(im.fy*Hh)+Math.sin(ang)*d}px) rotate(${45+kk*200}deg) scale(${1-0.6*kk})`;
     }
   });
-  // swipe between scenes (right -> left); speed lines trail it
   const w=$('wipe'); let wx=null,wk=0;
   for(const s of SC.slice(1)){ if(Math.abs(t-s.a)<=WIPE_HALF){ wk=(t-(s.a-WIPE_HALF))/(2*WIPE_HALF); wx=(1-2*inOut(wk))*150 } }
   if(wx===null){w.style.display='none'} else {w.style.display='block';w.style.transform=`translateX(${wx}vw) skewX(-14deg)`}
   for(let i=0;i<10;i++){
     const s=$('sk'+i);
     if(wx===null){s.style.display='none';continue}
-    const edge=(wx*W/100)+0.85*W;               // right (trailing) edge of the panel in px
-    const len=(380+rnd(i*5)*620)*u, y=(110+i*92+rnd(i)*30)*u;
+    const edge=(wx*W/100)+0.85*W;
+    const len=(380+rnd(i*5)*620)*u, y=(i+0.35)*(Hh/10.4)+rnd(i)*30*u;
     s.style.display='block'; s.style.top=y+'px'; s.style.width=len*clamp(wk*2.2)+'px'; s.style.left=(edge-20*u)+'px';
   }
-  // fade to black only at the very end (loop point); first frame already has action
   $('black').style.opacity=clamp((t-(DUR-0.3))/0.3);
 };
 window.DUR=DUR;

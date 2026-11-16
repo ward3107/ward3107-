@@ -1,14 +1,16 @@
-name: Deploy Solar Quote to GitHub Pages
+name: Deploy Solar Quote + landing to GitHub Pages
 
 on:
   push:
     branches: [main]
     paths:
       - 'solar-quote/**'
+      - 'landing/**'
       - '.github/workflows/pages.yml'
   pull_request:
     paths:
       - 'solar-quote/**'
+      - 'landing/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -45,6 +47,8 @@ jobs:
         run: |
           mkdir -p _site/solar-quote
           cp -R solar-quote/out/. _site/solar-quote/
+          mkdir -p _site/landing
+          cp -R landing/. _site/landing/
           touch _site/.nojekyll
           cat > _site/index.html <<'HTML'
           <!doctype html>
