@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>LED promo — frame renderer (ar / he)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Heebo:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* Palette: signal-yellow on near-black — the highest-visibility pair (road-sign logic). White for body, nothing else. */
+  :root{--u:1px;--ink:#08080b;--y:#ffd60a;--w:#ffffff;--soft:#d7d7df;--panel:#16161c;--font:'Cairo',sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{overflow:hidden}
+  body{position:fixed;inset:0;overflow:hidden;contain:paint;background:var(--ink);color:var(--w);font-family:var(--font)}
+  body.he{--font:'Heebo',sans-serif}
+  /* LED pixel texture, very faint */
+  #led{position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.05) 1.3px,transparent 1.8px) 0 0/calc(var(--u)*14) calc(var(--u)*14)}
+  /* road centre-line, scrolls forever: the "you are driving past" cue */
+  #road{position:absolute;left:0;right:0;bottom:calc(var(--u)*34);height:calc(var(--u)*10);
+    background:repeating-linear-gradient(90deg,var(--y) 0 calc(var(--u)*90),transparent calc(var(--u)*90) calc(var(--u)*150))}
+  .scene{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;
+    padding:calc(var(--u)*130) calc(var(--u)*90) calc(var(--u)*90)}
+  .scene.on{display:flex}
+  .a{opacity:0;will-change:transform}
+  .y{color:var(--y)}
+  /* corner tags (repetition = memory) */
+  #brand{position:absolute;top:calc(var(--u)*38);right:calc(var(--u)*60);display:flex;align-items:center;gap:calc(var(--u)*16);font-weight:800;font-size:calc(var(--u)*40)}
+  #brand svg{width:calc(var(--u)*64);height:calc(var(--u)*44)}
+  #tag{position:absolute;top:calc(var(--u)*34);left:calc(var(--u)*60);display:flex;align-items:center;gap:calc(var(--u)*14);direction:ltr;
+    background:var(--y);color:#000;font-weight:900;font-size:calc(var(--u)*44);padding:calc(var(--u)*6) calc(var(--u)*26);border-radius:999px;letter-spacing:.02em}
+  #tag svg{width:calc(var(--u)*34);height:calc(var(--u)*34)}
+  /* S1 */
+  .h1{font-size:calc(var(--u)*176);font-weight:900;line-height:1.15}
+  .blk{display:inline-block;background:var(--y);color:#000;padding:calc(var(--u)*4) calc(var(--u)*56) calc(var(--u)*18);margin-top:calc(var(--u)*14);transform-origin:center}
+  body.he .h1{font-size:calc(var(--u)*150)}
+  body.he .screen .txt{font-size:calc(var(--u)*80)}
+  .h1{white-space:nowrap}
+  .q{margin-top:calc(var(--u)*56);font-size:calc(var(--u)*64);font-weight:700;color:var(--soft);line-height:1.4}
+  /* S2 */
+  .s2h{font-size:calc(var(--u)*76);font-weight:900;line-height:1.3;margin-bottom:calc(var(--u)*34)}
+  #s2{padding-top:calc(var(--u)*150);padding-bottom:calc(var(--u)*80)}
+  .screens{display:flex;gap:calc(var(--u)*56);direction:ltr}
+  .screen{position:relative;width:calc(var(--u)*640);height:calc(var(--u)*300);border:calc(var(--u)*12) solid var(--y);border-radius:calc(var(--u)*22);overflow:hidden;background:#000}
+  .screen .fill{position:absolute;inset:0;background:var(--y)}
+  .screen .txt{position:absolute;inset:0;display:grid;place-items:center;font-size:calc(var(--u)*104);font-weight:900}
+  .screen::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(0,0,0,.35) 1.4px,transparent 2px) 0 0/calc(var(--u)*10) calc(var(--u)*10)}
+  .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*30);margin-top:calc(var(--u)*40);width:100%;max-width:calc(var(--u)*1740)}
+  .chip{background:var(--panel);border-inline-start:calc(var(--u)*14) solid var(--y);padding:calc(var(--u)*18) calc(var(--u)*26);font-size:calc(var(--u)*40);font-weight:800;line-height:1.35;text-align:start;border-radius:calc(var(--u)*10)}
+  /* S3 */
+  .prices{display:flex;gap:calc(var(--u)*56);width:100%;max-width:calc(var(--u)*1700)}
+  .pb{flex:1;display:flex;flex-direction:column;justify-content:space-between;border-radius:calc(var(--u)*28);padding:calc(var(--u)*50) calc(var(--u)*36);color:#000}
+  .pb.w{background:var(--w)} .pb.yb{background:var(--y)}
+  .pb .pq{font-size:calc(var(--u)*60);font-weight:900;line-height:1.3;min-height:2.6em;display:grid;place-items:center}
+  .pb .pn{font-size:calc(var(--u)*230);font-weight:900;line-height:1.05;direction:ltr;margin-top:calc(var(--u)*6)}
+  .pb .pn small{font-size:.5em;margin-inline-start:.12em}
+  .pb .pu{font-size:calc(var(--u)*64);font-weight:800}
+  .fine{margin-top:calc(var(--u)*46);max-width:calc(var(--u)*1500);font-size:calc(var(--u)*38);font-weight:600;color:var(--soft);line-height:1.55}
+  /* S4 */
+  .c1{font-size:calc(var(--u)*118);font-weight:900;line-height:1.2}
+  .c2{font-size:calc(var(--u)*68);font-weight:800;color:var(--y);margin-top:calc(var(--u)*10)}
+  .num{direction:ltr;display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*34);margin-top:calc(var(--u)*34);font-size:calc(var(--u)*250);font-weight:900;color:var(--y);line-height:1;letter-spacing:-.01em}
+  .num .d{width:calc(var(--u)*56);height:calc(var(--u)*16);background:var(--w);border-radius:calc(var(--u)*8)}
+  .ul{height:calc(var(--u)*18);background:var(--y);margin:calc(var(--u)*34) auto 0;border-radius:calc(var(--u)*9)}
+  .c3{margin-top:calc(var(--u)*38);font-size:calc(var(--u)*46);font-weight:800;color:var(--soft)}
+  #wipe{position:absolute;top:-10%;bottom:-10%;left:50%;width:170vw;margin-left:-85vw;background:var(--y);display:none;will-change:transform}
+  #black{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="led"></div><div id="road"></div>
+
+<div id="brand"><svg viewBox="0 0 64 44" fill="none" stroke="#ffd60a" stroke-width="4" stroke-linejoin="round"><rect x="2" y="3" width="26" height="30" rx="4"/><rect x="36" y="3" width="26" height="30" rx="4"/><path d="M15 33v8M49 33v8" stroke-linecap="round"/></svg><span id="brandTxt"></span></div>
+<div id="tag" class="a"><svg viewBox="0 0 24 24" fill="#000"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.6a1 1 0 01-.25 1z"/></svg><span>054-451-3141</span></div>
+
+<section class="scene" id="s1">
+  <div class="h1 a" id="h1a" data-t="0.25" data-from="r"></div>
+  <div class="h1 a" id="h1b" data-t="0.6" data-from="l"><span class="blk" id="h1bt"></span></div>
+  <div class="q a" id="q" data-t="1.6" data-from="b" data-d="0.15"></div>
+</section>
+
+<section class="scene" id="s2">
+  <div class="s2h a" id="s2h" data-t="0.3" data-from="t"></div>
+  <div class="screens">
+    <div class="screen a" id="scL" data-t="0.45" data-from="l"><div class="fill"></div><div class="txt"></div></div>
+    <div class="screen a" id="scR" data-t="0.45" data-from="r"><div class="fill"></div><div class="txt"></div></div>
+  </div>
+  <div class="chips">
+    <div class="chip a" id="ch0" data-t="1.7" data-from="r"></div>
+    <div class="chip a" id="ch1" data-t="2.2" data-from="l"></div>
+    <div class="chip a" id="ch2" data-t="2.7" data-from="r"></div>
+  </div>
+</section>
+
+<section class="scene" id="s3">
+  <div class="prices">
+    <div class="pb w a" id="pA" data-t="0.3" data-from="r"><div class="pq" id="pAq"></div><div class="pn"><span id="nA">1,250</span><small>₪</small></div><div class="pu" id="pAu"></div></div>
+    <div class="pb yb a" id="pB" data-t="0.55" data-from="l"><div class="pq" id="pBq"></div><div class="pn"><span id="nB">1,750</span><small>₪</small></div><div class="pu" id="pBu"></div></div>
+  </div>
+  <div class="fine a" id="fine" data-t="1.9" data-from="b" data-d="0.15"></div>
+</section>
+
+<section class="scene" id="s4">
+  <div class="c1 a" id="c1" data-t="0.3" data-from="t"></div>
+  <div class="c2 a" id="c2" data-t="1.3" data-from="b" data-d="0.2"></div>
+  <div class="num"><span class="a" id="g1" data-t="0.4" data-from="l">054</span><i class="d a" id="d1" data-t="0.5" data-from="s"></i><span class="a" id="g2" data-t="0.6" data-from="r">451</span><i class="d a" id="d2" data-t="0.7" data-from="s"></i><span class="a" id="g3" data-t="0.8" data-from="l">3141</span></div>
+  <div class="ul a" id="ul" data-t="1.5" data-from="s"></div>
+  <div class="c3 a" id="c3" data-t="2.1" data-from="b" data-d="0.2"></div>
+</section>
+
+<div id="wipe"></div><div id="black"></div>
+
+<script>
+const LANG = new URLSearchParams(location.search).get('lang') === 'he' ? 'he' : 'ar';
+const T = {
+  ar:{brand:'أبو عقل سنتر',h1a:'خلّي إعلان مشروعك',h1b:'يوصل للناس!',q:'عندك محل أو مشروع وبدك تعرّف الناس عليه؟',
+      s2h:'اعرض إعلانك على <span class="y">شاشتين إعلانيتين</span><br>عند <span class="y">أبو عقل سنتر</span>',
+      scr:'إعلانك',chips:['إعلانك بيظهر على الشاشتين بنفس الوقت','مدة الإعلان حوالي 10 ثواني','إمكانية تجهيز فيديو إعلاني بالذكاء الاصطناعي'],
+      pAq:'عندك فيديو جاهز؟',pAu:'بالشهر',pBq:'بدك نجهّز لك الفيديو؟',pBu:'للشهر الأول',
+      fine:'الأسعار تشمل ضريبة القيمة المضافة.<br>عدد مرات ظهور الإعلان يعتمد على عدد الإعلانات في الدورة.',
+      c1:'للاستفسار والتفاصيل',c2:'تواصل معي على رقم العمل',c3:'أبو عقل سنتر · شاشتين إعلانيتين'},
+  he:{brand:'אבו עקל סנטר',h1a:'הפרסום של העסק שלך',h1b:'מגיע לאנשים!',q:'יש לכם חנות או עסק ורוצים שאנשים יכירו אתכם?',
+      s2h:'פרסמו על <span class="y">שני מסכי פרסום</span><br>ב<span class="y">אבו עקל סנטר</span>',
+      scr:'המודעה שלך',chips:['המודעה שלכם מופיעה על שני המסכים בו-זמנית','משך המודעה כ-10 שניות','אפשרות להכנת סרטון פרסומי בבינה מלאכותית'],
+      pAq:'יש לכם סרטון מוכן?',pAu:'לחודש',pBq:'רוצים שנכין לכם את הסרטון?',pBu:'לחודש הראשון',
+      fine:'המחירים כוללים מע״מ.<br>מספר הופעות המודעה תלוי במספר המודעות במחזור.',
+      c1:'לבירורים ופרטים',c2:'צרו קשר במספר העבודה',c3:'אבו עקל סנטר · שני מסכי פרסום'}
+}[LANG];
+const DUR = 18;
+const SC = [{id:'s1',a:0,b:3.9},{id:'s2',a:3.9,b:8.7},{id:'s3',a:8.7,b:13.3},{id:'s4',a:13.3,b:DUR}];
+const WIPE_HALF = 0.28;
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const outBack=x=>{x=clamp(x);const c1=1.9,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const outCubic=x=>1-Math.pow(1-clamp(x),3);
+const inOut=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const $=id=>document.getElementById(id);
+
+function setup(){
+  document.documentElement.lang=LANG; document.body.classList.toggle('he',LANG==='he');
+  document.documentElement.style.setProperty('--u',(innerWidth/1920)+'px');
+  $('brandTxt').textContent=T.brand;
+  $('h1a').textContent=T.h1a; $('h1bt').textContent=T.h1b; $('q').textContent=T.q;
+  $('s2h').innerHTML=T.s2h;
+  document.querySelectorAll('.screen .txt').forEach(e=>e.textContent=T.scr);
+  T.chips.forEach((c,i)=>$('ch'+i).textContent=c);
+  $('pAq').textContent=T.pAq; $('pAu').textContent=T.pAu; $('pBq').textContent=T.pBq; $('pBu').textContent=T.pBu;
+  $('fine').innerHTML=T.fine; $('c1').textContent=T.c1; $('c2').textContent=T.c2; $('c3').textContent=T.c3;
+}
+const fmt=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');
+
+window.seek=function(t){
+  const W=innerWidth, Hh=innerHeight;
+  $('road').style.backgroundPosition=(-t*340)+'px 0';
+  const cur = SC.find(s=>t>=s.a && t<s.b) || SC[SC.length-1];
+  SC.forEach(s=>$(s.id).classList.toggle('on',s===cur));
+  // entrances: each element slams in from its own side, alternating sides
+  document.querySelectorAll('.a').forEach(el=>{
+    const sc=el.closest('.scene'); if(!sc) return;           // corner tag handled below
+    const s=SC.find(x=>x.id===sc.id);
+    const t0=s.a+ +el.dataset.t + (s.a>0?-0.1:0);
+    const raw=(t-t0)/(+el.dataset.d||0.7);
+    const p=outBack(raw), vis=clamp((t-t0)/0.12);
+    const f=el.dataset.from; let tf='';
+    const dx=W*0.85*(1-p), dy=Hh*0.5*(1-p);
+    if(f==='l') tf=`translateX(${-dx}px)`; else if(f==='r') tf=`translateX(${dx}px)`;
+    else if(f==='b') tf=`translateY(${(1-outCubic(raw))*120}px)`; else if(f==='t') tf=`translateY(${-(1-p)*Hh*0.35}px)`;
+    else if(f==='s') tf=`scale(${0.2+0.8*p})`;
+    if(el.id==='ul') tf=`scaleX(${clamp(raw)})`, el.style.width=(1280*(innerWidth/1920))+'px';
+    el.style.opacity=vis; el.style.transform=tf;
+  });
+  // headline block: tiny skew settle
+  $('h1bt').style.transform=`skewX(${-6}deg)`;
+  // phone tag: visible scenes 1-3 only (scene 4 shows it huge)
+  const tg=$('tag'), tIn=clamp((t-1.4)/0.5), tOut=t>=13.3-WIPE_HALF?0:1;
+  tg.style.opacity=tIn*tOut; tg.style.transform=`translateY(${-(1-outCubic((t-1.4)/0.5))*80}px)`;
+  // screens: both flash yellow on the SAME beat = "same time"
+  const ph=((t-4.9)%1.2+1.2)%1.2, pulse=t<4.9?0:Math.max(0,1-ph/0.45);
+  document.querySelectorAll('.screen').forEach(sc=>{
+    sc.querySelector('.fill').style.opacity=pulse;
+    sc.querySelector('.txt').style.color=pulse>.5?'#000':'#fff';
+  });
+  // price count-up
+  const cu=(a,b)=>fmt(b*outCubic((t-a)/0.9));
+  $('nA').textContent=t<9.0?'0':cu(9.1,1250);
+  $('nB').textContent=t<9.0?'0':cu(9.35,1750);
+  // yellow swipe between scenes (right -> left, reading direction); cut happens while fully covered
+  const w=$('wipe'); let wx=null;
+  for(const s of SC.slice(1)){
+    if(Math.abs(t-s.a)<=WIPE_HALF){ const k=(t-(s.a-WIPE_HALF))/(2*WIPE_HALF); wx=(1-2*inOut(k))*150; }
+  }
+  if(wx===null){w.style.display='none'} else {w.style.display='block';w.style.transform=`translateX(${wx}vw) skewX(-14deg)`}
+  // fade in from / out to black for a clean loop
+  $('black').style.opacity=Math.max(1-clamp(t/0.3), clamp((t-(DUR-0.4))/0.4));
+};
+window.DUR=DUR;
+document.fonts.ready.then(()=>{setup();window.seek(0);window.READY=true});
+</script>
+</body>
+</html>
