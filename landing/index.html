@@ -9,7 +9,7 @@
 <meta property="og:title" content="خلّي إعلان مشروعك يوصل للناس! — أبو عقل سنتر">
 <meta property="og:description" content="شاشتين إعلانيتين · إعلانك بيظهر على الشاشتين بنفس الوقت · الأسعار تشمل ضريبة القيمة المضافة.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="promo-video/poster-ar.jpg">
+<meta property="og:image" content="media/poster-ar.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -238,8 +238,8 @@
       <div class="kick rv" data-i18n="vid_k">الإعلان</div>
       <h2 class="rv" data-i18n="vid_h">شوف كيف بيظهر إعلانك</h2>
       <div class="vid-box rv">
-        <video id="vid" controls playsinline preload="none" poster="promo-video/poster-ar.jpg">
-          <source id="vsrc" src="promo-video/led-promo-ar.mp4" type="video/mp4">
+        <video id="vid" controls playsinline preload="none" poster="media/poster-ar.jpg">
+          <source id="vsrc" src="media/led-promo-ar.mp4" type="video/mp4">
         </video>
       </div>
     </div>
@@ -398,7 +398,7 @@
     document.title=D.title; document.querySelector('meta[name=description]').content=D.desc;
     document.getElementById('langBtn').textContent=(l==='he')?'العربية':'עברית';
     var v=document.getElementById('vid'), s=document.getElementById('vsrc'), tag=l==='he'?'he':'ar';
-    var src='promo-video/led-promo-'+tag+'.mp4'; if(s.getAttribute('src')!==src){s.setAttribute('src',src);v.setAttribute('poster','promo-video/poster-'+tag+'.jpg');v.load()}
+    var src='media/led-promo-'+tag+'.mp4'; if(s.getAttribute('src')!==src){s.setAttribute('src',src);v.setAttribute('poster','media/poster-'+tag+'.jpg');v.load()}
     var t=document.getElementById('tk'), unit='<span>'+D.foot+'</span><span><bdi class="ltr">054-451-3141</bdi></span>';
     var h=''; for(var i=0;i<12;i++) h+=unit; t.innerHTML=h;
     refreshWa();

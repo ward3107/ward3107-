@@ -29,7 +29,7 @@ async function renderChunk(lang, W, H, FPS, f0, f1, out) {
 (async () => {
   const lang = A[0] === 'he' ? 'he' : 'ar';
   if (isWorker) { await renderChunk(lang, +A[1], +A[2], +A[3], +A[4], +A[5], A[6]); return; }
-  const OUT = A[1] || path.join(__dirname, `led-promo-${lang}.mp4`);
+  const OUT = A[1] || path.join(__dirname, '..', 'landing', 'media', `led-promo-${lang}.mp4`);
   const W = +A[2] || 1920, H = +A[3] || 1080, FPS = +A[4] || 30, N = +A[5] || os.cpus().length;
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: W, height: H } });
   await p.goto(URL(lang)); await p.waitForFunction('window.READY === true');
