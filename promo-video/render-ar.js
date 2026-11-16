@@ -1,0 +1,52 @@
+// Parallel frame-by-frame renderer for render-ar.html -> MP4 (silent).
+// Usage: node render-ar.js [width] [height] [fps] [out.mp4] [workers]
+const { chromium } = require('playwright');
+const { spawn, spawnSync } = require('child_process');
+const fs = require('fs'), os = require('os'), path = require('path');
+
+const isWorker = process.argv[2] === '--worker';
+const A = isWorker ? process.argv.slice(3) : process.argv.slice(2);
+
+async function renderChunk(W, H, FPS, f0, f1, out) {
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+  page.on('pageerror', e => console.error('pageerror:', e.message));
+  await page.goto('file://' + path.join(__dirname, 'render-ar.html'));
+  await page.waitForFunction('window.READY === true');
+  const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-',
+    '-c:v', 'libx264', '-preset', 'slow', '-crf', '14', '-pix_fmt', 'yuv420p', '-g', String(FPS), out],
+    { stdio: ['pipe', 'inherit', 'inherit'] });
+  const done = new Promise(r => ff.on('close', r));
+  for (let i = f0; i < f1; i++) {
+    await page.evaluate(t => window.seek(t), i / FPS);
+    const buf = await page.screenshot({ type: 'png' });
+    if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
+  }
+  ff.stdin.end(); await done; await browser.close();
+}
+
+(async () => {
+  const W = +A[0] || 1920, H = +A[1] || 1080, FPS = +A[2] || 30;
+  if (isWorker) { await renderChunk(W, H, FPS, +A[3], +A[4], A[5]); return; }
+  const OUT = A[3] || path.join(__dirname, 'led-promo-ar.mp4');
+  const N = +A[4] || Math.max(1, os.cpus().length);
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: W, height: H } });
+  await p.goto('file://' + path.join(__dirname, 'render-ar.html')); await p.waitForFunction('window.READY === true');
+  console.log('Cairo loaded:', await p.evaluate(() => document.fonts.check('900 40px Cairo', 'خلّي')));
+  const frames = Math.round((await p.evaluate('window.DUR')) * FPS); await b.close();
+
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'promo-'));
+  const per = Math.ceil(frames / N), parts = [];
+  await Promise.all(Array.from({ length: N }, (_, k) => new Promise((res, rej) => {
+    const f0 = k * per, f1 = Math.min(frames, f0 + per); if (f0 >= f1) return res();
+    const out = path.join(tmp, `part${k}.mp4`); parts[k] = out;
+    spawn(process.execPath, [__filename, '--worker', W, H, FPS, f0, f1, out], { stdio: 'inherit' })
+      .on('close', c => c ? rej(new Error('worker ' + k + ' failed')) : res());
+  })));
+  const list = path.join(tmp, 'list.txt');
+  fs.writeFileSync(list, parts.filter(Boolean).map(f => `file '${f}'`).join('\n'));
+  const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', '-movflags', '+faststart', OUT], { stdio: 'inherit' });
+  if (r.status) throw new Error('concat failed');
+  fs.rmSync(tmp, { recursive: true, force: true });
+  console.log('wrote', OUT, frames, 'frames');
+})().catch(e => { console.error(e); process.exit(1); });
