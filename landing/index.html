@@ -247,15 +247,17 @@
   #xm{position:fixed;inset:0;z-index:0;pointer-events:none;display:none;overflow:hidden}
   html.xmas main,html.xmas footer{position:relative;z-index:1}
   html.xmas #xm{display:block}
-  #xm .fr{position:absolute;inset:10px;border:3px solid var(--y);border-radius:22px;box-shadow:inset 0 0 0 6px var(--ink),inset 0 0 0 7px rgba(255,195,46,.7)}
-  #xm .cn{position:absolute}
+  #xm .bgi{position:absolute;inset:-4%;background:url(media/xmas-bg-16x9.jpg) center/cover no-repeat;transform:scale(1.04);animation:xdrift 26s ease-in-out infinite alternate}
+  @keyframes xdrift{to{transform:scale(1.1) translate(-1.2%,.8%)}}
+  #xm .sh{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(5,6,11,.52) 0%,rgba(5,6,11,.66) 60%,rgba(5,6,11,.84) 100%)}
+  @media (max-width:700px){#xm .bgi{background-image:url(media/xmas-bg-9x16.jpg)}}
+  html.xmas .vid{background:rgba(11,10,16,.55)}
+  html.xmas .scr::after{opacity:0}
   #xm .sn{position:absolute;top:-20px;border-radius:50%;background:#fff;opacity:.85;animation:snow linear infinite}
   #xm .sn.g{background:#ffd978}
   @keyframes snow{to{transform:translateY(112vh) translateX(var(--dx,20px))}}
-  html.xmas .scr::after{opacity:.0}
   #xBtn{padding:6px 14px;font-size:1.1rem}
   html.xmas #xBtn{border-color:var(--y);background:rgba(255,195,46,.12)}
-  @media (max-width:900px){#xm .cn.mid{display:none}}
   @media (prefers-reduced-motion:reduce){#xm .sn{display:none}}
 </style>
 </head>
@@ -539,96 +541,12 @@
   // ---------- Christmas theme: black + gold + pine frame (original vector art, shared with the video renderer) ----------
   (function(){
     const rnd=n=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)};
-    const GREENS=['#1c5a37','#26734a','#33895b','#4aa571'], GOLDS=['#f6cf63','#e0a62e','#b97d14'];
-    function fan(ox,oy,ang,len,seed,sc){
-      const a=ang*Math.PI/180, ca=Math.cos(a), sa=Math.sin(a);
-      let g=`<line x1="${ox}" y1="${oy}" x2="${(ox+ca*len).toFixed(1)}" y2="${(oy+sa*len).toFixed(1)}" stroke="#3a2813" stroke-width="${(5*sc).toFixed(1)}" stroke-linecap="round"/>`;
-      const N=Math.round(len/8);
-      for(let i=2;i<=N;i++){
-        const t=i/N, px=ox+ca*len*t, py=oy+sa*len*t, L=(96*sc)*(1-t*0.7)*(0.85+rnd(seed+i)*0.3);
-        for(const sg of [1,-1]){
-          const na=a+sg*(Math.PI/180)*(46+rnd(seed+i*3)*16);
-          const col=rnd(seed+i*11)>0.88?GOLDS[i%2]:GREENS[(i+(sg>0?1:0)+Math.floor(rnd(seed+i)*2))%4];
-          g+=`<line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${(px+Math.cos(na)*L).toFixed(1)}" y2="${(py+Math.sin(na)*L).toFixed(1)}" stroke="${col}" stroke-width="${(4.2*sc).toFixed(1)}" stroke-linecap="round"/>`;
-        }
-      }
-      return g;
-    }
-    function leaf(x,y,rot,rx,ry,gold){return `<g transform="translate(${x} ${y}) rotate(${rot})"><ellipse rx="${rx}" ry="${ry}" fill="${gold?'#d9a32d':'#46605a'}" stroke="${gold?'#8a5a0c':'#22332f'}" stroke-width="2"/><line x1="${-rx}" y1="0" x2="${rx}" y2="0" stroke="${gold?'#8a5a0c':'#22332f'}" stroke-width="1.6"/></g>`}
-    function cone(x,y,rot,s,seed){
-      let g='';
-      for(let r=0;r<7;r++){const n=r<2?3:r<5?4:3, y0=-52+r*16; for(let c=0;c<n;c++){const x0=(c-(n-1)/2)*17+(r%2?8:0)*(n>3?1:0);
-        g+=`<ellipse cx="${x0.toFixed(1)}" cy="${y0}" rx="11" ry="9" fill="${(r+c)%2?'#6b4a2b':'#85603a'}" stroke="#3a2610" stroke-width="1.6"/>`}}
-      return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">${g}</g>`;
-    }
-    function berries(x,y,rot,s,seed){
-      let g=`<path d="M0 0 Q30 -36 64 -50" fill="none" stroke="#a8700f" stroke-width="4" stroke-linecap="round"/><path d="M26 -22 Q40 -4 62 4" fill="none" stroke="#a8700f" stroke-width="3" stroke-linecap="round"/>`;
-      [[64,-50],[52,-60],[74,-40],[44,-34],[62,4],[50,12],[36,-14],[70,-62],[30,-26]].forEach((q,i)=>{const r=6+rnd(seed+i)*3.5;g+=`<circle cx="${q[0]}" cy="${q[1]}" r="${r.toFixed(1)}" fill="#f1bd3d" stroke="#9a6410" stroke-width="1.5"/><circle cx="${q[0]-2}" cy="${q[1]-2}" r="${(r*.35).toFixed(1)}" fill="#fff6c9"/>`});
-      return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">${g}</g>`;
-    }
-    function ball(cx,cy,r,type,id,seed){
-      const defs = type==='black'
-        ? `<radialGradient id="b${id}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#7c7c92"/><stop offset=".4" stop-color="#1d1d2b"/><stop offset="1" stop-color="#03030a"/></radialGradient>`
-        : `<radialGradient id="b${id}" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#fff4c2"/><stop offset=".3" stop-color="#ffcf4a"/><stop offset=".72" stop-color="#c78612"/><stop offset="1" stop-color="#5e3a00"/></radialGradient>`;
-      let extra='';
-      if(type==='black'){for(let i=0;i<60;i++){const a=rnd(seed+i)*6.283,d=Math.sqrt(rnd(seed+i*2))*r*.9;extra+=`<circle cx="${(cx+Math.cos(a)*d-r*.06).toFixed(1)}" cy="${(cy+Math.sin(a)*d-r*.06).toFixed(1)}" r="${(1+rnd(seed+i*3)*1.8).toFixed(1)}" fill="${i%3?'#ffe9a8':'#fff'}" opacity=".9"/>`}}
-      if(type==='rib'){for(const k of [-.55,0,.55]){extra+=`<path d="M${(cx+k*r).toFixed(1)} ${(cy-r*.95).toFixed(1)} Q${(cx+k*r*1.7).toFixed(1)} ${cy} ${(cx+k*r).toFixed(1)} ${(cy+r*.95).toFixed(1)}" fill="none" stroke="#7a4d08" stroke-width="2.2" opacity=".65"/>`}}
-      return `<defs>${defs}</defs><rect x="${(cx-r*.24).toFixed(1)}" y="${(cy-r-r*.26).toFixed(1)}" width="${(r*.48).toFixed(1)}" height="${(r*.3).toFixed(1)}" rx="3" fill="#d9a23a" stroke="#7a4d08" stroke-width="1.6"/><circle cx="${cx}" cy="${(cy-r-r*.34).toFixed(1)}" r="${(r*.13).toFixed(1)}" fill="none" stroke="#d9a23a" stroke-width="2.4"/>
-        <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#b${id})" ${type==='black'?'stroke="#c98a1a" stroke-width="2.4"':'stroke="#7a4d08" stroke-width="1.6"'}/>${extra}
-        <ellipse cx="${(cx-r*.38).toFixed(1)}" cy="${(cy-r*.42).toFixed(1)}" rx="${(r*.2).toFixed(1)}" ry="${(r*.12).toFixed(1)}" fill="#fff" opacity=".78" transform="rotate(-35 ${(cx-r*.38).toFixed(1)} ${(cy-r*.42).toFixed(1)})"/>`;
-    }
-    function bow(x,y,s,rot){
-      return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">
-       <path d="M-4 8 L-70 108 L-44 100 L-38 132 L8 22Z" fill="#0b0b12" stroke="#e6b13a" stroke-width="3"/>
-       <path d="M4 8 L78 100 L50 96 L58 128 L-2 20Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="2.5"/>
-       <path d="M0 0 C-30 -52 -108 -58 -116 -8 C-122 36 -46 38 0 0Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="3"/>
-       <path d="M0 0 C30 -52 108 -58 116 -8 C122 36 46 38 0 0Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="3"/>
-       <path d="M-10 -4 C-44 -26 -86 -28 -104 -8 M10 -4 C44 -26 86 -28 104 -8" fill="none" stroke="#fff1b8" stroke-width="3" opacity=".85"/>
-       <path d="M-20 4 C-52 14 -84 12 -100 0 M20 4 C52 14 84 12 100 0" fill="none" stroke="#8a5a0c" stroke-width="2.4" opacity=".7"/>
-       <ellipse rx="19" ry="23" fill="#0b0b12" stroke="#ffd978" stroke-width="3"/><path d="M-8 -10 Q0 -2 -8 10" fill="none" stroke="#ffd978" stroke-width="3" opacity=".8"/></g>`;
-    }
-    // big corner cluster (drawn for the top-left corner; the others are mirrored copies)
-    function cornerSVG(seed){
-      let g='';
-      g+=fan(-20,-20,16,430,seed+1,1.05)+fan(-20,-20,34,400,seed+2,1.05)+fan(-20,-20,54,340,seed+3,1)+fan(-20,-20,72,290,seed+4,0.95);
-      g+=fan(-20,40,8,350,seed+5,0.9)+fan(10,-20,66,250,seed+6,0.85);
-      g+=leaf(210,150,28,44,15,false)+leaf(250,120,10,38,13,true)+leaf(120,330,64,40,14,false)+leaf(90,300,40,34,12,true);
-      g+=cone(70,300,-20,1.0,seed+7);
-      g+=ball(110,108,64,'gold','a'+seed,seed+9)+ball(225,70,46,'black','b'+seed,seed+10)+ball(95,246,42,'rib','c'+seed,seed+11)+ball(250,205,30,'gold','d'+seed,seed+12);
-      g+=berries(150,360,-60,1.0,seed+13)+berries(300,40,10,0.9,seed+14);
-      g+=bow(345,112,0.86,18);
-      return `<svg viewBox="0 0 560 430" width="100%" height="100%">${g}</svg>`;
-    }
-    // smaller cluster for the middle of the left/right edges
-    function sideSVG(seed){
-      let g='';
-      g+=fan(-20,170,-30,250,seed+1,0.95)+fan(-20,170,0,270,seed+2,1)+fan(-20,170,30,250,seed+3,0.95);
-      g+=leaf(120,110,-30,38,13,false)+leaf(130,235,30,38,13,true);
-      g+=ball(70,170,50,'gold','e'+seed,seed+9)+ball(150,108,30,'black','f'+seed,seed+10)+ball(150,236,26,'gold','g'+seed,seed+11);
-      g+=berries(60,262,-70,0.8,seed+13);
-      return `<svg viewBox="0 0 280 340" width="100%" height="100%">${g}</svg>`;
-    }
-    // hanging strand: gold beads ending in a drop ornament (animated pendulum)
-    function strandSVG(id,r,L,type,seed){
-      const W=2*r+4, H=L+2*r+24, cx=W/2; let beads='';
-      for(let y=6;y<L;y+=13){beads+=`<circle cx="${cx}" cy="${y}" r="${y%26?4.2:5.6}" fill="#f1bd3d" stroke="#8a5a0c" stroke-width="1.4"/>`}
-      return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%"><line x1="${cx}" y1="0" x2="${cx}" y2="${L}" stroke="#b97d14" stroke-width="1.6"/>${beads}${ball(cx,L+r+10,r,type,id,seed)}</svg>`;
-    }
-    
-    var built=false;
+        var built=false;
     function build(){
       if(built) return; built=true;
       var root=document.getElementById('xm'), W=innerWidth, H=innerHeight, mob=W<900;
       var add=function(cls,html,st){var d=document.createElement('div');d.className=cls;if(html)d.innerHTML=html;if(st)d.style.cssText=st;root.appendChild(d);return d};
-      add('fr','');
-      var cw=Math.min(380,W*(mob?0.46:0.22)), ch=cw*430/560;
-      add('cn',cornerSVG(3),'left:0;top:0;width:'+cw+'px;height:'+ch+'px');
-      add('cn',cornerSVG(21),'right:0;top:0;width:'+cw+'px;height:'+ch+'px;transform:scaleX(-1)');
-      add('cn',cornerSVG(41),'left:0;bottom:0;width:'+cw+'px;height:'+ch+'px;transform:scaleY(-1)');
-      add('cn',cornerSVG(61),'right:0;bottom:0;width:'+cw+'px;height:'+ch+'px;transform:scale(-1,-1)');
-      if(!mob){var sw=Math.min(200,W*0.13), sh=sw*340/280;
-        add('cn mid',sideSVG(5),'left:0;top:'+(H-sh)/2+'px;width:'+sw+'px;height:'+sh+'px');
-        add('cn mid',sideSVG(25),'right:0;top:'+(H-sh)/2+'px;width:'+sw+'px;height:'+sh+'px;transform:scaleX(-1)');}
+      add('bgi',''); add('sh','');
       for(var i=0;i<36;i++){var sz=3+rnd(i+90)*6, d=add('sn'+(i%5===0?' g':''),'','left:'+(rnd(i*7+1)*100)+'%;width:'+sz+'px;height:'+sz+'px;animation-duration:'+(8+rnd(i)*10)+'s;animation-delay:-'+(rnd(i+3)*14)+'s;--dx:'+((rnd(i*2)-.5)*80)+'px')}
     }
     var html=document.documentElement, xb=document.getElementById('xBtn');
