@@ -75,6 +75,23 @@
   #wipe{position:absolute;top:-10%;bottom:-10%;left:50%;width:170vw;margin-left:-85vw;background:var(--y);display:none;will-change:transform}
   #black{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
 
+
+  /* ---------- CHRISTMAS THEME (?theme=xmas): black + metallic gold, pine garland frame, baubles, bokeh, snow ---------- */
+  body.xmas{--y:#ffc32e;--ink:#05060b;--panel:#15141c}
+  #xmas{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  #xmas .frame{position:absolute;inset:calc(var(--u)*18);border:calc(var(--u)*5) solid var(--y);border-radius:calc(var(--u)*30);
+    box-shadow:inset 0 0 0 calc(var(--u)*9) var(--ink),inset 0 0 0 calc(var(--u)*11) rgba(255,195,46,.75)}
+  #xmas .bk{position:absolute;left:0;top:0;border-radius:50%;will-change:transform,opacity}
+  #xmas .sn{position:absolute;left:0;top:0;border-radius:50%;background:#fff;will-change:transform}
+  #xmas .sn.g{background:#ffd978}
+  #xmas .gl{position:absolute;left:0;top:0;background:#fff3c4;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);will-change:transform,opacity}
+  #xmas .corner{position:absolute}
+  #xmas svg{overflow:visible}
+  #xmas .orn{position:absolute;top:0;transform-origin:50% 0;will-change:transform}
+  body.xmas.portrait #tag{top:calc(var(--u)*300)} body.xmas.portrait #brand{top:calc(var(--u)*304)}
+  body.xmas:not(.portrait) #tag{left:calc(var(--u)*400)}
+  body.xmas:not(.portrait) #brand{right:calc(var(--u)*400)}
+
   /* ---------- PORTRAIT 9:16 (social). u = width/1080. Keeps the platform UI zones (top ~14%, bottom ~20%) clear. ---------- */
   body.portrait .scene{padding:calc(var(--u)*270) calc(var(--u)*70) calc(var(--u)*390)}
   body.portrait #road{bottom:calc(var(--u)*340)} body.portrait .car{bottom:calc(var(--u)*356)}
@@ -111,6 +128,7 @@
 <body>
 <div id="road"></div>
 <div id="cars"></div>
+<div id="xmas"></div>
 
 <div id="brand"><svg viewBox="0 0 64 44" fill="none" stroke="#ffd60a" stroke-width="4" stroke-linejoin="round"><rect x="2" y="3" width="26" height="30" rx="4"/><rect x="36" y="3" width="26" height="30" rx="4"/><path d="M15 33v8M49 33v8" stroke-linecap="round"/></svg><span id="brandTxt"></span></div>
 <div id="tag" class="a"><svg viewBox="0 0 24 24" fill="#000"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.6a1 1 0 01-.25 1z"/></svg><span>054-451-3141</span></div>
@@ -160,6 +178,8 @@
 
 <script>
 const LANG = new URLSearchParams(location.search).get('lang') === 'he' ? 'he' : 'ar';
+const XMAS = new URLSearchParams(location.search).get('theme')==='xmas';
+const Y = XMAS ? '#ffc32e' : '#ffd60a';
 const ICONS = [
   '<svg viewBox="0 0 24 24"><rect x="1.5" y="5" width="9.5" height="7" rx="1.2"/><rect x="13" y="5" width="9.5" height="7" rx="1.2"/><path d="M6.25 12v3M17.75 12v3M4 15.5h4.5M15.5 15.5H20"/></svg>',
   '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>',
@@ -198,7 +218,7 @@ const CAR_SVG='<svg viewBox="0 0 170 66" fill="#08080b" stroke="#ffd60a" stroke-
 
 function setup(){
   PORTRAIT = innerHeight > innerWidth; IMPACTS = PORTRAIT ? IMPACTS_P : IMPACTS_L;
-  document.documentElement.lang=LANG; document.body.classList.toggle('he',LANG==='he'); document.body.classList.toggle('portrait',PORTRAIT);
+  document.documentElement.lang=LANG; document.body.classList.toggle('he',LANG==='he'); document.body.classList.toggle('xmas',XMAS); document.body.classList.toggle('portrait',PORTRAIT);
   document.documentElement.style.setProperty('--u',(innerWidth/(PORTRAIT?1080:1920))+'px');
   $('brandTxt').textContent=T.brand;
   $('h1a').textContent=T.h1a; $('h1bt').textContent=T.h1b; $('q').textContent=T.q;
@@ -207,7 +227,9 @@ function setup(){
   T.chips.forEach((c,i)=>$('ch'+i).innerHTML='<div class="ci">'+ICONS[i]+'</div><div class="ct">'+c+'</div>');
   $('pAq').textContent=T.pAq; $('pAu').textContent=T.pAu; $('pBq').textContent=T.pBq; $('pBu').textContent=T.pBu;
   $('fine').innerHTML=T.fine; $('c1').textContent=T.c1; $('c2t').textContent=T.c2; $('qc1').textContent=T.qc1; $('qc2').textContent=T.qc2;
-  CARS.forEach((c,i)=>{const d=document.createElement('div');d.className='car';d.id='car'+i;d.innerHTML=CAR_SVG;$('cars').appendChild(d)});
+  document.querySelectorAll('[stroke="#ffd60a"]').forEach(e=>e.setAttribute('stroke',Y)); document.querySelectorAll('[fill="#ffd60a"]').forEach(e=>e.setAttribute('fill',Y));
+  if(XMAS) buildXmas();
+  CARS.forEach((c,i)=>{const d=document.createElement('div');d.className='car';d.id='car'+i;d.innerHTML=CAR_SVG.replace(/#ffd60a/g,Y);$('cars').appendChild(d)});
   IMPACTS.forEach((im,k)=>{for(let i=0;i<NP;i++){const d=document.createElement('i');d.className='pt'+(i%2?' w':'');d.id=`pt${k}_${i}`;$('fx').appendChild(d)}});
   for(let i=0;i<10;i++){const d=document.createElement('i');d.className='sk';d.id='sk'+i;$('fx').appendChild(d)}
 }
@@ -215,14 +237,128 @@ function setup(){
 const mix=(a,b,k)=>{const h=x=>[1,3,5].map(i=>parseInt(x.slice(i,i+2),16));const A=h(a),B=h(b);return 'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*k)).join(',')+')'};
 function extT(n,ex,ey,c0,c1,u){let o=[];for(let i=1;i<=n;i++){o.push(`${(ex*i*u).toFixed(1)}px ${(ey*i*u).toFixed(1)}px 0 ${mix(c0,c1,i/n)}`)}return o.join(',')}
 function extB(n,ex,ey,c0,c1,u,floor){let o=[];for(let i=1;i<=n;i++){o.push(`${(ex*i*u).toFixed(1)}px ${(ey*i*u).toFixed(1)}px 0 ${mix(c0,c1,i/n)}`)}if(floor)o.push(`${(ex*n*u*1.4).toFixed(1)}px ${(ey*n*u*1.4+28*u).toFixed(1)}px ${(46*u).toFixed(1)}px rgba(0,0,0,.65)`);return o.join(',')}
-const GOLD0='#c79f00',GOLD1='#4a3a00', STEEL0='#a8a8a8', STEEL1='#3b3b3b';
+const GOLD0=XMAS?'#e3a41a':'#c79f00',GOLD1=XMAS?'#4d2f00':'#4a3a00', STEEL0='#a8a8a8', STEEL1='#3b3b3b';
 // depth (px, toward the viewer) and resting tilt [rotateX, rotateY] per element
 const ZMAP={h1a:40,h1b:110,q:20,s2h:35,scL:80,scR:80,ch0:55,ch1:55,ch2:55,pA:40,pB:40,fine:15,c1:45,c2:60,g1:130,d1:110,g2:130,d2:110,g3:130,qr:90,qrcap:45};
 const TILT={scL:[0,12],scR:[0,-12],pA:[0,-5],pB:[0,5],ch0:[0,-6],ch2:[0,6],qr:[0,0],h1b:[0,-5]};
+
+// ---------- Christmas layer (all original vector artwork) ----------
+let XM = null;
+// pine, gold leaves, pinecones, berries, baubles, bows: drawn from scratch as SVG, in a black + gold + deep-green palette
+const GREENS=['#1c5a37','#26734a','#33895b','#4aa571'], GOLDS=['#f6cf63','#e0a62e','#b97d14'];
+function fan(ox,oy,ang,len,seed,sc){
+  const a=ang*Math.PI/180, ca=Math.cos(a), sa=Math.sin(a);
+  let g=`<line x1="${ox}" y1="${oy}" x2="${(ox+ca*len).toFixed(1)}" y2="${(oy+sa*len).toFixed(1)}" stroke="#3a2813" stroke-width="${(5*sc).toFixed(1)}" stroke-linecap="round"/>`;
+  const N=Math.round(len/8);
+  for(let i=2;i<=N;i++){
+    const t=i/N, px=ox+ca*len*t, py=oy+sa*len*t, L=(96*sc)*(1-t*0.7)*(0.85+rnd(seed+i)*0.3);
+    for(const sg of [1,-1]){
+      const na=a+sg*(Math.PI/180)*(46+rnd(seed+i*3)*16);
+      const col=rnd(seed+i*11)>0.88?GOLDS[i%2]:GREENS[(i+(sg>0?1:0)+Math.floor(rnd(seed+i)*2))%4];
+      g+=`<line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${(px+Math.cos(na)*L).toFixed(1)}" y2="${(py+Math.sin(na)*L).toFixed(1)}" stroke="${col}" stroke-width="${(4.2*sc).toFixed(1)}" stroke-linecap="round"/>`;
+    }
+  }
+  return g;
+}
+function leaf(x,y,rot,rx,ry,gold){return `<g transform="translate(${x} ${y}) rotate(${rot})"><ellipse rx="${rx}" ry="${ry}" fill="${gold?'#d9a32d':'#46605a'}" stroke="${gold?'#8a5a0c':'#22332f'}" stroke-width="2"/><line x1="${-rx}" y1="0" x2="${rx}" y2="0" stroke="${gold?'#8a5a0c':'#22332f'}" stroke-width="1.6"/></g>`}
+function cone(x,y,rot,s,seed){
+  let g='';
+  for(let r=0;r<7;r++){const n=r<2?3:r<5?4:3, y0=-52+r*16; for(let c=0;c<n;c++){const x0=(c-(n-1)/2)*17+(r%2?8:0)*(n>3?1:0);
+    g+=`<ellipse cx="${x0.toFixed(1)}" cy="${y0}" rx="11" ry="9" fill="${(r+c)%2?'#6b4a2b':'#85603a'}" stroke="#3a2610" stroke-width="1.6"/>`}}
+  return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">${g}</g>`;
+}
+function berries(x,y,rot,s,seed){
+  let g=`<path d="M0 0 Q30 -36 64 -50" fill="none" stroke="#a8700f" stroke-width="4" stroke-linecap="round"/><path d="M26 -22 Q40 -4 62 4" fill="none" stroke="#a8700f" stroke-width="3" stroke-linecap="round"/>`;
+  [[64,-50],[52,-60],[74,-40],[44,-34],[62,4],[50,12],[36,-14],[70,-62],[30,-26]].forEach((q,i)=>{const r=6+rnd(seed+i)*3.5;g+=`<circle cx="${q[0]}" cy="${q[1]}" r="${r.toFixed(1)}" fill="#f1bd3d" stroke="#9a6410" stroke-width="1.5"/><circle cx="${q[0]-2}" cy="${q[1]-2}" r="${(r*.35).toFixed(1)}" fill="#fff6c9"/>`});
+  return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">${g}</g>`;
+}
+function ball(cx,cy,r,type,id,seed){
+  const defs = type==='black'
+    ? `<radialGradient id="b${id}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#7c7c92"/><stop offset=".4" stop-color="#1d1d2b"/><stop offset="1" stop-color="#03030a"/></radialGradient>`
+    : `<radialGradient id="b${id}" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#fff4c2"/><stop offset=".3" stop-color="#ffcf4a"/><stop offset=".72" stop-color="#c78612"/><stop offset="1" stop-color="#5e3a00"/></radialGradient>`;
+  let extra='';
+  if(type==='black'){for(let i=0;i<60;i++){const a=rnd(seed+i)*6.283,d=Math.sqrt(rnd(seed+i*2))*r*.9;extra+=`<circle cx="${(cx+Math.cos(a)*d-r*.06).toFixed(1)}" cy="${(cy+Math.sin(a)*d-r*.06).toFixed(1)}" r="${(1+rnd(seed+i*3)*1.8).toFixed(1)}" fill="${i%3?'#ffe9a8':'#fff'}" opacity=".9"/>`}}
+  if(type==='rib'){for(const k of [-.55,0,.55]){extra+=`<path d="M${(cx+k*r).toFixed(1)} ${(cy-r*.95).toFixed(1)} Q${(cx+k*r*1.7).toFixed(1)} ${cy} ${(cx+k*r).toFixed(1)} ${(cy+r*.95).toFixed(1)}" fill="none" stroke="#7a4d08" stroke-width="2.2" opacity=".65"/>`}}
+  return `<defs>${defs}</defs><rect x="${(cx-r*.24).toFixed(1)}" y="${(cy-r-r*.26).toFixed(1)}" width="${(r*.48).toFixed(1)}" height="${(r*.3).toFixed(1)}" rx="3" fill="#d9a23a" stroke="#7a4d08" stroke-width="1.6"/><circle cx="${cx}" cy="${(cy-r-r*.34).toFixed(1)}" r="${(r*.13).toFixed(1)}" fill="none" stroke="#d9a23a" stroke-width="2.4"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#b${id})" ${type==='black'?'stroke="#c98a1a" stroke-width="2.4"':'stroke="#7a4d08" stroke-width="1.6"'}/>${extra}
+    <ellipse cx="${(cx-r*.38).toFixed(1)}" cy="${(cy-r*.42).toFixed(1)}" rx="${(r*.2).toFixed(1)}" ry="${(r*.12).toFixed(1)}" fill="#fff" opacity=".78" transform="rotate(-35 ${(cx-r*.38).toFixed(1)} ${(cy-r*.42).toFixed(1)})"/>`;
+}
+function bow(x,y,s,rot){
+  return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">
+   <path d="M-4 8 L-70 108 L-44 100 L-38 132 L8 22Z" fill="#0b0b12" stroke="#e6b13a" stroke-width="3"/>
+   <path d="M4 8 L78 100 L50 96 L58 128 L-2 20Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="2.5"/>
+   <path d="M0 0 C-30 -52 -108 -58 -116 -8 C-122 36 -46 38 0 0Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="3"/>
+   <path d="M0 0 C30 -52 108 -58 116 -8 C122 36 46 38 0 0Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="3"/>
+   <path d="M-10 -4 C-44 -26 -86 -28 -104 -8 M10 -4 C44 -26 86 -28 104 -8" fill="none" stroke="#fff1b8" stroke-width="3" opacity=".85"/>
+   <path d="M-20 4 C-52 14 -84 12 -100 0 M20 4 C52 14 84 12 100 0" fill="none" stroke="#8a5a0c" stroke-width="2.4" opacity=".7"/>
+   <ellipse rx="19" ry="23" fill="#0b0b12" stroke="#ffd978" stroke-width="3"/><path d="M-8 -10 Q0 -2 -8 10" fill="none" stroke="#ffd978" stroke-width="3" opacity=".8"/></g>`;
+}
+// big corner cluster (drawn for the top-left corner; the others are mirrored copies)
+function cornerSVG(seed){
+  let g='';
+  g+=fan(-20,-20,16,430,seed+1,1.05)+fan(-20,-20,34,400,seed+2,1.05)+fan(-20,-20,54,340,seed+3,1)+fan(-20,-20,72,290,seed+4,0.95);
+  g+=fan(-20,40,8,350,seed+5,0.9)+fan(10,-20,66,250,seed+6,0.85);
+  g+=leaf(210,150,28,44,15,false)+leaf(250,120,10,38,13,true)+leaf(120,330,64,40,14,false)+leaf(90,300,40,34,12,true);
+  g+=cone(70,300,-20,1.0,seed+7);
+  g+=ball(110,108,64,'gold','a'+seed,seed+9)+ball(225,70,46,'black','b'+seed,seed+10)+ball(95,246,42,'rib','c'+seed,seed+11)+ball(250,205,30,'gold','d'+seed,seed+12);
+  g+=berries(150,360,-60,1.0,seed+13)+berries(300,40,10,0.9,seed+14);
+  g+=bow(345,112,0.86,18);
+  return `<svg viewBox="0 0 560 430" width="100%" height="100%">${g}</svg>`;
+}
+// smaller cluster for the middle of the left/right edges
+function sideSVG(seed){
+  let g='';
+  g+=fan(-20,170,-30,250,seed+1,0.95)+fan(-20,170,0,270,seed+2,1)+fan(-20,170,30,250,seed+3,0.95);
+  g+=leaf(120,110,-30,38,13,false)+leaf(130,235,30,38,13,true);
+  g+=ball(70,170,50,'gold','e'+seed,seed+9)+ball(150,108,30,'black','f'+seed,seed+10)+ball(150,236,26,'gold','g'+seed,seed+11);
+  g+=berries(60,262,-70,0.8,seed+13);
+  return `<svg viewBox="0 0 280 340" width="100%" height="100%">${g}</svg>`;
+}
+// hanging strand: gold beads ending in a drop ornament (animated pendulum)
+function strandSVG(id,r,L,type,seed){
+  const W=2*r+4, H=L+2*r+24, cx=W/2; let beads='';
+  for(let y=6;y<L;y+=13){beads+=`<circle cx="${cx}" cy="${y}" r="${y%26?4.2:5.6}" fill="#f1bd3d" stroke="#8a5a0c" stroke-width="1.4"/>`}
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%"><line x1="${cx}" y1="0" x2="${cx}" y2="${L}" stroke="#b97d14" stroke-width="1.6"/>${beads}${ball(cx,L+r+10,r,type,id,seed)}</svg>`;
+}
+function buildXmas(){
+  const root=$('xmas'), W=innerWidth, Hh=innerHeight, port=Hh>W, u=W/(port?1080:1920);
+  root.innerHTML='';
+  const add=(cls,html,style)=>{const d=document.createElement('div');d.className=cls;if(html)d.innerHTML=html;if(style)d.style.cssText=style;root.appendChild(d);return d};
+  XM={bk:[],sn:[],gl:[],orn:[]};
+  for(let i=0;i<16;i++){const sz=(60+rnd(i+1)*170)*u; const d=add('bk','',`width:${sz}px;height:${sz}px;background:radial-gradient(circle,rgba(255,195,46,.6) 0%,rgba(255,170,30,.2) 55%,rgba(255,170,30,0) 71%)`);XM.bk.push({d,x:rnd(i*3+1)*W,y:rnd(i*3+2)*Hh,sz,k:1+(i%3),ph:rnd(i+9)*6.283})}
+  add('frame','');
+  const k=port?0.74:1, cw=560*u*k*0.86, ch=430*u*k*0.86;
+  const place=(svg,style)=>add('corner',svg,style);
+  place(cornerSVG(3),`left:0;top:0;width:${cw}px;height:${ch}px`);
+  place(cornerSVG(21),`right:0;top:0;width:${cw}px;height:${ch}px;transform:scaleX(-1)`);
+  place(cornerSVG(41),`left:0;bottom:0;top:auto;width:${cw}px;height:${ch}px;transform:scaleY(-1)`);
+  place(cornerSVG(61),`right:0;bottom:0;top:auto;width:${cw}px;height:${ch}px;transform:scale(-1,-1)`);
+  if(!port){const sw=280*u*0.9, sh=340*u*0.9;
+    place(sideSVG(5),`left:0;top:${(Hh-sh)/2}px;width:${sw}px;height:${sh}px`);
+    place(sideSVG(25),`right:0;top:${(Hh-sh)/2}px;width:${sw}px;height:${sh}px;transform:scaleX(-1)`);}
+  // swinging strands from the top edge, between the corner clusters and the content
+  const sets=[{x:.30,L:60,r:26,t:'gold'},{x:.42,L:110,r:34,t:'black'},{x:.53,L:50,r:22,t:'rib'}];
+  ['l','r'].forEach((side,si)=>sets.forEach((o,i)=>{
+    const r=o.r*u*k, L=o.L*u*k, w=2*r+4*u, h=L+2*r+24*u*k, xx=side==='l'?o.x*cw*1.25:W-o.x*cw*1.25;
+    const d=add('orn',strandSVG(side+i,o.r,o.L,o.t,si*40+i*7),`left:${xx-w/2}px;top:${8*u}px;width:${w}px;height:${h}px`);
+    XM.orn.push({d,k:2+((i+si)%2),ph:rnd(si*9+i)*6.283,amp:4+(i%2)*2});
+  }));
+  for(let i=0;i<10;i++){const sz=(20+rnd(i+40)*26)*u;XM.gl.push({d:add('gl','',`width:${sz}px;height:${sz}px`),x:rnd(i*5+11)*W,y:rnd(i*5+12)*Hh,sz,k:1+(i%3),ph:rnd(i+70)*6.283})}
+  for(let i=0;i<46;i++){const sz=(4+rnd(i+90)*8)*u;XM.sn.push({d:add('sn'+(i%5===0?' g':''),'',`width:${sz}px;height:${sz}px;opacity:${(0.55+rnd(i+5)*0.4).toFixed(2)}`),x:rnd(i*7+1)*W,P:[9,6,4.5,3][i%4],o:rnd(i+3),sw:(14+rnd(i)*30)*u,k:1+(i%3),ph:rnd(i*2)*6.283,sz})}
+}
+function xmasFrame(t,W,Hh,u){
+  if(!XM) return; const TP=Math.PI*2/DUR;
+  XM.bk.forEach(b=>{const dx=Math.sin(TP*t*b.k+b.ph)*34*u, dy=Math.cos(TP*t*b.k+b.ph)*26*u;
+    b.d.style.transform=`translate(${b.x+dx-b.sz/2}px,${b.y+dy-b.sz/2}px)`; b.d.style.opacity=(0.5+0.4*Math.sin(TP*t*(b.k+1)+b.ph)).toFixed(3)});
+  XM.sn.forEach(s=>{const y=(((t/s.P)+s.o)%1)*(Hh+40*u)-20*u, x=s.x+Math.sin(TP*t*s.k+s.ph)*s.sw; s.d.style.transform=`translate(${x}px,${y}px)`});
+  XM.gl.forEach(g=>{const tw=Math.max(0,Math.sin(TP*t*(g.k*2)+g.ph)); g.d.style.opacity=tw.toFixed(3); g.d.style.transform=`translate(${g.x-g.sz/2}px,${g.y-g.sz/2}px) scale(${(0.4+tw*0.8).toFixed(3)}) rotate(${(tw*30).toFixed(1)}deg)`});
+  XM.orn.forEach(o=>{o.d.style.transform=`rotate(${(Math.sin(TP*t*o.k+o.ph)*o.amp).toFixed(2)}deg)`});
+}
 const fmt=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');
 
 window.seek=function(t){
   const W=innerWidth, Hh=innerHeight, u=W/(PORTRAIT?1080:1920);
+  if(XMAS) xmasFrame(t,W,Hh,u);
   $('road').style.backgroundPosition=(-t*350*u)+'px 0';   // 350*18/150 = 42 dash periods => seamless loop
   CARS.forEach((c,i)=>{const k=(((t+c.o)/c.p)%1+1)%1; const x=W+170*u-k*(W+340*u); const sc=[1,0.7,1.25,0.85][i]; $('car'+i).style.transform=`translateX(${x}px) scale(${sc})`; $('car'+i).style.transformOrigin='50% 100%'});
   // camera orbit: period = DUR so the loop is seamless
@@ -233,7 +369,7 @@ window.seek=function(t){
     if(s===cur){
       const push=1+0.04*((t-s.a)/(s.b-s.a)); let sx=0,sy=0;
       IMPACTS.forEach(im=>{const dt=t-im.t; if(dt>=0&&dt<.5){const a=11*u*Math.exp(-dt*11); sx+=a*Math.sin(dt*70); sy+=a*Math.cos(dt*58)}});
-      el.style.transform=`translate(${sx}px,${sy}px) scale(${push}) rotateX(${CAM.rx}deg) rotateY(${CAM.ry}deg)`;
+      el.style.transform=`translate(${sx}px,${sy}px) scale(${push*(XMAS?(PORTRAIT?0.92:0.86):1)}) rotateX(${CAM.rx}deg) rotateY(${CAM.ry}deg)`;
     }});
   document.querySelectorAll('.a').forEach(el=>{
     const sc=el.closest('.scene'); if(!sc) return;

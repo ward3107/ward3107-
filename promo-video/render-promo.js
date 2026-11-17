@@ -6,7 +6,8 @@ const fs = require('fs'), os = require('os'), path = require('path');
 
 const isWorker = process.argv[2] === '--worker';
 const A = isWorker ? process.argv.slice(3) : process.argv.slice(2);
-const URL = lang => 'file://' + path.join(__dirname, 'render-promo.html') + '?lang=' + lang;
+// THEME=xmas node render-promo.js ... renders the Christmas variant
+const URL = lang => 'file://' + path.join(__dirname, 'render-promo.html') + '?lang=' + lang + (process.env.THEME ? '&theme=' + process.env.THEME : '');
 
 async function renderChunk(lang, W, H, FPS, f0, f1, out) {
   const browser = await chromium.launch();
