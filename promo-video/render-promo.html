@@ -80,17 +80,32 @@
   body.xmas{--y:#ffc32e;--ink:#05060b;--panel:#15141c}
   #xmas{position:absolute;inset:0;pointer-events:none;overflow:hidden}
   #xmas .bgimg{position:absolute;inset:-6%;background-size:cover;background-position:center;will-change:transform}
-  #xmas .shade{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 46%,rgba(5,6,11,.36) 0%,rgba(5,6,11,.48) 58%,rgba(5,6,11,.68) 100%)}
+  #xmas .shade{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 46%,rgba(5,6,11,.30) 0%,rgba(5,6,11,.42) 58%,rgba(5,6,11,.64) 100%)}
   #xmas .bk{position:absolute;left:0;top:0;border-radius:50%;will-change:transform,opacity}
   #xmas .sn{position:absolute;left:0;top:0;border-radius:50%;background:#fff;will-change:transform}
   #xmas .sn.g{background:#ffd978}
   #xmas .gl{position:absolute;left:0;top:0;background:#fff3c4;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);will-change:transform,opacity}
+
+
+  .greet{display:none}
+  body.xmas .greet{display:inline-flex;align-items:center;gap:calc(var(--u)*26);margin-bottom:calc(var(--u)*34);padding:calc(var(--u)*10) calc(var(--u)*44);border:calc(var(--u)*4) solid var(--y);border-radius:999px;
+    font-size:calc(var(--u)*50);font-weight:900;color:#fff;background:rgba(5,6,11,.86);box-shadow:0 0 calc(var(--u)*40) rgba(255,195,46,.45),inset 0 0 calc(var(--u)*18) rgba(255,195,46,.25)}
+  body.xmas .greet::before,body.xmas .greet::after{content:"";width:calc(var(--u)*34);height:calc(var(--u)*34);background:var(--y);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+  body.xmas .pt{clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);width:calc(var(--u)*34);height:calc(var(--u)*34);margin:calc(var(--u)*-17)}
+  /* price cards hang like gift tags: string up to the top edge + a gold bow */
+  body.xmas .pb{position:relative}
+  body.xmas .pb::before{content:"";position:absolute;left:50%;bottom:calc(100% - var(--u)*6);width:calc(var(--u)*5);height:calc(var(--u)*520);margin-left:calc(var(--u)*-2.5);background:linear-gradient(#7a4d08,#ffd978 40%,#b97d14);box-shadow:0 0 calc(var(--u)*10) rgba(255,195,46,.5)}
+  body.xmas .pb::after{content:"";position:absolute;left:50%;top:calc(var(--u)*-62);width:calc(var(--u)*190);height:calc(var(--u)*118);margin-left:calc(var(--u)*-95);background:var(--bowurl) center/contain no-repeat;filter:drop-shadow(0 calc(var(--u)*8) calc(var(--u)*8) rgba(0,0,0,.55))}
+  #xmas .orn{position:absolute;top:0;transform-origin:50% 0;will-change:transform}
+  #xmas .dof{position:absolute;will-change:transform;filter:blur(calc(var(--u)*5))}
 
   /* ---------- PORTRAIT 9:16 (social). u = width/1080. Keeps the platform UI zones (top ~14%, bottom ~20%) clear. ---------- */
   body.portrait .scene{padding:calc(var(--u)*270) calc(var(--u)*70) calc(var(--u)*390)}
   body.portrait #road{bottom:calc(var(--u)*340)} body.portrait .car{bottom:calc(var(--u)*356)}
   body.portrait #brand{top:calc(var(--u)*170);right:calc(var(--u)*50);font-size:calc(var(--u)*38)}
   body.portrait #tag{top:calc(var(--u)*166);left:calc(var(--u)*50);font-size:calc(var(--u)*40)}
+  body.portrait .greet{font-size:calc(var(--u)*40);padding:calc(var(--u)*8) calc(var(--u)*30)}
+  body.portrait.xmas .pb::before{height:calc(var(--u)*420)}
   body.portrait .h1{white-space:normal;font-size:calc(var(--u)*138)}
   body.he.portrait .h1{font-size:calc(var(--u)*118)}
   body.portrait .q{font-size:calc(var(--u)*60);margin-top:calc(var(--u)*50)}
@@ -128,6 +143,7 @@
 <div id="tag" class="a"><svg viewBox="0 0 24 24" fill="#000"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.6a1 1 0 01-.25 1z"/></svg><span>054-451-3141</span></div>
 
 <section class="scene" id="s1">
+  <div class="greet a" id="greet" data-t="-0.1" data-from="t"></div>
   <div class="h1 a" id="h1a" data-t="-0.1" data-from="r"></div>
   <div class="h1 a" id="h1b" data-t="0.15" data-from="l"><span class="blk" id="h1bt"></span></div>
   <div class="q a" id="q" data-t="1.0" data-from="b" data-d="0.15"></div>
@@ -185,13 +201,13 @@ const T = {
       scr:'إعلانك',chips:['إعلانك بيظهر على الشاشتين بنفس الوقت','مدة الإعلان حوالي 10 ثواني','إمكانية تجهيز فيديو إعلاني بالذكاء الاصطناعي'],
       pAq:'عندك فيديو جاهز؟',pAu:'بالشهر',pBq:'بدك نجهّز لك الفيديو؟',pBu:'للشهر الأول',
       fine:'الأسعار تشمل ضريبة القيمة المضافة.<br>عدد مرات ظهور الإعلان يعتمد على عدد الإعلانات في الدورة.',
-      c1:'للاستفسار والتفاصيل',c2:'تواصل معي على رقم العمل',qc1:'امسح الكود للتواصل',qc2:'أبو عقل سنتر · شاشتين إعلانيتين'},
+      c1:'للاستفسار والتفاصيل',c2:'تواصل معي على رقم العمل',qc1:'امسح الكود للتواصل',qc2:'أبو عقل سنتر · شاشتين إعلانيتين',greet:'ميلاد مجيد وسنة جديدة سعيدة',qc2x:'ميلاد مجيد وسنة جديدة سعيدة · أبو عقل سنتر'},
   he:{brand:'אבו עקל סנטר',h1a:'הפרסום של העסק שלך',h1b:'מגיע לאנשים!',q:'יש לכם חנות או עסק ורוצים שאנשים יכירו אתכם?',
       s2h:'פרסמו על <span class="y">שני מסכי פרסום</span><br>ב<span class="y">אבו עקל סנטר</span>',
       scr:'המודעה שלך',chips:['המודעה שלכם מופיעה על שני המסכים בו-זמנית','משך המודעה כ-10 שניות','אפשרות להכנת סרטון פרסומי בבינה מלאכותית'],
       pAq:'יש לכם סרטון מוכן?',pAu:'לחודש',pBq:'רוצים שנכין לכם את הסרטון?',pBu:'לחודש הראשון',
       fine:'המחירים כוללים מע״מ.<br>מספר הופעות המודעה תלוי במספר המודעות במחזור.',
-      c1:'לבירורים ופרטים',c2:'צרו קשר במספר העבודה',qc1:'סרקו וצרו קשר',qc2:'אבו עקל סנטר · שני מסכי פרסום'}
+      c1:'לבירורים ופרטים',c2:'צרו קשר במספר העבודה',qc1:'סרקו וצרו קשר',qc2:'אבו עקל סנטר · שני מסכי פרסום',greet:'חג מולד שמח ושנה טובה',qc2x:'חג מולד שמח ושנה טובה · אבו עקל סנטר'}
 }[LANG];
 const DUR = 18;
 const SC = [{id:'s1',a:0,b:3.9},{id:'s2',a:3.9,b:8.7},{id:'s3',a:8.7,b:13.3},{id:'s4',a:13.3,b:DUR}];
@@ -211,6 +227,7 @@ const rnd=n=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)}
 const CAR_SVG='<svg viewBox="0 0 170 66" fill="#08080b" stroke="#ffd60a" stroke-width="5" stroke-linejoin="round"><path d="M8 46V36c0-5 3-8 8-9l26-5 20-14c3-2 6-3 10-3h40c6 0 10 2 13 6l12 16 21 4c4 1 7 4 7 8v10z"/><path d="M52 24l14-10h36l12 10z" stroke-width="4"/><circle cx="46" cy="50" r="13"/><circle cx="130" cy="50" r="13"/></svg>';
 
 function setup(){
+  document.documentElement.style.setProperty('--bowurl','url("data:image/svg+xml;utf8,'+encodeURIComponent(BOW)+'")');
   PORTRAIT = innerHeight > innerWidth; IMPACTS = PORTRAIT ? IMPACTS_P : IMPACTS_L;
   document.documentElement.lang=LANG; document.body.classList.toggle('he',LANG==='he'); document.body.classList.toggle('xmas',XMAS); document.body.classList.toggle('portrait',PORTRAIT);
   document.documentElement.style.setProperty('--u',(innerWidth/(PORTRAIT?1080:1920))+'px');
@@ -220,7 +237,7 @@ function setup(){
   document.querySelectorAll('.screen .txt').forEach(e=>e.textContent=T.scr);
   T.chips.forEach((c,i)=>$('ch'+i).innerHTML='<div class="ci">'+ICONS[i]+'</div><div class="ct">'+c+'</div>');
   $('pAq').textContent=T.pAq; $('pAu').textContent=T.pAu; $('pBq').textContent=T.pBq; $('pBu').textContent=T.pBu;
-  $('fine').innerHTML=T.fine; $('c1').textContent=T.c1; $('c2t').textContent=T.c2; $('qc1').textContent=T.qc1; $('qc2').textContent=T.qc2;
+  $('fine').innerHTML=T.fine; $('c1').textContent=T.c1; $('c2t').textContent=T.c2; $('qc1').textContent=T.qc1; $('qc2').textContent=XMAS?T.qc2x:T.qc2; $('greet').textContent=T.greet;
   document.querySelectorAll('[stroke="#ffd60a"]').forEach(e=>e.setAttribute('stroke',Y)); document.querySelectorAll('[fill="#ffd60a"]').forEach(e=>e.setAttribute('fill',Y));
   if(XMAS) buildXmas();
   CARS.forEach((c,i)=>{const d=document.createElement('div');d.className='car';d.id='car'+i;d.innerHTML=CAR_SVG.replace(/#ffd60a/g,Y);$('cars').appendChild(d)});
@@ -233,11 +250,25 @@ function extT(n,ex,ey,c0,c1,u){let o=[];for(let i=1;i<=n;i++){o.push(`${(ex*i*u)
 function extB(n,ex,ey,c0,c1,u,floor){let o=[];for(let i=1;i<=n;i++){o.push(`${(ex*i*u).toFixed(1)}px ${(ey*i*u).toFixed(1)}px 0 ${mix(c0,c1,i/n)}`)}if(floor)o.push(`${(ex*n*u*1.4).toFixed(1)}px ${(ey*n*u*1.4+28*u).toFixed(1)}px ${(46*u).toFixed(1)}px rgba(0,0,0,.65)`);return o.join(',')}
 const GOLD0=XMAS?'#e3a41a':'#c79f00',GOLD1=XMAS?'#4d2f00':'#4a3a00', STEEL0='#a8a8a8', STEEL1='#3b3b3b';
 // depth (px, toward the viewer) and resting tilt [rotateX, rotateY] per element
-const ZMAP={h1a:40,h1b:110,q:20,s2h:35,scL:80,scR:80,ch0:55,ch1:55,ch2:55,pA:40,pB:40,fine:15,c1:45,c2:60,g1:130,d1:110,g2:130,d2:110,g3:130,qr:90,qrcap:45};
+const ZMAP={greet:50,h1a:40,h1b:110,q:20,s2h:35,scL:80,scR:80,ch0:55,ch1:55,ch2:55,pA:40,pB:40,fine:15,c1:45,c2:60,g1:130,d1:110,g2:130,d2:110,g3:130,qr:90,qrcap:45};
 const TILT={scL:[0,12],scR:[0,-12],pA:[0,-5],pB:[0,5],ch0:[0,-6],ch2:[0,6],qr:[0,0],h1b:[0,-5]};
 
 // ---------- Christmas layer: the provided festive photo (black baubles + golden bokeh) as a slowly drifting background ----------
 let XM = null;
+function ball(cx,cy,r,type,id,seed){
+  const defs = type==='black'
+    ? `<radialGradient id="b${id}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#7c7c92"/><stop offset=".4" stop-color="#1d1d2b"/><stop offset="1" stop-color="#03030a"/></radialGradient>`
+    : `<radialGradient id="b${id}" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#fff4c2"/><stop offset=".3" stop-color="#ffcf4a"/><stop offset=".72" stop-color="#c78612"/><stop offset="1" stop-color="#5e3a00"/></radialGradient>`;
+  let extra='';
+  if(type==='black'){for(let i=0;i<60;i++){const a=rnd(seed+i)*6.283,d=Math.sqrt(rnd(seed+i*2))*r*.9;extra+=`<circle cx="${(cx+Math.cos(a)*d-r*.06).toFixed(1)}" cy="${(cy+Math.sin(a)*d-r*.06).toFixed(1)}" r="${(1+rnd(seed+i*3)*1.8).toFixed(1)}" fill="${i%3?'#ffe9a8':'#fff'}" opacity=".9"/>`}}
+  if(type==='rib'){for(const k of [-.55,0,.55]){extra+=`<path d="M${(cx+k*r).toFixed(1)} ${(cy-r*.95).toFixed(1)} Q${(cx+k*r*1.7).toFixed(1)} ${cy} ${(cx+k*r).toFixed(1)} ${(cy+r*.95).toFixed(1)}" fill="none" stroke="#7a4d08" stroke-width="2.2" opacity=".65"/>`}}
+  return `<defs>${defs}</defs><rect x="${(cx-r*.24).toFixed(1)}" y="${(cy-r-r*.26).toFixed(1)}" width="${(r*.48).toFixed(1)}" height="${(r*.3).toFixed(1)}" rx="3" fill="#d9a23a" stroke="#7a4d08" stroke-width="1.6"/><circle cx="${cx}" cy="${(cy-r-r*.34).toFixed(1)}" r="${(r*.13).toFixed(1)}" fill="none" stroke="#d9a23a" stroke-width="2.4"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#b${id})" ${type==='black'?'stroke="#c98a1a" stroke-width="2.4"':'stroke="#7a4d08" stroke-width="1.6"'}/>${extra}
+    <ellipse cx="${(cx-r*.38).toFixed(1)}" cy="${(cy-r*.42).toFixed(1)}" rx="${(r*.2).toFixed(1)}" ry="${(r*.12).toFixed(1)}" fill="#fff" opacity=".78" transform="rotate(-35 ${(cx-r*.38).toFixed(1)} ${(cy-r*.42).toFixed(1)})"/>`;
+}
+function ornSVG(id,r,L,type,seed){const W=2*r+4,H=L+2*r+26,cx=W/2;return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%"><line x1="${cx}" y1="0" x2="${cx}" y2="${L}" stroke="#e0b04a" stroke-width="2"/>${ball(cx,L+r+12,r,type,id,seed)}</svg>`}
+const BOW='<svg xmlns="http://www.w3.org/2000/svg" viewBox="-130 -70 260 210"><path d="M-4 8 L-70 108 L-44 100 L-38 132 L8 22Z" fill="#0b0b12" stroke="#e6b13a" stroke-width="3"/><path d="M4 8 L78 100 L50 96 L58 128 L-2 20Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="2.5"/><path d="M0 0 C-30 -52 -108 -58 -116 -8 C-122 36 -46 38 0 0Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="3"/><path d="M0 0 C30 -52 108 -58 116 -8 C122 36 46 38 0 0Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="3"/><path d="M-10 -4 C-44 -26 -86 -28 -104 -8 M10 -4 C44 -26 86 -28 104 -8" fill="none" stroke="#fff1b8" stroke-width="3" opacity=".85"/><ellipse rx="19" ry="23" fill="#0b0b12" stroke="#ffd978" stroke-width="3"/></svg>';
+
 function buildXmas(){
   const root=$('xmas'), W=innerWidth, Hh=innerHeight, port=Hh>W, u=W/(port?1080:1920);
   root.innerHTML='';
@@ -247,6 +278,17 @@ function buildXmas(){
   add('shade','');
   for(let i=0;i<8;i++){const sz=(90+rnd(i+1)*160)*u; const d=add('bk','',`width:${sz}px;height:${sz}px;background:radial-gradient(circle,rgba(255,195,46,.5) 0%,rgba(255,170,30,.16) 55%,rgba(255,170,30,0) 71%)`);XM.bk.push({d,x:rnd(i*3+1)*W,y:rnd(i*3+2)*Hh,sz,k:1+(i%3),ph:rnd(i+9)*6.283})}
   for(let i=0;i<12;i++){const sz=(20+rnd(i+40)*28)*u;XM.gl.push({d:add('gl','',`width:${sz}px;height:${sz}px`),x:rnd(i*5+11)*W,y:rnd(i*5+12)*Hh,sz,k:1+(i%3),ph:rnd(i+70)*6.283})}
+  // hanging baubles scattered across the scene at different depths (a mobile, not a frame)
+  XM.orn=[]; const kk=port?0.78:1;
+  const H1=port?[{x:.16,L:120,r:30,t:'gold'},{x:.38,L:250,r:24,t:'black'},{x:.62,L:90,r:26,t:'rib'},{x:.84,L:200,r:32,t:'gold'}]
+              :[{x:.27,L:90,r:30,t:'gold'},{x:.37,L:200,r:26,t:'black'},{x:.49,L:60,r:24,t:'rib'},{x:.62,L:150,r:34,t:'gold'},{x:.74,L:80,r:22,t:'black'}];
+  H1.forEach((o,i)=>{const r=o.r*u*kk, L=o.L*u*kk, w=2*r+4*u, h=L+2*r+26*u*kk;
+    const d=add('orn',ornSVG('h'+i,o.r,o.L,o.t,i*11+3),`left:${o.x*W-w/2}px;top:${-6*u}px;width:${w}px;height:${h}px`);
+    XM.orn.push({d,k:2+(i%2),ph:rnd(i+5)*6.283,amp:4+(i%3)});});
+  // two big out-of-focus baubles in the foreground for depth
+  XM.dof=[{x:port?.1:.04,y:port?.9:.9,r:port?120:110,t:'gold',k:1},{x:port?.92:.965,y:port?.86:.88,r:port?100:96,t:'black',k:2}].map((o,i)=>{
+    const r=o.r*u, d=add('dof',`<svg viewBox="0 0 ${2*r+10} ${2*r+34}" width="100%" height="100%">${ball(r+5,r+22,r,o.t,'d'+i,i*7+1)}</svg>`,`width:${2*r+10}px;height:${2*r+34}px`);
+    return {d,x:o.x*W,y:o.y*Hh,r,k:o.k,ph:i*2.1}});
   for(let i=0;i<54;i++){const sz=(4+rnd(i+90)*9)*u;XM.sn.push({d:add('sn'+(i%5===0?' g':''),'',`width:${sz}px;height:${sz}px;opacity:${(0.55+rnd(i+5)*0.4).toFixed(2)}`),x:rnd(i*7+1)*W,P:[9,6,4.5,3][i%4],o:rnd(i+3),sw:(14+rnd(i)*30)*u,k:1+(i%3),ph:rnd(i*2)*6.283,sz})}
 }
 function xmasFrame(t,W,Hh,u){
@@ -255,6 +297,8 @@ function xmasFrame(t,W,Hh,u){
   XM.bg.style.transform=`translate(${(Math.sin(TP*t)*16*u).toFixed(1)}px,${(Math.cos(TP*t*2)*10*u).toFixed(1)}px) scale(${(1.06+0.025*Math.sin(TP*t+1)).toFixed(4)})`;
   XM.bk.forEach(b=>{const dx=Math.sin(TP*t*b.k+b.ph)*34*u, dy=Math.cos(TP*t*b.k+b.ph)*26*u;
     b.d.style.transform=`translate(${b.x+dx-b.sz/2}px,${b.y+dy-b.sz/2}px)`; b.d.style.opacity=(0.4+0.4*Math.sin(TP*t*(b.k+1)+b.ph)).toFixed(3)});
+  (XM.orn||[]).forEach(o=>{o.d.style.transform=`rotate(${(Math.sin(TP*t*o.k+o.ph)*o.amp).toFixed(2)}deg)`});
+  (XM.dof||[]).forEach(o=>{o.d.style.transform=`translate(${(o.x-o.r+Math.sin(TP*t*o.k+o.ph)*18*u).toFixed(1)}px,${(o.y-o.r+Math.cos(TP*t*o.k+o.ph)*14*u).toFixed(1)}px) rotate(${(Math.sin(TP*t+o.ph)*6).toFixed(2)}deg)`});
   XM.sn.forEach(s=>{const y=(((t/s.P)+s.o)%1)*(Hh+40*u)-20*u, x=s.x+Math.sin(TP*t*s.k+s.ph)*s.sw; s.d.style.transform=`translate(${x}px,${y}px)`});
   XM.gl.forEach(g=>{const tw=Math.max(0,Math.sin(TP*t*(g.k*2)+g.ph)); g.d.style.opacity=tw.toFixed(3); g.d.style.transform=`translate(${g.x-g.sz/2}px,${g.y-g.sz/2}px) scale(${(0.4+tw*0.8).toFixed(3)}) rotate(${(tw*30).toFixed(1)}deg)`});
 }
@@ -293,7 +337,7 @@ window.seek=function(t){
     tf+=` translateZ(${z.toFixed(1)}px) rotateX(${(tl[0]*tk).toFixed(2)}deg) rotateY(${(tl[1]*tk+swing).toFixed(2)}deg)`;
     el.style.opacity=vis; el.style.transform=tf;
   });
-  const T3=(sel,n,c0,c1)=>document.querySelectorAll(sel).forEach(e=>e.style.textShadow=extT(n,EX,EY,c0,c1,u));
+  const T3=(sel,n,c0,c1)=>document.querySelectorAll(sel).forEach(e=>e.style.textShadow=extT(n,EX,EY,c0,c1,u)+(XMAS?`,0 0 ${(26*u).toFixed(0)}px rgba(255,195,46,.5)`:''));
   const B3=(sel,n,c0,c1,floor)=>document.querySelectorAll(sel).forEach(e=>e.style.boxShadow=extB(n,EX,EY,c0,c1,u,floor));
   T3('#h1a,#s2h,#c1,#qc1',14,GOLD0,GOLD1); T3('#c2t',9,GOLD0,GOLD1); T3('#g1,#g2,#g3',20,GOLD0,GOLD1); T3('#pA .pn,#pA .pq,#pA .pu',8,GOLD0,GOLD1); T3('.chip .ct',4,GOLD0,GOLD1);
   B3('.blk',18,GOLD0,GOLD1,true); B3('.pb.yb',20,GOLD0,GOLD1,true); B3('.pb.w',20,STEEL0,STEEL1,true); B3('.screen',22,GOLD0,GOLD1,true);

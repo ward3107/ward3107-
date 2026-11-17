@@ -256,6 +256,18 @@
   #xm .sn{position:absolute;top:-20px;border-radius:50%;background:#fff;opacity:.85;animation:snow linear infinite}
   #xm .sn.g{background:#ffd978}
   @keyframes snow{to{transform:translateY(112vh) translateX(var(--dx,20px))}}
+
+  /* ---- Christmas: greeting, gift-tag price cards, hanging baubles, glow ---- */
+  .xgreet{display:none}
+  html.xmas .xgreet{display:inline-flex;align-items:center;gap:14px;margin-bottom:14px;padding:6px 26px;border:3px solid var(--y);border-radius:999px;font-weight:900;font-size:1.15rem;background:rgba(5,6,11,.8);box-shadow:0 0 28px rgba(255,195,46,.4),inset 0 0 14px rgba(255,195,46,.2)}
+  html.xmas .xgreet::before,html.xmas .xgreet::after{content:"";width:16px;height:16px;background:var(--y);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+  html.xmas h1,html.xmas .big-num,html.xmas h2{text-shadow:var(--ex-s),0 0 26px rgba(255,195,46,.4)}
+  html.xmas .plan::before{content:"";position:absolute;left:50%;bottom:calc(100% - 4px);width:3px;height:46px;margin-left:-1.5px;background:linear-gradient(#7a4d08,#ffd978)}
+  html.xmas .plan::after{content:"";position:absolute;left:50%;top:-34px;width:96px;height:62px;margin-left:-48px;background:var(--bowurl) center/contain no-repeat;filter:drop-shadow(0 4px 5px rgba(0,0,0,.55));z-index:2}
+  #xm .orn{position:absolute;transform-origin:50% 0;animation:swing 6s ease-in-out infinite alternate}
+  #xm .orn:nth-child(odd){animation-duration:8s;animation-delay:-2s}
+  @keyframes swing{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+  @media (prefers-reduced-motion:reduce){#xm .orn{animation:none}}
   #xBtn{padding:6px 14px;font-size:1.1rem}
   html.xmas #xBtn{border-color:var(--y);background:rgba(255,195,46,.12)}
   @media (prefers-reduced-motion:reduce){#xm .sn{display:none}}
@@ -282,6 +294,7 @@
   <div class="hero">
     <div class="wrap hero-grid">
       <div>
+        <div class="xgreet rv" data-i18n="xgreet">ميلاد مجيد وسنة جديدة سعيدة</div>
         <div class="eyebrow rv"><i></i><span data-i18n="eyebrow">شاشتين إعلانيتين · أبو عقل سنتر</span></div>
         <h1 class="rv" style="--d:.08s" data-i18n="h1">خلّي إعلان مشروعك <mark><span>يوصل للناس!</span></mark></h1>
         <p class="sub rv" style="--d:.16s" data-i18n="sub">عندك محل أو مشروع وبدك تعرّف الناس عليه؟ اعرض إعلانك على <b>شاشتين إعلانيتين</b> عند <b>أبو عقل سنتر</b></p>
@@ -440,7 +453,7 @@
     sub:'יש לכם חנות או עסק ורוצים שאנשים יכירו אתכם? פרסמו על <b>שני מסכי פרסום</b> ב<b>אבו עקל סנטר</b>',
     wa:'וואטסאפ',vat_short:'המחירים כוללים מע״מ',s1:'מסך 1',s2:'מסך 2',ad:'המודעה שלך',ad2:'המודעה שלך',cap:'אותה מודעה · באותו זמן',
     f1t:'שני מסכי פרסום',f1d:'המודעה שלכם מופיעה על שני המסכים בו-זמנית',f2t:'שניות',f2d:'משך המודעה כ-10 שניות',f3t:'סרטון פרסומי',f3d:'אפשרות להכנת סרטון פרסומי בבינה מלאכותית',
-    gal_k:'המקום',gal_h:'המקום והמסכים',
+    xgreet:'חג מולד שמח ושנה טובה',gal_k:'המקום',gal_h:'המקום והמסכים',
     vid_k:'המודעה',vid_h:'ככה המודעה שלכם נראית',how_k:'פשוט',how_h:'איך זה עובד?',
     st1t:'יוצרים קשר',st1d:'מתקשרים או שולחים וואטסאפ ומספרים לנו על העסק.',
     st2t:'הסרטון',st2d:'יש לכם סרטון מוכן? נציג אותו. רוצים שנכין לכם את הסרטון? נכין אותו בבינה מלאכותית.',
@@ -541,12 +554,24 @@
   // ---------- Christmas theme: black + gold + pine frame (original vector art, shared with the video renderer) ----------
   (function(){
     const rnd=n=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)};
-        var built=false;
+    
+    function ball(cx,cy,r,type,id,seed){
+      var defs=type==='black'?'<radialGradient id="b'+id+'" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#7c7c92"/><stop offset=".4" stop-color="#1d1d2b"/><stop offset="1" stop-color="#03030a"/></radialGradient>':'<radialGradient id="b'+id+'" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#fff4c2"/><stop offset=".3" stop-color="#ffcf4a"/><stop offset=".72" stop-color="#c78612"/><stop offset="1" stop-color="#5e3a00"/></radialGradient>', extra='';
+      if(type==='black'){for(var i=0;i<50;i++){var a=rnd(seed+i)*6.283,d=Math.sqrt(rnd(seed+i*2))*r*.9;extra+='<circle cx="'+(cx+Math.cos(a)*d-r*.06).toFixed(1)+'" cy="'+(cy+Math.sin(a)*d-r*.06).toFixed(1)+'" r="'+(1+rnd(seed+i*3)*1.8).toFixed(1)+'" fill="'+(i%3?'#ffe9a8':'#fff')+'" opacity=".9"/>'}}
+      return '<defs>'+defs+'</defs><rect x="'+(cx-r*.24).toFixed(1)+'" y="'+(cy-r-r*.26).toFixed(1)+'" width="'+(r*.48).toFixed(1)+'" height="'+(r*.3).toFixed(1)+'" rx="3" fill="#d9a23a" stroke="#7a4d08" stroke-width="1.6"/><circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="url(#b'+id+')" '+(type==='black'?'stroke="#c98a1a" stroke-width="2.4"':'stroke="#7a4d08" stroke-width="1.6"')+'/>'+extra+'<ellipse cx="'+(cx-r*.38).toFixed(1)+'" cy="'+(cy-r*.42).toFixed(1)+'" rx="'+(r*.2).toFixed(1)+'" ry="'+(r*.12).toFixed(1)+'" fill="#fff" opacity=".78" transform="rotate(-35 '+(cx-r*.38).toFixed(1)+' '+(cy-r*.42).toFixed(1)+')"/>';
+    }
+    function ornSVG(id,r,L,type,seed){var W=2*r+4,H=L+2*r+26,cx=W/2;return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="100%"><line x1="'+cx+'" y1="0" x2="'+cx+'" y2="'+L+'" stroke="#e0b04a" stroke-width="2"/>'+ball(cx,L+r+12,r,type,id,seed)+'</svg>'}
+    var BOW='<svg xmlns="http://www.w3.org/2000/svg" viewBox="-130 -70 260 210"><path d="M-4 8 L-70 108 L-44 100 L-38 132 L8 22Z" fill="#0b0b12" stroke="#e6b13a" stroke-width="3"/><path d="M4 8 L78 100 L50 96 L58 128 L-2 20Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="2.5"/><path d="M0 0 C-30 -52 -108 -58 -116 -8 C-122 36 -46 38 0 0Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="3"/><path d="M0 0 C30 -52 108 -58 116 -8 C122 36 46 38 0 0Z" fill="#e0a62e" stroke="#7a4d08" stroke-width="3"/><path d="M-10 -4 C-44 -26 -86 -28 -104 -8 M10 -4 C44 -26 86 -28 104 -8" fill="none" stroke="#fff1b8" stroke-width="3" opacity=".85"/><ellipse rx="19" ry="23" fill="#0b0b12" stroke="#ffd978" stroke-width="3"/></svg>';
+    document.documentElement.style.setProperty('--bowurl','url("data:image/svg+xml;utf8,'+encodeURIComponent(BOW)+'")');
+    var built=false;
     function build(){
       if(built) return; built=true;
       var root=document.getElementById('xm'), W=innerWidth, H=innerHeight, mob=W<900;
       var add=function(cls,html,st){var d=document.createElement('div');d.className=cls;if(html)d.innerHTML=html;if(st)d.style.cssText=st;root.appendChild(d);return d};
       add('bgi',''); add('sh','');
+      var orns=mob?[{x:.18,L:60,r:20,t:'gold'},{x:.5,L:120,r:16,t:'black'},{x:.82,L:80,r:18,t:'gold'}]
+                  :[{x:.30,L:70,r:24,t:'gold'},{x:.40,L:150,r:20,t:'black'},{x:.52,L:50,r:18,t:'gold'},{x:.63,L:120,r:26,t:'black'},{x:.72,L:64,r:18,t:'gold'}];
+      orns.forEach(function(o,i){var w=2*o.r+4,h=o.L+2*o.r+26;add('orn',ornSVG('l'+i,o.r,o.L,o.t,i*9+2),'left:'+(o.x*W-w/2)+'px;top:68px;width:'+w+'px;height:'+h+'px')});
       for(var i=0;i<36;i++){var sz=3+rnd(i+90)*6, d=add('sn'+(i%5===0?' g':''),'','left:'+(rnd(i*7+1)*100)+'%;width:'+sz+'px;height:'+sz+'px;animation-duration:'+(8+rnd(i)*10)+'s;animation-delay:-'+(rnd(i+3)*14)+'s;--dx:'+((rnd(i*2)-.5)*80)+'px')}
     }
     var html=document.documentElement, xb=document.getElementById('xBtn');
