@@ -185,6 +185,62 @@
     *,*::before,*::after{animation:none!important;transition:none!important}
     .rv,.scr,.cap{opacity:1!important;transform:none!important}
   }
+
+  /* =====================  3D ILLUSION LAYER  =====================
+     Real depth where it is cheap (perspective + preserve-3d + parallax) and stepped, colour-graded
+     extrusion everywhere else, so every object reads as a solid slab/letter, day or night. */
+  @property --rx{syntax:'<angle>';inherits:false;initial-value:0deg}
+  @property --ry{syntax:'<angle>';inherits:false;initial-value:0deg}
+  :root{--ex:.045em .06em 0 #d9ae00,.09em .12em 0 #c49c00,.135em .18em 0 #b08b00,.18em .24em 0 #9b7a00,.225em .3em 0 #876a00,.27em .36em 0 #725a00,.315em .42em 0 #5e4a00,.36em .48em 0 #4a3a00;
+        --ex-s:.04em .05em 0 #c49c00,.08em .1em 0 #a98700,.12em .15em 0 #8a6d00,.16em .2em 0 #6b5500,.2em .25em 0 #4a3a00}
+  /* extruded headline letters */
+  h1,.big-num{text-shadow:var(--ex-s)}
+  .lead h2{text-shadow:none}
+  mark>span{text-shadow:none}
+  h2{text-shadow:var(--ex-s)}
+  .fact .n{text-shadow:var(--ex-s);transform:translateZ(46px)}
+  .plan .p{text-shadow:.04em .05em 0 rgba(0,0,0,.28),.08em .1em 0 rgba(0,0,0,.22),.12em .15em 0 rgba(0,0,0,.18),.16em .2em 0 rgba(0,0,0,.14)}
+  .plan.a .p{text-shadow:var(--ex-s)}
+  /* solid slabs */
+  mark{box-shadow:1px 1px 0 #d9ae00,2px 2px 0 #cba300,3px 3px 0 #bd9800,4px 4px 0 #ae8c00,5px 5px 0 #9f8000,6px 6px 0 #907500,7px 7px 0 #826a00,8px 9px 0 #735e00,9px 10px 0 #645200,10px 11px 0 #554600,11px 12px 0 #4a3a00,22px 30px 40px rgba(0,0,0,.65)}
+  .fact,.step{box-shadow:1px 1px 0 #3d3d48,2px 2px 0 #373742,3px 3px 0 #31313b,4px 4px 0 #2b2b34,5px 5px 0 #25252d,6px 6px 0 #1f1f26,7px 7px 0 #19191f,8px 8px 0 #131318,18px 26px 34px rgba(0,0,0,.6)}
+  .fact{overflow:visible}
+  .plan.a{box-shadow:1px 1px 0 #d6d6d6,2px 2px 0 #c8c8c8,3px 3px 0 #bababa,4px 4px 0 #acacac,5px 5px 0 #9e9e9e,6px 6px 0 #909090,7px 7px 0 #828282,8px 8px 0 #747474,9px 9px 0 #666,10px 10px 0 #585858,11px 11px 0 #4a4a4a,12px 12px 0 #3c3c3c,24px 34px 50px rgba(0,0,0,.7)}
+  .plan.b{box-shadow:1px 1px 0 #d9ae00,2px 2px 0 #cba300,3px 3px 0 #bd9800,4px 4px 0 #ae8c00,5px 5px 0 #9f8000,6px 6px 0 #907500,7px 7px 0 #826a00,8px 8px 0 #735e00,9px 9px 0 #645200,10px 10px 0 #554600,11px 11px 0 #4a3a00,12px 12px 0 #3a2e00,24px 34px 50px rgba(0,0,0,.7)}
+  details{box-shadow:0 3px 0 #2b2b34,0 6px 0 #1f1f26,0 9px 0 #131318,0 18px 24px rgba(0,0,0,.5)}
+  .vid-box{box-shadow:1px 1px 0 #d9ae00,2px 2px 0 #c49c00,3px 3px 0 #b08b00,4px 4px 0 #9b7a00,5px 5px 0 #876a00,6px 6px 0 #725a00,7px 7px 0 #5e4a00,8px 8px 0 #4a3a00,26px 40px 60px rgba(0,0,0,.7)}
+  .ticker{box-shadow:0 6px 0 #9b7a00,0 12px 0 #5e4a00,0 26px 30px rgba(0,0,0,.6)}
+  .badge{box-shadow:1px 1px 0 #7d6400,2px 2px 0 #6a5400,3px 3px 0 #574500,4px 4px 0 #443600,6px 10px 14px rgba(0,0,0,.6)}
+  .eyebrow{box-shadow:1px 1px 0 #d9ae00,2px 2px 0 #b08b00,3px 3px 0 #876a00,4px 4px 0 #5e4a00,6px 10px 14px rgba(0,0,0,.5)}
+  .step::before{box-shadow:1px 1px 0 #b08b00,2px 2px 0 #9b7a00,3px 3px 0 #876a00,4px 4px 0 #725a00,5px 5px 0 #5e4a00,8px 12px 16px rgba(0,0,0,.6);transform:rotate(-6deg) translateZ(40px)}
+  /* pressable 3D buttons */
+  .btn-y{box-shadow:0 1px 0 #e6bd00,0 2px 0 #d1aa00,0 3px 0 #bf9b00,0 4px 0 #ad8b00,0 5px 0 #9b7b00,0 6px 0 #896b00,0 7px 0 #775b00,0 16px 26px rgba(0,0,0,.55)}
+  .btn-wa{box-shadow:0 1px 0 #20b85a,0 2px 0 #1ca852,0 3px 0 #18984a,0 4px 0 #148842,0 5px 0 #10783a,0 6px 0 #0c6832,0 7px 0 #09582a,0 16px 26px rgba(0,0,0,.55)}
+  .btn-o{box-shadow:0 3px 0 #2b2b34,0 6px 0 #1f1f26,0 12px 18px rgba(0,0,0,.5)}
+  .btn-y:hover,.btn-wa:hover{transform:translateY(-4px)}
+  .btn-y:active,.btn-wa:active{transform:translateY(6px);box-shadow:0 1px 0 #775b00,0 6px 12px rgba(0,0,0,.5)}
+  .plan .btn,.lead .btn{box-shadow:0 1px 0 #3a3a44,0 2px 0 #30303a,0 3px 0 #262630,0 4px 0 #1c1c26,0 5px 0 #12121a,0 12px 18px rgba(0,0,0,.45)}
+  .plan .btn:active,.lead .btn:active{transform:translateY(5px);box-shadow:0 1px 0 #12121a}
+  /* hover/touch tilt: rotation comes from --rx/--ry (set by JS); children float at their own depth */
+  [data-tilt]{transform-style:preserve-3d}
+  .rv.in[data-tilt]{transform:perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .18s linear,opacity .7s var(--ease)}
+  .plan:hover{transform:none}
+  .plan .q,.plan ul,.plan .u{transform:translateZ(26px)}
+  .plan .p{transform:translateZ(54px)}
+  .fact .t,.fact .d{transform:translateZ(26px)}
+  .step h3,.step p{transform:translateZ(22px)}
+  /* hero: two LED screens in a V, floating in depth, slowly swaying (or following the pointer) */
+  .rig{--rx:0deg;--ry:0deg;transform-style:preserve-3d;transform:perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry));animation:sway 9s ease-in-out infinite}
+  .rig.follow{animation:none;transition:transform .15s linear}
+  @keyframes sway{0%,100%{--ry:-9deg;--rx:3deg}50%{--ry:9deg;--rx:-2deg}}
+  .scr{box-shadow:1px 1px 0 #d9ae00,2px 2px 0 #c49c00,3px 3px 0 #b08b00,4px 4px 0 #9b7a00,5px 5px 0 #876a00,6px 6px 0 #725a00,7px 7px 0 #5e4a00,8px 8px 0 #4a3a00,9px 9px 0 #3a2e00,10px 10px 0 #2b2200,14px 30px 40px rgba(0,0,0,.7)}
+  .scr:nth-child(1){translate:0 0 50px;rotate:0 1 0 9deg}
+  .scr:nth-child(2){translate:0 0 50px;rotate:0 1 0 -9deg}
+  .cap,.road{transform:translateZ(20px)}
+  @media (prefers-reduced-motion:reduce){
+    .rig{animation:none;transform:none}.scr{rotate:none;translate:none}
+    .rv.in[data-tilt]{transform:none}
+  }
 </style>
 </head>
 <body>
@@ -229,9 +285,9 @@
   <section>
     <div class="wrap">
       <div class="facts">
-        <div class="fact rv l"><div class="n">2</div><div class="t" data-i18n="f1t">شاشتين إعلانيتين</div><div class="d" data-i18n="f1d">إعلانك بيظهر على الشاشتين بنفس الوقت</div></div>
-        <div class="fact rv" style="--d:.1s"><div class="n">10</div><div class="t" data-i18n="f2t">ثواني</div><div class="d" data-i18n="f2d">مدة الإعلان حوالي 10 ثواني</div></div>
-        <div class="fact rv r" style="--d:.2s"><div class="n">AI</div><div class="t" data-i18n="f3t">فيديو إعلاني</div><div class="d" data-i18n="f3d">إمكانية تجهيز فيديو إعلاني بالذكاء الاصطناعي</div></div>
+        <div data-tilt class="fact rv l"><div class="n">2</div><div class="t" data-i18n="f1t">شاشتين إعلانيتين</div><div class="d" data-i18n="f1d">إعلانك بيظهر على الشاشتين بنفس الوقت</div></div>
+        <div data-tilt class="fact rv" style="--d:.1s"><div class="n">10</div><div class="t" data-i18n="f2t">ثواني</div><div class="d" data-i18n="f2d">مدة الإعلان حوالي 10 ثواني</div></div>
+        <div data-tilt class="fact rv r" style="--d:.2s"><div class="n">AI</div><div class="t" data-i18n="f3t">فيديو إعلاني</div><div class="d" data-i18n="f3d">إمكانية تجهيز فيديو إعلاني بالذكاء الاصطناعي</div></div>
       </div>
     </div>
   </section>
@@ -264,9 +320,9 @@
       <div class="kick rv" data-i18n="how_k">بسيط</div>
       <h2 class="rv" data-i18n="how_h">كيف بيشتغل؟</h2>
       <div class="steps">
-        <div class="step rv l"><h3 data-i18n="st1t">تواصل معنا</h3><p data-i18n="st1d">اتصل أو ابعت واتساب، وخبرنا عن مشروعك.</p></div>
-        <div class="step rv" style="--d:.1s"><h3 data-i18n="st2t">الفيديو</h3><p data-i18n="st2d">عندك فيديو جاهز؟ بنعرضه. بدك نجهّز لك الفيديو؟ بنجهّزه لك بالذكاء الاصطناعي.</p></div>
-        <div class="step rv r" style="--d:.2s"><h3 data-i18n="st3t">بيظهر على الشاشتين</h3><p data-i18n="st3d">إعلانك بيظهر على الشاشتين بنفس الوقت، ومدة الإعلان حوالي 10 ثواني.</p></div>
+        <div data-tilt class="step rv l"><h3 data-i18n="st1t">تواصل معنا</h3><p data-i18n="st1d">اتصل أو ابعت واتساب، وخبرنا عن مشروعك.</p></div>
+        <div data-tilt class="step rv" style="--d:.1s"><h3 data-i18n="st2t">الفيديو</h3><p data-i18n="st2d">عندك فيديو جاهز؟ بنعرضه. بدك نجهّز لك الفيديو؟ بنجهّزه لك بالذكاء الاصطناعي.</p></div>
+        <div data-tilt class="step rv r" style="--d:.2s"><h3 data-i18n="st3t">بيظهر على الشاشتين</h3><p data-i18n="st3d">إعلانك بيظهر على الشاشتين بنفس الوقت، ومدة الإعلان حوالي 10 ثواني.</p></div>
       </div>
     </div>
   </section>
@@ -277,14 +333,14 @@
       <div class="kick rv" data-i18n="pr_k">اختار</div>
       <h2 class="rv" data-i18n="pr_h">الأسعار</h2>
       <div class="plans">
-        <article class="plan a rv r">
+        <article data-tilt class="plan a rv r">
           <div class="q" data-i18n="pAq">عندك فيديو جاهز؟</div>
           <div class="p"><span class="num" data-count="1250">1,250</span><small>₪</small></div>
           <div class="u" data-i18n="pAu">بالشهر</div>
           <ul><li data-i18n="pAl1">إعلانك بيظهر على الشاشتين بنفس الوقت</li><li data-i18n="pAl2">مدة الإعلان حوالي 10 ثواني</li></ul>
           <a class="btn btn-lg wa-link" href="#" target="_blank" rel="noopener" data-plan="A"><span data-i18n="pick">ابعت واتساب</span></a>
         </article>
-        <article class="plan b rv l" style="--d:.1s">
+        <article data-tilt class="plan b rv l" style="--d:.1s">
           <span class="badge" data-i18n="pBb">الأوفر</span>
           <div class="q" data-i18n="pBq">بدك نجهّز لك الفيديو؟</div>
           <div class="p"><span class="num" data-count="1750">1,750</span><small>₪</small></div>
@@ -438,6 +494,27 @@
     document.getElementById('photos').hidden=false;
   }
 
+
+  // 3D: pointer tilt on cards + the hero rig follows the pointer (touch devices keep the idle sway)
+  (function(){
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches||!matchMedia('(hover:hover)').matches) return;
+    document.querySelectorAll('[data-tilt]').forEach(function(el){
+      el.style.setProperty('--rx','0deg'); el.style.setProperty('--ry','0deg');
+      el.addEventListener('pointermove',function(e){
+        var r=el.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+        el.style.setProperty('--ry',(x*14).toFixed(2)+'deg'); el.style.setProperty('--rx',(-y*12).toFixed(2)+'deg');
+      });
+      el.addEventListener('pointerleave',function(){el.style.setProperty('--rx','0deg');el.style.setProperty('--ry','0deg')});
+    });
+    var hero=document.querySelector('.hero'), rig=document.querySelector('.rig');
+    if(hero&&rig){
+      hero.addEventListener('pointermove',function(e){
+        var r=hero.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+        rig.classList.add('follow'); rig.style.setProperty('--ry',(x*28).toFixed(2)+'deg'); rig.style.setProperty('--rx',(-y*16).toFixed(2)+'deg');
+      });
+      hero.addEventListener('pointerleave',function(){rig.classList.remove('follow');rig.style.removeProperty('--rx');rig.style.removeProperty('--ry')});
+    }
+  })();
   // reveal on scroll (alternating sides) + price count-up
   var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(en){
     if(!en.isIntersecting) return; en.target.classList.add('in'); io.unobserve(en.target);

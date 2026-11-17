@@ -9,15 +9,16 @@
   :root{--u:1px;--ink:#08080b;--y:#ffd60a;--w:#ffffff;--soft:#ffffff;--panel:#16161c;--font:'Cairo',sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
   html{overflow:hidden}
-  body{position:fixed;inset:0;overflow:hidden;contain:paint;background:var(--ink);color:var(--w);font-family:var(--font)}
+  body{position:fixed;inset:0;overflow:hidden;contain:paint;background:var(--ink);color:var(--w);font-family:var(--font);perspective:1800px;perspective-origin:50% 48%}
   body.he{--font:'Heebo',sans-serif}
   #road{position:absolute;left:0;right:0;bottom:calc(var(--u)*34);height:calc(var(--u)*10);
     background:repeating-linear-gradient(90deg,var(--y) 0 calc(var(--u)*90),transparent calc(var(--u)*90) calc(var(--u)*150))}
   .car{position:absolute;bottom:calc(var(--u)*50);width:calc(var(--u)*170);height:calc(var(--u)*66);will-change:transform}
-  .car svg{width:100%;height:100%;overflow:visible}
+  .car svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(calc(var(--u)*5) calc(var(--u)*6) 0 #8a6a00) drop-shadow(calc(var(--u)*10) calc(var(--u)*12) 0 #4a3a00)}
   .scene{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;
     padding:calc(var(--u)*130) calc(var(--u)*90) calc(var(--u)*110)}
   .scene.on{display:flex}
+  .scene,.prices,.screens,.chips,.qrrow,.num,.c2,.qrcap{transform-style:preserve-3d}
   .a{opacity:0;will-change:transform}
   .y{color:var(--y)}
   #fx{position:absolute;inset:0;pointer-events:none}
@@ -210,18 +211,29 @@ function setup(){
   IMPACTS.forEach((im,k)=>{for(let i=0;i<NP;i++){const d=document.createElement('i');d.className='pt'+(i%2?' w':'');d.id=`pt${k}_${i}`;$('fx').appendChild(d)}});
   for(let i=0;i<10;i++){const d=document.createElement('i');d.className='sk';d.id='sk'+i;$('fx').appendChild(d)}
 }
+// ---- 3D illusion helpers: stepped, colour-graded extrusion that follows the camera orbit ----
+const mix=(a,b,k)=>{const h=x=>[1,3,5].map(i=>parseInt(x.slice(i,i+2),16));const A=h(a),B=h(b);return 'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*k)).join(',')+')'};
+function extT(n,ex,ey,c0,c1,u){let o=[];for(let i=1;i<=n;i++){o.push(`${(ex*i*u).toFixed(1)}px ${(ey*i*u).toFixed(1)}px 0 ${mix(c0,c1,i/n)}`)}return o.join(',')}
+function extB(n,ex,ey,c0,c1,u,floor){let o=[];for(let i=1;i<=n;i++){o.push(`${(ex*i*u).toFixed(1)}px ${(ey*i*u).toFixed(1)}px 0 ${mix(c0,c1,i/n)}`)}if(floor)o.push(`${(ex*n*u*1.4).toFixed(1)}px ${(ey*n*u*1.4+28*u).toFixed(1)}px ${(46*u).toFixed(1)}px rgba(0,0,0,.65)`);return o.join(',')}
+const GOLD0='#c79f00',GOLD1='#4a3a00', STEEL0='#a8a8a8', STEEL1='#3b3b3b';
+// depth (px, toward the viewer) and resting tilt [rotateX, rotateY] per element
+const ZMAP={h1a:40,h1b:110,q:20,s2h:35,scL:80,scR:80,ch0:55,ch1:55,ch2:55,pA:40,pB:40,fine:15,c1:45,c2:60,g1:130,d1:110,g2:130,d2:110,g3:130,qr:90,qrcap:45};
+const TILT={scL:[0,12],scR:[0,-12],pA:[0,-5],pB:[0,5],ch0:[0,-6],ch2:[0,6],qr:[0,0],h1b:[0,-5]};
 const fmt=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');
 
 window.seek=function(t){
   const W=innerWidth, Hh=innerHeight, u=W/(PORTRAIT?1080:1920);
   $('road').style.backgroundPosition=(-t*350*u)+'px 0';   // 350*18/150 = 42 dash periods => seamless loop
-  CARS.forEach((c,i)=>{const k=(((t+c.o)/c.p)%1+1)%1; const x=W+170*u-k*(W+340*u); $('car'+i).style.transform=`translateX(${x}px)`});
+  CARS.forEach((c,i)=>{const k=(((t+c.o)/c.p)%1+1)%1; const x=W+170*u-k*(W+340*u); const sc=[1,0.7,1.25,0.85][i]; $('car'+i).style.transform=`translateX(${x}px) scale(${sc})`; $('car'+i).style.transformOrigin='50% 100%'});
+  // camera orbit: period = DUR so the loop is seamless
+  const ORB=2*Math.PI/DUR, CAM={ry:(PORTRAIT?4:6)*Math.sin(ORB*t), rx:(PORTRAIT?2:2.6)*Math.sin(ORB*t*2+1)};
+  const EX=0.55-CAM.ry*0.07, EY=0.82+CAM.rx*0.09;                 // extrusion direction follows the orbit
   const cur = SC.find(s=>t>=s.a && t<s.b) || SC[SC.length-1];
   SC.forEach(s=>{const el=$(s.id); el.classList.toggle('on',s===cur);
     if(s===cur){
       const push=1+0.04*((t-s.a)/(s.b-s.a)); let sx=0,sy=0;
       IMPACTS.forEach(im=>{const dt=t-im.t; if(dt>=0&&dt<.5){const a=11*u*Math.exp(-dt*11); sx+=a*Math.sin(dt*70); sy+=a*Math.cos(dt*58)}});
-      el.style.transform=`translate(${sx}px,${sy}px) scale(${push})`;
+      el.style.transform=`translate(${sx}px,${sy}px) scale(${push}) rotateX(${CAM.rx}deg) rotateY(${CAM.ry}deg)`;
     }});
   document.querySelectorAll('.a').forEach(el=>{
     const sc=el.closest('.scene'); if(!sc) return;
@@ -235,8 +247,17 @@ window.seek=function(t){
     else if(f==='b') tf=`translateY(${(1-outCubic(raw))*120*u}px)`; else if(f==='t') tf=`translateY(${-(1-p)*Hh*0.35}px)`;
     else if(f==='s') tf=`scale(${0.2+0.8*p})`;
     if(el.id==='pA'||el.id==='pB'){ tf+=` translateY(${Math.sin(t*2.2+(el.id==='pB'?1.6:0))*6*u*clamp(raw-1)}px)`}
+    // 3D: elements swing in around the vertical axis, then sit at their own depth and tilt
+    const z=(ZMAP[el.id]||0)*u, tl=TILT[el.id]||[0,0], tk=PORTRAIT?0.5:1;
+    const swing=(f==='l'?-1:f==='r'?1:0)*70*(1-p);
+    tf+=` translateZ(${z.toFixed(1)}px) rotateX(${(tl[0]*tk).toFixed(2)}deg) rotateY(${(tl[1]*tk+swing).toFixed(2)}deg)`;
     el.style.opacity=vis; el.style.transform=tf;
   });
+  const T3=(sel,n,c0,c1)=>document.querySelectorAll(sel).forEach(e=>e.style.textShadow=extT(n,EX,EY,c0,c1,u));
+  const B3=(sel,n,c0,c1,floor)=>document.querySelectorAll(sel).forEach(e=>e.style.boxShadow=extB(n,EX,EY,c0,c1,u,floor));
+  T3('#h1a,#s2h,#c1,#qc1',14,GOLD0,GOLD1); T3('#c2t',9,GOLD0,GOLD1); T3('#g1,#g2,#g3',20,GOLD0,GOLD1); T3('#pA .pn,#pA .pq,#pA .pu',8,GOLD0,GOLD1); T3('.chip .ct',4,GOLD0,GOLD1);
+  B3('.blk',18,GOLD0,GOLD1,true); B3('.pb.yb',20,GOLD0,GOLD1,true); B3('.pb.w',20,STEEL0,STEEL1,true); B3('.screen',22,GOLD0,GOLD1,true);
+  B3('.chip',10,GOLD0,GOLD1,false); B3('.qrbox',14,STEEL0,STEEL1,true); B3('#tag',8,GOLD0,GOLD1,false);
   const tg=$('tag'), tIn=clamp((t-1.4)/0.5), tOut=t>=13.3-WIPE_HALF?0:1;
   tg.style.opacity=tIn*tOut; tg.style.transform=`translateY(${-(1-outCubic((t-1.4)/0.5))*80}px)`;
   const ph=((t-4.9)%2.4+2.4)%2.4, pulse=t<4.9?0:0.55*Math.max(0,1-ph/1.0);
