@@ -3,6 +3,7 @@
 import { chromium } from 'playwright';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readFile } from 'node:fs/promises';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const file = resolve(process.argv[2] || resolve(here, '../index.html'));
@@ -10,7 +11,7 @@ const failures = [];
 const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!ok) failures.push(msg); };
 
 const browser = await chromium.launch();
-const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 }, acceptDownloads: true })).newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 await page.goto('file://' + file);
@@ -36,6 +37,42 @@ for (const mode of [3, 14, 19, 27, 36, 40]) {
 
 await page.fill('#txt', 'שלום مرحبا Привет');
 check(await inkAt(2500) > 0, 'Hebrew + Arabic + Russian text draws');
+
+// extra text layers
+await page.click('#layerAdd');
+await page.fill('#layerList .layer .lt', 'SUB');
+check((await page.$$('#layerList .layer')).length === 1, 'a text layer can be added');
+await page.click('#kinds .chip[data-v="json"]');
+await page.waitForTimeout(400);
+check((await page.inputValue('#code')).includes('"layers"'), 'layers are part of the exported settings');
+check(await inkAt(1500) > 0, 'a scene with a layer draws');
+
+// saved projects (IndexedDB) and project files
+await page.fill('#projName', 'smoke');
+await page.click('#projSave');
+await page.waitForTimeout(600);
+check((await page.$$eval('#projList option', (o) => o.map((x) => x.value))).includes('smoke'), 'project is saved in the browser');
+await page.click('#layerList .layer button');
+await page.waitForTimeout(300);
+check((await page.$$('#layerList .layer')).length === 0, 'a text layer can be deleted');
+await page.click('#projLoad');
+await page.waitForTimeout(1200);
+check((await page.$$('#layerList .layer')).length === 1, 'opening the saved project restores the layer');
+const [pf] = await Promise.all([page.waitForEvent('download'), page.click('#projExport')]);
+const projJson = JSON.parse(await readFile(await pf.path(), 'utf8'));
+check(projJson.app === 'particle-text-studio' && projJson.scenes[0].d.layers.length === 1, 'project file has the scenes and layers');
+
+// GIF export
+const gifOpt = (await page.$$eval('#vfmt option', (o) => o.map((x) => [x.value, x.textContent]))).find((x) => /GIF/.test(x[1]));
+check(!!gifOpt, 'GIF format is offered');
+await page.selectOption('#vfmt', gifOpt[0]);
+await page.selectOption('#vres', '1280x720');
+await page.selectOption('#vdur', '5');
+await page.click('#vrec');
+await page.waitForSelector('#vsave:not([hidden])', { timeout: 120000 });
+const [gf] = await Promise.all([page.waitForEvent('download'), page.click('#vsave')]);
+const gifBytes = await readFile(await gf.path());
+check(gifBytes.subarray(0, 6).toString() === 'GIF89a' && gifBytes[gifBytes.length - 1] === 0x3b && gifBytes.length > 5000, 'GIF export is a complete GIF89a file');
 
 for (const lang of ['ar', 'ru', 'en', 'he']) {
   await page.click(`#langs .chip[lang="${lang}"]`);
