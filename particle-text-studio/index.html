@@ -1,0 +1,1291 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05070d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>html{padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>סטודיו אפקטי טקסט</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap">
+<style>:root{color-scheme:dark;--bg:#05070d;--surface:#0b101a;--line:#1b2538;--fg:#e8eefb;--muted:#8c99b3;--accent:#4cc9ff;--accent-ink:#04121c;--font-ui:"Rubik",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font-family:var(--font-ui);font-size:15px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}.wrap{max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:16px}h1{margin:0;font-size:clamp(24px, 4vw, 34px);font-weight:700;letter-spacing:-.01em;text-wrap:balance}h2{margin:0;font-size:18px;font-weight:700}.lede{margin:4px 0 0;color:var(--muted);max-width:62ch}.stage{position:relative;width:min(100%,calc(76vh * var(--ar,1.7778)));aspect-ratio:var(--ar,1.7778);margin-inline:auto;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden;touch-action:pan-y}.stage.transp{background:repeating-conic-gradient(#10172a 0 25%,#0a0f1c 0 50%) 0 0/24px 24px}.stage:fullscreen{aspect-ratio:auto;width:100vw;height:100vh;margin:0;border:0;border-radius:0}.app{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,440px);gap:20px;align-items:start}.preview{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px;min-width:0}.side{display:flex;flex-direction:column;gap:16px;min-width:0}@media (max-width:959px){.app{grid-template-columns:minmax(0,1fr)}.preview{top:0;z-index:20;background:var(--bg);padding-block:8px}.stage{width:min(100%,calc(36vh * var(--ar,1.7778)))}}.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.hint{color:var(--muted);font-size:13px}.card{display:flex;flex-direction:column;gap:20px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px}.grid{display:grid;gap:20px 24px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.ctl{display:flex;flex-direction:column;gap:8px;min-width:0}.ctl label,.lbl{font-size:13px;color:var(--muted);font-weight:500}.span-all{grid-column:1/-1}input[type=text],select,textarea{width:100%;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:inherit}#txt{min-height:0;resize:vertical;font:600 20px/1.3 var(--font-ui);padding:10px 12px;unicode-bidi:plaintext;text-align:start}textarea{font:12.5px/1.5 var(--mono);direction:ltr;text-align:left;resize:vertical;min-height:190px}input[type=range]{width:100%;accent-color:var(--accent)}input[type=color]{width:44px;height:34px;padding:2px;background:var(--bg);border:1px solid var(--line);border-radius:8px;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.seg{display:flex;flex-wrap:wrap;gap:8px}.chip{display:inline-flex;align-items:center;gap:8px;background:0 0;color:var(--fg);font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:7px 12px}.chip:hover{border-color:#31405c}.chip[aria-pressed=true]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}.swatch{width:34px;height:12px;border-radius:3px;flex:none}.fontlist{max-height:178px;overflow-y:auto;padding:2px;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--bg)}.chip.scene.playing{box-shadow:0 0 0 2px var(--accent)}.langbar{display:flex;margin-inline-start:auto}.chip[lang]{padding:5px 11px;font-size:14px}.stage.drop{outline:2px dashed var(--accent);outline-offset:-6px}.grp{flex-basis:100%;font-size:12px;color:var(--muted);font-weight:500;margin-top:4px}.val{color:var(--accent);font-variant-numeric:tabular-nums;margin-inline-start:6px;font-weight:700}.chip.fnt{font-size:16px;line-height:1.2;padding:6px 11px;direction:ltr}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.row input[type=text]{flex:1 1 200px;direction:ltr}.colors{display:flex;gap:8px;align-items:center}.btn{font:500 15px/1 var(--font-ui);cursor:pointer;border-radius:8px;padding:11px 18px;background:0 0;color:var(--fg);border:1px solid #31405c}.btn:hover:not(:disabled){border-color:var(--fg)}.btn:disabled{opacity:.45;cursor:not-allowed}.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}.btn.primary:hover:not(:disabled){filter:brightness(1.08)}.msg{color:var(--muted);font-size:13px;min-height:1.4em}.msg.err{color:#ff8a8a}progress{width:100%;height:8px;accent-color:var(--accent)}.sub{margin:0;font-size:14px;font-weight:700}.block{display:flex;flex-direction:column;gap:12px;min-width:0}.divider{border:0;border-top:1px solid var(--line);margin:0}.note{margin:0;color:var(--muted);font-size:13px;max-width:72ch}details summary{cursor:pointer;color:var(--muted);font-size:13px}.layer{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}.layer+.layer{margin-top:8px}.layer .sl{display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}#layerList:empty{display:none}</style>
+
+</head>
+<body>
+<main class="wrap" lang="he" dir="rtl">
+  <header>
+    <div class="langbar"><div class="seg" id="langs" role="group" aria-label="שפת הממשק"></div></div>
+    <h1>סטודיו אפקטי טקסט</h1>
+    <p class="lede">כתבו טקסט בעברית, בערבית, ברוסית או באנגלית, בחרו אפקט, צבעים וגופן, ואז ייצאו סרטון, תמונה או קוד לאתר. האפקט בנוי מחלקיקים אמיתיים, ולכן האותיות נשארות חדות וללא עיוותים.</p>
+  </header>
+
+  <div class="app">
+  <div class="preview">
+  <div id="stage" class="stage" dir="ltr"></div>
+  <div class="bar">
+    <button id="replay" class="btn primary" type="button">הפעלה מחדש</button>
+    <button id="fs" class="btn" type="button">מסך מלא</button>
+    <button id="reset" class="btn" type="button">איפוס הגדרות</button>
+    <span class="hint">העבירו עכבר או אצבע מעל האותיות כדי לפזר את החלקיקים.</span>
+  </div>
+  <p class="hint" style="margin:0">אפשר להדביק (Ctrl+V) טקסט, תמונה או לוגו, SVG או הגדרות JSON מכל מקום בדף, וגם לגרור לכאן קבצים.</p>
+
+  </div>
+  <aside class="side">
+  <section class="card" aria-label="רצף סצנות">
+    <h2>רצף סצנות</h2>
+    <p class="note">כל סצנה היא עיצוב שלם משלה: טקסט או לוגו, אפקט, צבעים וגופן. כך אפשר לבנות פתיחה עם כמה כותרות ברצף. בחרו סצנה כדי לערוך אותה בהגדרות שמתחת, והרצף כולו מיוצא כסרטון אחד או כקוד אחד.</p>
+    <div class="seg" id="scenes" role="group" aria-label="הסצנות"></div>
+    <div class="row">
+      <button id="sAdd" class="btn" type="button">＋ סצנה חדשה</button>
+      <button id="sDel" class="btn" type="button">מחיקת הסצנה</button>
+      <button id="sLeft" class="btn" type="button" aria-label="העברת הסצנה אחורה">הקדמה</button>
+      <button id="sRight" class="btn" type="button" aria-label="העברת הסצנה קדימה">דחייה</button>
+      <label for="sdur" class="lbl">אורך הסצנה (שניות)</label>
+      <input id="sdur" type="number" min="1" max="120" step="0.5" value="6" style="width:90px">
+    </div>
+    <div class="row">
+      <button id="sPlay" class="btn primary" type="button">▶ נגן את כל הרצף</button>
+      <span id="sTotal" class="hint"></span>
+    </div>
+    <hr class="divider">
+    <div class="ctl">
+      <label for="music">מוזיקת רקע (אופציונלי, MP3 / WAV / M4A)</label>
+      <div class="row">
+        <input id="music" type="file" accept="audio/*" style="max-width:100%">
+        <button id="musicClear" class="btn" type="button" hidden>הסרה</button>
+        <span id="mname" class="hint"></span>
+      </div>
+      <div class="row"><label for="avol" class="lbl">עוצמה <span id="v-avol" class="val"></span></label><input id="avol" type="range" min="0" max="100" step="5" value="80" style="max-width:220px"></div>
+      <div class="row"><button id="beatBtn" class="chip" type="button" aria-pressed="false">פעימה לפי המוזיקה</button><label for="beatAmt" class="lbl">עוצמת הפעימה <span id="v-beatAmt" class="val"></span></label><input id="beatAmt" type="range" min="20" max="100" step="5" value="60" style="max-width:200px"></div>
+      <span class="hint">הטקסט פועם ומבזיק בקצב הבס של המוזיקה. עובד בתצוגת הרצף ובסרטון, לא בקוד לאתר.</span>
+      <div class="grid" style="margin-top:6px">
+        <div class="ctl"><label for="fadesel">מעבר בין סצנות</label><select id="fadesel"><option value="0">חיתוך ישר</option><option value="0.5">דהייה קצרה (0.5 שנ׳)</option><option value="1">דהייה ארוכה (1 שנ׳)</option></select></div>
+        <div class="ctl"><label for="qual">ביצועים</label><select id="qual"><option value="auto">אוטומטי</option><option value="high">איכות גבוהה</option><option value="low">חסכוני (למכשירים איטיים)</option></select></div>
+      </div>
+      <span id="mmsg" class="msg" role="status">המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.</span>
+    </div>
+    <hr class="divider">
+    <div class="ctl" id="projBox">
+      <span class="lbl">פרויקטים שמורים</span>
+      <div id="projLocal" class="ctl">
+        <div class="row"><input id="projName" type="text" maxlength="40" placeholder="שם הפרויקט" aria-label="שם הפרויקט" autocomplete="off" style="max-width:220px"><button id="projSave" class="btn primary" type="button">שמירת פרויקט</button></div>
+        <div class="row"><select id="projList" aria-label="הפרויקטים השמורים" style="width:auto;max-width:240px"></select><button id="projLoad" class="btn" type="button">פתיחה</button><button id="projDel" class="btn" type="button">מחיקה</button></div>
+      </div>
+      <div class="row"><button id="projExport" class="btn" type="button">שמירת קובץ פרויקט</button><input id="projFile" type="file" accept=".json,application/json" aria-label="פתיחת קובץ פרויקט" style="max-width:100%"></div>
+      <span id="projMsg" class="msg" role="status"></span>
+      <span class="hint">הפרויקטים נשמרים בדפדפן הזה, כולל תמונות, לוגו וגופנים. כדי לעבור למחשב אחר או לגבות, שמרו קובץ פרויקט ופתחו אותו שם.</span>
+    </div>
+  </section>
+
+  <section class="card" aria-label="עיצוב">
+    <h2>עיצוב</h2>
+    <div class="grid">
+      <div class="ctl span-all">
+        <label for="txt">הטקסט (עברית, ערבית, רוסית או אנגלית, עד 300 תווים)</label>
+        <textarea id="txt" rows="3" maxlength="300" dir="auto" autocomplete="off" spellcheck="false">VFX</textarea>
+        <span id="tmsg" class="msg" role="status"></span>
+      </div>
+      <div class="ctl span-all" id="layersBox">
+        <span class="lbl">שכבות טקסט נוספות</span>
+        <p class="note">אפשר להוסיף לסצנה עוד טקסטים שמופיעים יחד עם הטקסט הראשי, כל אחד עם אפקט, צבעים, גודל, מיקום ועיכוב הופעה משלו, למשל כותרת וכתובית מתחתיה.</p>
+        <div id="layerList"></div>
+        <div class="row"><button id="layerAdd" class="btn" type="button">＋ שכבת טקסט</button></div>
+      </div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-pre">תבניות מוכנות</span>
+        <div class="seg" id="presets" role="group" aria-labelledby="l-pre"></div>
+      </div>
+      <div class="ctl span-all">
+        <label for="img">או לוגו / תמונה במקום טקסט</label>
+        <div class="row">
+          <input id="img" type="file" accept="image/png,image/svg+xml,image/jpeg,image/webp" style="max-width:100%">
+          <button id="imgClear" class="btn" type="button" hidden>הסרת הלוגו</button>
+          <span id="imgName" class="hint"></span>
+        </div>
+        <div class="seg" id="imgcols" role="group" aria-label="צבעי הלוגו" hidden></div>
+        <span id="imsg2" class="msg" role="status">הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית.</span>
+      </div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-mode">אפקט</span>
+        <div class="seg" id="modes" role="group" aria-labelledby="l-mode"></div>
+      </div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-pal">צבעים</span>
+        <div class="seg" id="pals" role="group" aria-labelledby="l-pal"></div>
+        <div class="colors" id="custom" hidden>
+          <input id="c1" type="color" value="#ff2d95" aria-label="צבע ראשון">
+          <input id="c2" type="color" value="#7a5cff" aria-label="צבע שני">
+          <input id="c3" type="color" value="#00e5ff" aria-label="צבע שלישי">
+          <span class="hint">שלושה צבעים שעוברים זה לזה</span>
+        </div>
+      </div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-font">גופן (Google Fonts)</span>
+        <div class="seg" id="fscripts" role="group" aria-label="סינון גופנים לפי כתב"></div>
+        <div class="fontlist seg" id="fonts" role="group" aria-labelledby="l-font" dir="ltr"></div>
+        <div class="row">
+          <input id="gf" type="text" placeholder="או כתבו שם גופן מ-Google Fonts, למשל Rubik Glitch" aria-label="שם גופן מ-Google Fonts" autocomplete="off" spellcheck="false">
+          <button id="gfBtn" class="btn" type="button">טעינת גופן</button>
+          <label for="wt" class="lbl">עובי</label>
+          <select id="wt" style="width:auto">
+            <option value="0">ברירת מחדל</option>
+            <option value="400">רגיל 400</option>
+            <option value="700">מודגש 700</option>
+            <option value="900">כבד 900</option>
+          </select>
+        </div>
+        <label for="fontfile" class="lbl" style="margin-top:6px">גופן משלכם (TTF / OTF / WOFF)</label>
+        <div class="row"><input id="fontfile" type="file" accept=".ttf,.otf,.woff,.woff2,font/*" style="max-width:100%"><button id="fontClear" class="btn" type="button" hidden>הסרת הגופן</button></div>
+        <span id="fmsg" class="msg" role="status"></span>
+      </div>
+      <div class="ctl"><label for="den">צפיפות חלקיקים <span id="v-den" class="val"></span></label><input id="den" type="range" min="1" max="5" step="1" value="4"></div>
+      <div class="ctl"><label for="spd">מהירות <span id="v-spd" class="val"></span></label><input id="spd" type="range" min="0.4" max="2" step="0.1" value="1"></div>
+      <div class="ctl"><label for="glow">עוצמת זוהר <span id="v-glow" class="val"></span></label><input id="glow" type="range" min="0" max="1.6" step="0.1" value="1"></div>
+      <div class="ctl"><label for="size">גודל הטקסט <span id="v-size" class="val"></span></label><input id="size" type="range" min="35" max="92" step="1" value="76"></div>
+      <div class="ctl"><label for="ox">מיקום אופקי <span id="v-ox" class="val"></span></label><input id="ox" type="range" min="-50" max="50" step="1" value="0"></div>
+      <div class="ctl"><label for="oy">מיקום אנכי <span id="v-oy" class="val"></span></label><input id="oy" type="range" min="-50" max="50" step="1" value="0"></div>
+      <div class="ctl"><label for="rot">סיבוב <span id="v-rot" class="val"></span></label><input id="rot" type="range" min="-45" max="45" step="1" value="0"></div>
+      <div class="ctl"><span class="lbl">מיקום וסיבוב</span><div class="row"><button id="posReset" class="btn" type="button">מרכוז</button><button id="dragMode" class="chip" type="button" aria-pressed="false">גרירה בתצוגה</button></div></div>
+      <div class="ctl span-all" id="hybridRow" hidden><button id="hybrid" class="chip" type="button" aria-pressed="false">בסיום, הטקסט מתפרק לחלקיקים</button></div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-bgt">רקע מאחורי הטקסט</span>
+        <div class="seg" id="bgtypes" role="group" aria-labelledby="l-bgt"></div>
+        <div class="colors" id="bgcolors" hidden><input id="bga" type="color" value="#0b1020" aria-label="צבע הרקע"><input id="bgb" type="color" value="#1b2a6b" aria-label="צבע שני לרקע"></div>
+        <div class="row" id="bgimgrow" hidden><input id="bgimg" type="file" accept="image/*" aria-label="תמונת רקע" style="max-width:100%"><button id="bgimgClear" class="btn" type="button" hidden>הסרת הרקע</button></div>
+        <div class="ctl" id="bgdimrow" hidden><label for="bgdim">הכהיית הרקע <span id="v-bgdim" class="val"></span></label><input id="bgdim" type="range" min="0" max="85" step="5" value="35"></div>
+      </div>
+      <div class="ctl"><span class="lbl" id="l-shape">צורת חלקיק</span><div class="seg" id="shapes" role="group" aria-labelledby="l-shape"></div></div>
+      <div class="ctl"><span class="lbl" id="l-bg">רקע</span><div class="seg" id="bgs" role="group" aria-labelledby="l-bg"></div></div>
+      <div class="ctl"><span class="lbl" id="l-loop">התנהגות</span><div class="seg" id="loops" role="group" aria-labelledby="l-loop"></div></div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="ייצוא">
+    <h2>ייצוא</h2>
+    <div class="grid">
+      <div class="block">
+        <h3 class="sub">סרטון</h3>
+        <div class="ctl"><label for="vfmt">פורמט</label><select id="vfmt"></select></div>
+        <div class="ctl"><label for="vres">גודל</label>
+          <select id="vres">
+            <option value="1920x1080">1920×1080 (יוטיוב, אתר)</option>
+            <option value="1280x720">1280×720</option>
+            <option value="1080x1920">1080×1920 (ריילס, טיקטוק, סטורי)</option>
+            <option value="1080x1080">1080×1080 (פוסט מרובע)</option>
+            <option value="3840x2160">3840×2160 (4K)</option>
+          </select></div>
+        <div class="ctl"><label for="vfps">קצב פריימים</label>
+          <select id="vfps"><option value="30">30 פריימים לשנייה</option><option value="60">60 פריימים לשנייה (חלק יותר)</option></select></div>
+        <div class="ctl"><label for="vdur">אורך</label>
+          <select id="vdur">
+            <option value="loop">כל הרצף (אורך הסצנות)</option>
+            <option value="5">5 שניות</option>
+            <option value="10">10 שניות</option>
+            <option value="15">15 שניות</option>
+            <option value="30">30 שניות</option>
+          </select></div>
+        <div class="row">
+          <button id="vrec" class="btn primary" type="button">הקלטת סרטון</button>
+          <button id="vsave" class="btn" type="button" hidden>שמירת הקובץ</button>
+        </div>
+        <progress id="vprog" value="0" max="1" hidden></progress>
+        <span id="vmsg" class="msg" role="status"></span>
+      </div>
+      <div class="block">
+        <h3 class="sub">תמונה</h3>
+        <p class="note">תמונת PNG בגודל שנבחר בסרטון. התצוגה למעלה מקבלת את אותו יחס מסך, כך שמה שרואים הוא מה שמקבלים. עם רקע "שקוף" מתקבל קובץ עם שקיפות לעיצוב.</p>
+        <div class="row"><button id="png" class="btn" type="button">שמירת PNG</button><button id="pngCopy" class="btn" type="button">העתקת תמונה</button></div>
+        <span id="pmsg" class="msg" role="status"></span>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="block">
+      <h3 class="sub">קוד לאתר</h3>
+      <p class="note">הקוד עצמאי ולא צריך שום ספרייה. "קטע להטמעה" מתאים ל-Wix, Webflow, וורדפרס ובלוק HTML מותאם. "דף HTML מלא" נפתח ישר בדפדפן. את ה-JSON אפשר לשמור כדי לשחזר את ההגדרות.</p>
+      <div class="seg" id="kinds" role="group" aria-label="סוג הקוד"></div>
+      <textarea id="code" readonly="readonly" spellcheck="false" aria-label="הקוד לייצוא"></textarea>
+      <div class="row">
+        <button id="copy" class="btn primary" type="button">העתקה</button>
+        <button id="savecode" class="btn" type="button">שמירה כקובץ</button>
+        <button id="shareLink" class="btn" type="button">העתקת קישור לשיתוף</button>
+        <span id="cmsg" class="msg" role="status"></span>
+      </div>
+      <details>
+        <summary>טעינת הגדרות שמורות (JSON)</summary>
+        <div class="block" style="margin-top:10px">
+          <textarea id="imp" spellcheck="false" aria-label="הדביקו כאן JSON של הגדרות" style="min-height:110px"></textarea>
+          <div class="row"><button id="impBtn" class="btn" type="button">החלה</button><span id="imsg" class="msg" role="status"></span></div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <p class="note">להקלטה ידנית אפשר גם להשתמש במסך מלא עם הקלטת מסך של המחשב. סרטון על רקע שחור אפשר להניח מעל וידאו אחר בעורך עם מצב מיזוג Screen או Add, והשחור נעלם.</p>
+  </aside>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.3/build/mp4-muxer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/webm-muxer@5.1.3/build/webm-muxer.js"></script>
+<script>
+var enginePack=function(){var e=2*Math.PI,t=64,a=195,n=291,r=[{P:9.2,out:4.4,cs:1},{P:1/0,out:1/0,cs:2.4,rec:6},{P:5.7,out:3.8,cs:1},{P:6,out:5,cs:1.4
+},{P:6,out:4.4,cs:1.8},{P:8,out:4.2,cs:.8},{P:7,out:4.6,cs:1.2},{P:1/0,out:1/0,cs:.7,rec:8},{P:7,out:5.2,cs:1.2},{P:1/0,out:1/0,cs:2,rec:6},{P:7,
+out:4.6,cs:1},{P:7,out:4.8,cs:1},{P:6,out:4.4,cs:1.6},{P:7,out:5,cs:1.3},{P:1/0,out:1/0,cs:1.2,rec:6},{P:7,out:4.6,cs:1},{P:8,out:5.8,cs:1.4},{P:7,
+out:4.6,cs:1.8},{P:7,out:4.8,cs:.9},{P:7,out:5.2,cs:1},{P:7,out:5,cs:1},{P:7,out:5.2,cs:1},{P:7,out:5,cs:1},{P:7,out:5,cs:1},{P:7,out:5.2,cs:1},{P:7,
+out:5.2,cs:1},{P:6,out:4.6,cs:1},{P:7,out:5,cs:1},{P:8,out:6,cs:1},{P:7,out:5.2,cs:1},{P:7,out:5,cs:1},{P:7,out:5.2,cs:1},{P:7,out:5.2,cs:1},{P:7,
+out:5,cs:1},{P:7,out:5.2,cs:1},{P:7,out:5,cs:1},{P:8,out:6,cs:1},{P:7,out:5,cs:1},{P:7,out:5,cs:1},{P:7,out:5,cs:1},{P:7,out:5.2,cs:1},{P:7,out:5,cs:1
+}],o={text:"VFX",mode:0,stops:["#1f6bff","#4cc9ff","#e2f8ff","#5a7dff"],family:"Montserrat",weight:800,step:3,speed:1,glow:1,shape:"round",bg:"black",
+loop:!0,size:.76,interactive:!0,image:"",imgColors:!0,bgType:"none",bgA:"#0b1020",bgB:"#1b2a6b",bgImg:"",bgDim:.35,ox:0,oy:0,rot:0,hybrid:!1,
+fontData:"",lowq:!1},i={text:1,family:1,weight:1,step:1,size:1,image:1,bgImg:1,fontData:1
+},l={},s=/^[^A-Za-z\u0400-\u052F\u0590-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]*[\u0590-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/,c={};function u(e){
+return e<0?0:e>1?1:e}function d(e){var t=1-e;return 1-t*t*t}function f(e){return e*e*e}function h(e){return e<.5?4*e*e*e:1-Math.pow(-2*e+2,3)/2}
+function m(e){return e-Math.floor(e)}function p(e){var t=7.5625,a=2.75
+;return e<1/a?t*e*e:e<2/a?t*(e-=1.5/a)*e+.75:e<2.5/a?t*(e-=2.25/a)*e+.9375:t*(e-=2.625/a)*e+.984375}function g(e){var t=1.70158
+;return 1+2.70158*Math.pow(e-1,3)+t*Math.pow(e-1,2)}function v(e,t){var a=43758.5453*Math.sin(127.1*e+311.7*t);return a-Math.floor(a)}function b(e){
+return 3===(e=String(e).replace("#","")).length&&(e=e[0]+e[0]+e[1]+e[1]+e[2]+e[2]),
+[parseInt(e.slice(0,2),16)||0,parseInt(e.slice(2,4),16)||0,parseInt(e.slice(4,6),16)||0]}function y(e){return l[e]||(l[e]=new Promise(function(t){
+var a=new Image;a.onload=function(){t(a)},a.onerror=function(){t(null)},a.src=e})),l[e]}function w(e,t,a,n){if(n){var r="data|"+e+"|"+n.length
+;return c[r]||(c[r]=new Promise(function(a){try{new FontFace(e,"url("+n+")").load().then(function(e){document.fonts.add(e),a({ok:!0,weight:400})
+},function(){a({ok:!1,weight:t})})}catch(e){a({ok:!1,weight:t})}})),c[r]}var o=e+"|"+t;return c[o]||(c[o]=new Promise(function(a){
+var n=encodeURIComponent(e).replace(/%20/g,"+");function r(e,t){var a,n=document.createElement("link"),r=!1;function o(e){r||(r=!0,clearTimeout(a),
+!e&&n.parentNode&&n.parentNode.removeChild(n),t(e))}n.rel="stylesheet",n.href=e,n.onload=function(){o(!0)},n.onerror=function(){o(!1)},
+a=setTimeout(function(){o(!1)},3500),document.head.appendChild(n)}
+r("https://fonts.googleapis.com/css2?family="+n+":wght@"+t+"&display=swap",function(e){if(e)return a({ok:!0,weight:t})
+;r("https://fonts.googleapis.com/css2?family="+n+"&display=swap",function(e){a(e?{ok:!0,weight:400}:{ok:!1,weight:t})})})})),c[o].then(function(t){
+if(!t.ok)return t;var n=t.weight+' 64px "'+e+'"',r=new Promise(function(e){setTimeout(e,2500)})
+;return Promise.race([document.fonts.load(n,a||"AaBb0123"),r]).then(function(){return t},function(){return t})})}function x(i,l){var c,x={}
+;for(c in o)x[c]=o[c];for(c in l||{})x[c]=l[c]
+;var M,S,A,C,E,T,k,F,P,L,O,N,G,B,R,I,D,j,q=i.getContext("2d"),V=0,W=0,J=1,z=1,H=0,U=2,Y=0,$=-9999,X=-9999,Q=[],_=!1,K=null,Z=null,ee=null,te=null,ae=null,ne=null,re=null,oe=null,ie=null,le=null,se=null,ce=[],ue=[],de="",fe=new Int32Array(292),he=new Int32Array(292),me=new Float32Array(12)
+;function pe(e,t){var a,n,r,o,i=[],l=[];for(n=0;n<W;n+=t)for(a=0;a<V;a+=t)r=Math.min(V-1,a+Math.random()*t|0),
+e[4*((o=Math.min(W-1,n+Math.random()*t|0))*V+r)+3]>110&&(i.push(r),l.push(o));return[i,l]}function ge(e,t){
+return"rgba("+(0|e[0])+","+(0|e[1])+","+(0|e[2])+","+t+")"}function ve(e,t,a){return[e[0]+(t[0]-e[0])*a,e[1]+(t[1]-e[1])*a,e[2]+(t[2]-e[2])*a]}
+function be(){q.setTransform(J,0,0,J,0,0);var e=x.bgType;if("color"===e)q.fillStyle=x.bgA,q.fillRect(0,0,V,W);else if("gradient"===e){
+var t=q.createLinearGradient(0,0,V,W);t.addColorStop(0,x.bgA),t.addColorStop(1,x.bgB),q.fillStyle=t,q.fillRect(0,0,V,W)}else if("image"===e&&ie){
+var a=Math.max(V/ie.width,W/ie.height),n=ie.width*a,r=ie.height*a;q.drawImage(ie,(V-n)/2,(W-r)/2,n,r),
+x.bgDim>0&&(q.fillStyle="rgba(0,0,0,"+x.bgDim+")",q.fillRect(0,0,V,W))}}function ye(o,l){var s=l||"transparent"===x.bg;q.setTransform(1,0,0,1,0,0),
+q.globalCompositeOperation="source-over",q.globalAlpha=1,s?q.clearRect(0,0,i.width,i.height):(q.fillStyle="#000",q.fillRect(0,0,i.width,i.height))
+;var c=-1;if((0|x.mode)>=19&&K&&!x.image){var y,w=r[0|x.mode]||r[0],Y=x.hybrid&&H>0;if(Y){var re=w.out+4.6;y=w.P===1/0?o:x.loop?o%re:Math.min(o,w.out)
+}else y=w.P===1/0?o:x.loop?o%w.P:Math.min(o,w.out);if(!(Y&&y>=w.out))return void function(t,a,n,r){var o,i=K,l=i.size,s=x.glow,c=x.stops.map(b)
+;c.length<2&&c.push(c[0]||[255,255,255]);var m=c[0],p=c[1],y=c[2]||c[1],w=[255,255,255];function M(e){
+var t=c.length,a=(e%1+1)%1*t,n=Math.floor(a)%t,r=a-Math.floor(a),o=(n+1)%t;return ve(c[n],c[o],r)}function S(e){return e*J}function A(e){
+i.lines.forEach(function(t,a){q.direction=t.rtl?"rtl":"ltr",e(t,a)})}function C(){ee.setTransform(1,0,0,1,0,0),ee.clearRect(0,0,Z.width,Z.height),
+ee.setTransform(J,0,0,J,0,0),ee.globalCompositeOperation="source-over",ee.globalAlpha=1,ee.shadowBlur=0,ee.font=i.font,ee.textAlign="center",
+ee.textBaseline="alphabetic",ee.lineJoin="round"}function E(e){i.lines.forEach(function(t,a){ee.direction=t.rtl?"rtl":"ltr",e(t,a)})}
+function T(e,t,a,n,r,o,i,l){C(),ee.lineWidth=2*e,ee.strokeStyle=t,ee.lineCap="round",i&&ee.setLineDash(i),E(function(e){ee.strokeText(e.text,V/2,e.y)
+}),ee.setLineDash([]),ee.globalCompositeOperation="destination-out",ee.fillStyle="#000",E(function(e){ee.fillText(e.text,V/2,e.y)}),q.save(),
+q.globalAlpha=a,q.globalCompositeOperation=o||"source-over",q.shadowColor=r||"transparent",q.shadowBlur=S(n),q.drawImage(Z,l||0,0,V,W),q.restore()}
+function k(e,t,a,n){var r,o,i=Math.max(1,Math.round(e*J)),l=Math.max(0,Math.floor(t*J)),s=Math.min(Z.height,Math.ceil(a*J))
+;for(r=l;r<s;r+=i)o=Math.min(i,Z.height-r),q.drawImage(Z,0,r,Z.width,o,n(r/J),r/J,V,o/J)}q.setTransform(J,0,0,J,0,0),
+q.globalCompositeOperation="source-over",q.globalAlpha=1,q.font=i.font,q.textAlign="center",q.textBaseline="alphabetic",q.lineJoin="round",
+q.lineCap="round";var F,P,L,O,N,G,B=u((n-r)/1.2),R=u(n/.7),I=R*(1-B),D=V/2,j=i.top,H=i.bottom,U=V,Y=W;switch(t){case 19:var $=1;if(n<1.8){var X=n/1.8
+;$=n>1.6||v(Math.floor(16*n),3)<(.2+.8*X)*(.3+.7*X)?1:.1}else if(n>=r){var Q=(n-r)/1.4;$=Q>=1?0:(v(Math.floor(14*n),5)>.9*Q?1:.08)*(1-.6*Q)
+}else v(Math.floor(5*a),7)>.975&&($=.45);var _=.05*l;[[1*_,p,.22,38],[.6*_,p,.6,20],[.34*_,y,.95,8],[.14*_,w,1,3]].forEach(function(e){
+T(e[0],ge(e[1],1),Math.min(1,e[2]*$),e[3]*s*z,ge(p,1),"lighter")}),q.shadowBlur=0,q.globalAlpha=.07*$,q.fillStyle=ge(p,1),A(function(e){
+q.fillText(e.text,D,e.y)});break;case 20:
+var re=d(u(n/1.4))*(1-f(u((n-r)/1.2))),oe=.16*l*re,ie=.75+.4*Math.sin(.9*a),le=Math.cos(ie),se=Math.sin(ie),ce=Math.max(1,Math.min(70,Math.round(oe/(1.1*z))))
+;for(q.globalAlpha=Math.min(1,3*n)*(1-B*B),o=ce;o>=1;o--){var ue=oe*o/ce,de=ve(ve(m,[0,0,0],.55),m,1-o/ce);q.fillStyle=ge(de,1),A(function(e){
+q.fillText(e.text,D+le*ue,e.y+se*ue)})}var fe=q.createLinearGradient(0,j,0,H);fe.addColorStop(0,ge(ve(y,w,.35),1)),fe.addColorStop(1,ge(p,1)),
+q.fillStyle=fe,q.shadowColor=ge(p,.5),q.shadowBlur=S(14*s*z),A(function(e){q.fillText(e.text,D,e.y)}),q.shadowBlur=0,
+T(Math.max(1,.012*l),ge(ve(y,w,.7),1),.8*q.globalAlpha,0,null);break;case 21:C();var he=ee.createLinearGradient(0,j,0,H)
+;he.addColorStop(0,ge(ve(y,w,.85),1)),he.addColorStop(.42,ge(ve(p,w,.35),1)),he.addColorStop(.5,ge(ve(m,[0,0,0],.8),1)),
+he.addColorStop(.56,ge(ve(m,[0,0,0],.45),1)),he.addColorStop(1,ge(ve(y,w,.3),1)),ee.lineWidth=.03*l,ee.strokeStyle=ge(ve(m,[0,0,0],.7),1),
+E(function(e){ee.strokeText(e.text,D,e.y)}),ee.fillStyle=he,E(function(e){ee.fillText(e.text,D,e.y)}),ee.globalCompositeOperation="source-atop"
+;var me=(.45*a%1.7-.35)*U,pe=ee.createLinearGradient(me-.5*l,j,me+.5*l,H);pe.addColorStop(0,"rgba(255,255,255,0)"),
+pe.addColorStop(.5,"rgba(255,255,255,0.85)"),pe.addColorStop(1,"rgba(255,255,255,0)"),ee.fillStyle=pe,ee.fillRect(0,j-10,U,H-j+20)
+;var be=.92+.08*d(u(n/1));q.globalAlpha=I,q.shadowColor=ge(p,.55),q.shadowBlur=S(22*s*z),q.save(),q.translate(D,(j+H)/2),q.scale(be,be),
+q.translate(-D,-(j+H)/2),q.drawImage(Z,0,0,U,Y),q.restore();break;case 22:
+var ye=h(u(n/2)),we=u((n-r)/1.4),xe=ye*(1-f(we)),Me=u((n-1.8)/.9)*(1-u(1.6*we))
+;T(Math.max(1.5,.02*l),ge(ve(p,w,.25),1),1,14*s*z,ge(p,.9),"source-over",[8*l*xe+.01,60*l]);var Se=q.createLinearGradient(D-.4*U,0,D+.4*U,0)
+;Se.addColorStop(0,ge(m,1)),Se.addColorStop(.5,ge(p,1)),Se.addColorStop(1,ge(y,1)),q.globalAlpha=Me,q.fillStyle=Se,A(function(e){
+q.fillText(e.text,D,e.y)});break;case 23:var Ae=U,Ce=-.18*a%1*Ae,Ee=q.createLinearGradient(Ce,0,Ce+2*Ae,0)
+;for(o=0;o<=8;o++)Ee.addColorStop(o/8,ge(c[o%4%c.length],1));q.fillStyle=Ee,q.shadowColor=ge(p,.55),q.shadowBlur=S(20*s*z),A(function(e,t){
+var o=u((n-.18*t)/1),i=u((n-r-.1*t)/.9);q.globalAlpha=o*(1-i),q.fillText(e.text,D,e.y+(1-d(o))*l*.5-f(i)*l*.4+Math.sin(1.6*a+t)*l*.012)});break
+;case 24:C();var Te=ee.createLinearGradient(0,j,0,H);Te.addColorStop(0,"rgba(255,255,255,0.30)"),Te.addColorStop(.5,"rgba(255,255,255,0.10)"),
+Te.addColorStop(1,"rgba(255,255,255,0.18)"),ee.fillStyle=Te,E(function(e){ee.fillText(e.text,D,e.y)}),ee.globalCompositeOperation="source-atop"
+;var ke=(.35*a%1.7-.35)*U,Fe=ee.createLinearGradient(ke-.4*l,j,ke+.4*l,H);Fe.addColorStop(0,"rgba(255,255,255,0)"),
+Fe.addColorStop(.5,"rgba(255,255,255,0.7)"),Fe.addColorStop(1,"rgba(255,255,255,0)"),ee.fillStyle=Fe,ee.fillRect(0,j-10,U,H-j+20),q.globalAlpha=I,
+q.shadowColor=ge(p,.9),q.shadowBlur=S(28*s*z),q.drawImage(Z,0,(1-d(R))*l*.2,U,Y),q.shadowBlur=0,
+T(Math.max(1.2,.012*l),"rgba(255,255,255,0.85)",I,10*s*z,ge(p,.9));break;case 25:C();var Pe=ee.createLinearGradient(0,j,0,H)
+;Pe.addColorStop(0,ge(ve(y,w,.3),1)),Pe.addColorStop(.5,ge(p,1)),Pe.addColorStop(1,ge(m,1)),ee.fillStyle=Pe,E(function(e){ee.fillText(e.text,D,e.y)}),
+ee.globalCompositeOperation="destination-out";var Le,Oe=j+.5*(H-j),Ne=Math.max(4,.085*l),Ge=0;for(Le=Oe;Le<H;Le+=Ne,
+Ge++)ee.fillRect(0,Le,U,Math.min(.9*Ne,1+Ge*l*.012));var Be=(1-d(u(n/1.2)))*U*.18,Re=I;q.globalAlpha=Re,q.shadowColor=ge(p,.95),
+q.shadowBlur=S(18*s*z),q.drawImage(Z,Be,0,U,Y),q.shadowBlur=0,T(Math.max(1.5,.012*l),ge(ve(p,w,.3),1),Re,10*s*z,ge(p,.95),"source-over",null,Be);break
+;case 26:var Ie=Math.floor(10*a),De=v(Ie,1)>.72||n<1&&v(Ie,4)>.4||n>=r&&v(Ie,6)>.35,je=(De?5+11*v(Ie,2):1.2)*z,qe=(H-j)/10,Ve=u(n/.9)*(1-u((n-r)/.9))
+;q.globalCompositeOperation="lighter",[[255,0,40],[0,255,90],[30,90,255]].forEach(function(e,t){if(q.fillStyle=ge(e,.95),De)for(var a=0;a<10;a++){
+var n=v(Ie,a+3)>.55?70*(v(Ie,a+9)-.5)*z:0;q.save(),q.beginPath(),q.rect(0,j+a*qe,U,qe+.5),q.clip(),A(function(e){q.fillText(e.text,D+n+(t-1)*je,e.y)
+}),q.restore()}else q.save(),q.beginPath(),q.rect(0,j-6,U,(H-j+12)*Ve),q.clip(),A(function(e){q.fillText(e.text,D+(t-1)*je,e.y)}),q.restore()}),
+q.globalCompositeOperation="source-over",q.globalAlpha=.28*Ve,q.fillStyle=ge(p,1),A(function(e){q.fillText(e.text,D,e.y)});break;case 27:var We=0,Je=0
+;i.lines.forEach(function(e){Je+=e.units.length}),q.textAlign="left",i.lines.forEach(function(e){q.direction=e.rtl?"rtl":"ltr",
+e.units.forEach(function(t){
+var o=u((n-.1-We*Math.min(.07,1.4/Je))/.7),c=g(o),d=f(u((n-r-We*Math.min(.04,.8/Je))/.6)),h=c*(1-d),m=Math.sin(2.4*a+.55*We)*l*.03*o*(1-d)
+;h>.002&&t.s.trim()&&(q.save(),q.translate(t.x+t.w/2,e.y-i.capH/2+(1-o)*l*.7+d*l*.5+m),q.rotate(-.6*(1-o)+.8*d),q.scale(h,h),
+q.fillStyle=ge(M(t.x/U*.8+.08*a),1),q.shadowColor=ge(p,.6),q.shadowBlur=S(12*s*z),q.fillText(t.s,-t.w/2,i.capH/2),q.restore()),We++})});break;case 28:
+var ze=D+Math.sin(.9*a)*U*.33,He=(j+H)/2;C(),ee.fillStyle=ge(ve(y,w,.5),1),E(function(e){ee.fillText(e.text,D,e.y)}),
+ee.globalCompositeOperation="destination-in";var Ue=ee.createRadialGradient(ze,He,0,ze,He,2.4*l);Ue.addColorStop(0,"rgba(0,0,0,1)"),
+Ue.addColorStop(.55,"rgba(0,0,0,0.85)"),Ue.addColorStop(1,"rgba(0,0,0,0)"),ee.fillStyle=Ue,ee.fillRect(0,0,U,Y),q.globalAlpha=.16*I,
+q.fillStyle=ge(p,1),A(function(e){q.fillText(e.text,D,e.y)}),q.globalAlpha=I,q.shadowColor=ge(p,.8),q.shadowBlur=S(26*s*z),q.drawImage(Z,0,0,U,Y),
+q.shadowBlur=0,q.globalCompositeOperation="lighter",q.globalAlpha=.14*I;var Ye=q.createRadialGradient(ze,He,0,ze,He,3.2*l);Ye.addColorStop(0,ge(p,1)),
+Ye.addColorStop(1,ge(p,0)),q.fillStyle=Ye,q.fillRect(0,0,U,Y);break;case 29:
+var $e=.34*-l,Xe=d(u(n/1.2)),Qe=H+$e-.22*l,_e=q.createLinearGradient(0,j+$e,0,H+$e);_e.addColorStop(0,ge(ve(y,w,.4),1)),_e.addColorStop(1,ge(p,1)),
+q.globalAlpha=I,q.fillStyle=_e,q.shadowColor=ge(p,.6),q.shadowBlur=S(18*s*z);var Ke=(1-Xe)*l*.3;A(function(e){q.fillText(e.text,D,e.y+$e+Ke)}),
+q.shadowBlur=0,C(),ee.setTransform(J,0,0,-J,0,2*Qe*J),ee.fillStyle=ge(p,1),ee.font=i.font,ee.textAlign="center",E(function(e){
+ee.fillText(e.text,D,e.y+$e+Ke)}),ee.setTransform(J,0,0,J,0,0),ee.globalCompositeOperation="destination-in"
+;var Ze=ee.createLinearGradient(0,Qe,0,Qe+1*l);Ze.addColorStop(0,"rgba(0,0,0,0.5)"),Ze.addColorStop(1,"rgba(0,0,0,0)"),ee.fillStyle=Ze,
+ee.fillRect(0,Qe,U,1.2*l),q.globalAlpha=I;var et,tt=Math.max(2,Math.round(3*J)),at=Z.height
+;for(et=Math.floor(Qe*J);et<Math.min(at,(Qe+1.2*l)*J);et+=tt){var nt=3*Math.sin(.09*et+3*a)*z*J;q.drawImage(Z,0,et,Z.width,tt,nt/J,et/J,U,tt/J)}
+var rt=q.createLinearGradient(D-.4*U,0,D+.4*U,0);rt.addColorStop(0,ge(p,0)),rt.addColorStop(.5,ge(p,.9)),rt.addColorStop(1,ge(p,0)),q.fillStyle=rt,
+q.globalAlpha=.9*I,q.fillRect(D-.4*U,Qe-1,.8*U,2);break;case 30:
+var ot=d(u(n/1.2))*(1-f(u((n-r)/1))),it=.95*l*ot,lt=Math.max(1,Math.min(170,Math.round(it/1.4))),st=(1-ot)*-U*.06,ct=ve(m,[0,0,0],.55)
+;for(q.globalAlpha=Math.min(1,3*n),o=lt;o>=1;o--){var ut=it*o/lt*.7071;q.fillStyle=ge(ct,.9*Math.pow(1-o/(lt+1),.8)),A(function(e){
+q.fillText(e.text,D+ut+st,e.y+ut)})}q.fillStyle=ge(ve(y,w,.55),1),A(function(e){q.fillText(e.text,D+st,e.y)});break;case 31:var dt=0
+;i.lines.forEach(function(e){dt+=e.units.length});var ft=Math.min(3.2,Math.max(1.2,dt/14)),ht=u((n-.3)/ft)*(1-u((n-r)/1)),mt=ht*dt,pt=null,gt=0
+;q.fillStyle=ge(ve(y,w,.3),1),q.shadowColor=ge(p,.7),q.shadowBlur=S(10*s*z);var vt=0;i.lines.forEach(function(e){q.direction=e.rtl?"rtl":"ltr"
+;var t,a,n=e.units.length,r=Math.max(0,Math.min(n,Math.floor(mt-vt)));r>0?(e.rtl?(t=e.units[r-1].x,a=e.xl+e.w+4):(t=e.xl-4,
+a=e.units[r-1].x+e.units[r-1].w),q.save(),q.beginPath(),q.rect(t,e.y-1.3*i.capH,a-t+2,1.9*i.capH),q.clip(),q.fillText(e.text,D,e.y),q.restore(),
+pt=e.rtl?t:a,gt=e.y):null===pt&&vt<=mt&&(pt=e.rtl?e.xl+e.w:e.xl,gt=e.y),vt+=n}),
+null!==pt&&(Math.floor(2*a)%2==0||ht>0&&ht<1)&&n<r+1.2&&(q.shadowBlur=S(14*s*z),q.fillStyle=ge(p,1),
+q.fillRect(pt+(i.lines[0].rtl?.09*-l:3),gt-1.05*i.capH,Math.max(2,.06*l),1.3*i.capH));break;case 32:C();var bt=ee.createLinearGradient(0,H,0,j-.1*l)
+;bt.addColorStop(0,ge(ve(y,w,.65),1)),bt.addColorStop(.3,ge(y,1)),bt.addColorStop(.7,ge(p,1)),bt.addColorStop(1,ge(m,1)),ee.fillStyle=bt,
+E(function(e){ee.fillText(e.text,D,e.y)}),q.globalAlpha=.55*I,q.shadowColor=ge(p,1),q.shadowBlur=S(34*s*z),
+q.drawImage(Z,0,.05*-l*(.6+.4*Math.sin(7*a)),U,Y),q.shadowBlur=0,q.globalAlpha=I,k(2,j-.3*l,H+.3*l,function(e){var t=u((H-e)/(H-j))
+;return(.6*Math.sin(.07*e+9*a)+.4*Math.sin(.13*e-6.5*a))*l*(.018+.065*t)});break;case 33:C();var yt=ee.createLinearGradient(0,j,0,H)
+;yt.addColorStop(0,ge(ve(y,w,.55),1)),yt.addColorStop(.5,ge(p,1)),yt.addColorStop(1,ge(m,1)),ee.fillStyle=yt,E(function(e){ee.fillText(e.text,D,e.y)})
+;var wt=1-d(u(n/1.8))+f(B),xt=l*(.014+.1*wt);q.globalAlpha=.5*I,q.shadowColor=ge(p,.8),q.shadowBlur=S(18*s*z),q.drawImage(Z,0,0,U,Y),q.shadowBlur=0,
+q.globalAlpha=I,k(2,j-.2*l,H+.2*l,function(e){return Math.sin(.11*e+3.2*a)*xt}),q.globalCompositeOperation="lighter",q.globalAlpha=.28*I,
+k(2,j-.2*l,H+.2*l,function(e){return Math.sin(.17*e-2.4*a+1.3)*xt*1.2});break;case 34:
+var Mt=.8*a,St=Math.cos(Mt),At=Math.sin(Mt),Ct=.016*l*d(u(n/1))*(1-B),Et=0;i.lines.forEach(function(e){Et=Math.max(Et,e.w)})
+;var Tt=.4*l,kt=D-Et/2-Tt,Ft=j-.7*Tt,Pt=Et+2*Tt,Lt=H-j+1.4*Tt,Ot=ve(m,[120,120,128],.6);q.globalAlpha=I;var Nt=q.createLinearGradient(0,Ft,0,Ft+Lt)
+;Nt.addColorStop(0,ge(ve(Ot,w,.14),1)),Nt.addColorStop(1,ge(ve(Ot,[0,0,0],.3),1)),q.fillStyle=Nt,P=kt,L=Ft,O=Pt,N=Lt,G=.12*l,(F=q).beginPath(),
+F.moveTo(P+G,L),F.arcTo(P+O,L,P+O,L+N,G),F.arcTo(P+O,L+N,P,L+N,G),F.arcTo(P,L+N,P,L,G),F.arcTo(P,L,P+O,L,G),F.closePath(),q.fill(),
+q.fillStyle="rgba(0,0,0,0.7)",A(function(e){q.fillText(e.text,D+St*Ct*1.4,e.y+At*Ct*1.4)}),q.fillStyle="rgba(255,255,255,0.6)",A(function(e){
+q.fillText(e.text,D-St*Ct*1.2,e.y-At*Ct*1.2)}),q.fillStyle=ge(ve(Ot,[0,0,0],.08),1),A(function(e){q.fillText(e.text,D,e.y)});break;case 35:var Gt
+;for(Gt=0;Gt<4;Gt++){
+var Bt=u((n-.18*Gt)/.8),Rt=u((n-r-.08*Gt)/.7),It=g(Bt)*(1-f(Rt)),Dt=M(.23*Gt+.05),jt=(3-Gt)*l*.034,qt=Math.sin(.9*a)*(Gt-1.5)*l*.012;q.save(),
+q.translate(D+qt,(j+H)/2+(1-Bt)*l*.4),q.scale(Math.max(.001,It),Math.max(.001,It)),q.translate(-D,-(j+H)/2),q.shadowColor="rgba(0,0,0,0.5)",
+q.shadowBlur=S(10*z),q.shadowOffsetY=4*z*J,q.fillStyle=ge(Dt,1),q.strokeStyle=ge(Dt,1),q.lineWidth=Math.max(.01,2*jt),A(function(e){
+jt>.1&&q.strokeText(e.text,D,e.y),q.fillText(e.text,D,e.y)}),q.restore()}break;case 36:if(!te)break;var Vt=Math.max(4,.05*l),Wt=.4*Vt,Jt=0
+;i.lines.forEach(function(e){Jt=Math.max(Jt,e.w)})
+;var zt,Ht,Ut,Yt=Math.max(0,Math.floor(D-Jt/2-2*Vt)),$t=Math.min(U,Math.ceil(D+Jt/2+2*Vt)),Xt=Math.max(0,Math.floor(j-2*Vt)),Qt=Math.min(Y,Math.ceil(H+2*Vt)),_t=(xe=n<r?d(u(n/1.6)):1-f(u((n-r)/1.2)),
+[]),Kt=[];for(zt=0;zt<16;zt++)_t.push([]);for(Ut=Xt+Vt/2;Ut<Qt;Ut+=Vt)for(Ht=Yt+Vt/2;Ht<$t;Ht+=Vt){var Zt=0|Ht,ea=0|Ut,ta=(Ht-Yt)/Math.max(1,$t-Yt)
+;if(Zt<U&&ea<Y&&te[4*(ea*U+Zt)+3]>110&&ta<xe+.12*(v(Zt,ea)-.5)){var aa=((.8*ta+.12*a)%1+1)%1;_t[Math.min(15,Math.floor(16*aa))].push(Ht,Ut)
+}else Kt.push(Ht,Ut)}for(q.globalAlpha=I>0?1:0,q.fillStyle="rgba(255,255,255,0.07)",q.beginPath(),o=0;o<Kt.length;o+=2)q.moveTo(Kt[o]+Wt,Kt[o+1]),
+q.arc(Kt[o],Kt[o+1],Wt,0,e);for(q.fill(),q.globalCompositeOperation="lighter",zt=0;zt<16;zt++){var na=_t[zt];if(na.length){var ra=M((zt+.5)/16)
+;[[1.9,.2],[1,1]].forEach(function(t){q.fillStyle=ge(1===t[1]?ve(ra,w,.25):ra,t[1]),q.beginPath()
+;for(var a=0;a<na.length;a+=2)q.moveTo(na[a]+Wt*t[0],na[a+1]),q.arc(na[a],na[a+1],Wt*t[0],0,e);q.fill()})}}break;case 37:C()
+;var oa=ee.createLinearGradient(0,j,0,H);oa.addColorStop(0,ge(ve(y,w,.3),1)),oa.addColorStop(1,ge(p,1)),ee.fillStyle=oa,E(function(e){
+ee.fillText(e.text,D,e.y)});var ia,la=(H-j)/9;for(q.shadowColor=ge(p,.6),q.shadowBlur=S(10*s*z),ia=0;ia<9;ia++){
+var sa=u((n-.07*ia)/.9),ca=u((n-r-.05*ia)/.8),ua=(ia%2?1:-1)*U*(1-d(sa)+f(ca))+2*Math.sin(1.5*a+ia)*z*(sa>.99?1:0),da=Math.max(0,Math.floor((j+ia*la)*J)),fa=Math.min(Math.ceil(la*J)+1,Z.height-da)
+;fa>0&&q.drawImage(Z,0,da,Z.width,fa,ua,da/J,U,fa/J)}break;case 38:C();var ha=ee.createLinearGradient(0,j,0,H);ha.addColorStop(0,ge(ve(y,w,.3),1)),
+ha.addColorStop(1,ge(p,1)),ee.fillStyle=ha,E(function(e){ee.fillText(e.text,D,e.y)});var ma=1+(1-d(u(n/1.8))+f(B))*l*.22
+;if(q.globalAlpha=u(3*n)*(1-.8*B),q.shadowColor=ge(p,.6),q.shadowBlur=S(14*s*z),ma<1.6)q.drawImage(Z,0,0,U,Y);else{
+var pa=Math.max(1,Math.ceil(U/ma)),ga=Math.max(1,Math.ceil(Y/ma));ae||(ae=document.createElement("canvas"),ne=ae.getContext("2d")),ae.width=pa,
+ae.height=ga,ne.imageSmoothingQuality="high",ne.drawImage(Z,0,0,Z.width,Z.height,0,0,pa,ga),q.imageSmoothingEnabled=!1,
+q.drawImage(ae,0,0,pa,ga,0,0,pa*ma,ga*ma),q.imageSmoothingEnabled=!0}break;case 39:C();var va=ee.createLinearGradient(0,j,0,H)
+;va.addColorStop(0,ge(ve(y,w,.3),1)),va.addColorStop(1,ge(p,1)),ee.fillStyle=va,E(function(e){ee.fillText(e.text,D,e.y)})
+;var ba,ya=n<r?1-d(u(n/1.5)):f(u((n-r)/1.6)),wa=Math.max(1,Math.round(2*J));for(ba=0;ba<Z.width;ba+=wa){
+var xa=v(Math.floor(ba/wa),11),Ma=Math.min(1,ya*(.5+xa)),Sa=1+1.6*Ma;q.globalAlpha=1-.85*Ma,
+q.drawImage(Z,ba,0,wa,Z.height,ba/J,j*(1-Sa)+Ma*l*(.2+xa),wa/J,Y*Sa)}break;case 40:var Aa;for(C(),ee.fillStyle=ge(ve(p,w,.35),1),E(function(e){
+ee.fillText(e.text,D,e.y)}),ee.globalCompositeOperation="destination-out",ee.fillStyle="rgba(0,0,0,0.5)",Aa=j;Aa<H;Aa+=3*z)ee.fillRect(0,Aa,U,1.4*z)
+;ee.globalCompositeOperation="source-atop";var Ca=j+(.45*a%1.4-.2)*(H-j),Ea=ee.createLinearGradient(0,Ca-.2*l,0,Ca+.2*l)
+;Ea.addColorStop(0,"rgba(255,255,255,0)"),Ea.addColorStop(.5,"rgba(255,255,255,0.85)"),Ea.addColorStop(1,"rgba(255,255,255,0)"),ee.fillStyle=Ea,
+ee.fillRect(0,Ca-.2*l,U,.4*l)
+;var Ta=.8+.2*v(Math.floor(18*a),9),ka=v(Math.floor(7*a),3)>.92?12*(v(Math.floor(7*a),5)-.5)*z:0,Fa=n<r?d(u(n/1.2)):1-f(u((n-r)/1));q.save(),
+q.beginPath(),q.rect(0,j-.15*l,U,(H-j+.3*l)*Fa),q.clip(),q.globalCompositeOperation="lighter",q.globalAlpha=.3*Ta,q.drawImage(Z,-3*z+ka,0,U,Y),
+q.drawImage(Z,3*z+ka,0,U,Y),q.globalAlpha=Ta,q.shadowColor=ge(p,.9),q.shadowBlur=S(24*s*z),q.drawImage(Z,ka,0,U,Y),q.restore();break;case 41:
+var Pa=u(n/.7),La=Math.max(.001,g(Pa)*(1-f(u((n-r)/.7))));C(),ee.lineWidth=.14*l,ee.strokeStyle="#ffffff",ee.fillStyle="#ffffff",E(function(e){
+ee.strokeText(e.text,D,e.y),ee.fillText(e.text,D,e.y)}),q.save(),q.translate(D,(j+H)/2),q.rotate(.02*Math.sin(1.3*a)+-.15*(1-Pa)),q.scale(La,La),
+q.translate(-D,-(j+H)/2),q.shadowColor="rgba(0,0,0,0.6)",q.shadowBlur=S(12*z),q.shadowOffsetY=7*z*J,q.drawImage(Z,0,0,U,Y),q.shadowBlur=0,
+q.shadowOffsetY=0,q.shadowColor="transparent";var Oa=q.createLinearGradient(0,j,0,H);Oa.addColorStop(0,ge(y,1)),Oa.addColorStop(1,ge(m,1)),
+q.fillStyle=Oa,A(function(e){q.fillText(e.text,D,e.y)}),q.restore()}q.shadowBlur=0,q.shadowColor="transparent",q.setLineDash([]),q.globalAlpha=1,
+q.globalCompositeOperation="source-over"}(0|x.mode,o,y,w.out);c=y-w.out+4.4}else if((0|x.mode)>=19&&x.image&&le&&se){var oe=r[0|x.mode]||r[0]
+;return void function(e,t,a){var n=x.stops.map(b);n.length<2&&n.push(n[0]||[255,255,255])
+;var r=n[1],o=se,i=x.glow,l=g(u(t/1)),s=f(u((t-a)/1)),c=Math.max(.001,l*(1-s)),d=u(3*t)*(1-s);ee.setTransform(1,0,0,1,0,0),
+ee.clearRect(0,0,Z.width,Z.height),ee.setTransform(J,0,0,J,0,0),ee.globalCompositeOperation="source-over",ee.globalAlpha=1,
+ee.drawImage(le,o.x,o.y,o.w,o.h),ee.globalCompositeOperation="source-atop"
+;var h=o.x+(.45*e%1.7-.35)*o.w,m=ee.createLinearGradient(h-.15*o.w,0,h+.15*o.w,0);m.addColorStop(0,"rgba(255,255,255,0)"),
+m.addColorStop(.5,"rgba(255,255,255,0.7)"),m.addColorStop(1,"rgba(255,255,255,0)"),ee.fillStyle=m,ee.fillRect(o.x,o.y,o.w,o.h),
+q.setTransform(J,0,0,J,0,0),q.globalAlpha=d,q.shadowColor="rgba("+(0|r[0])+","+(0|r[1])+","+(0|r[2])+",0.85)",q.shadowBlur=26*i*z*J,
+q.translate(V/2,W/2),q.scale(c,c),q.translate(-V/2,-W/2),q.drawImage(Z,0,0,V,W),q.setTransform(1,0,0,1,0,0),q.shadowBlur=0,q.globalAlpha=1
+}(o,x.loop?o%oe.P:Math.min(o,oe.out),oe.out)}if(H){x.stops.join(",")!==de&&function(){var e,a,n=x.stops.map(b),r=[]
+;for(n.length<2&&n.push(n[0]||[255,255,255]),e=n.length,a=0;a<t;a++){var o=a/t*e,i=Math.floor(o)%e,l=(i+1)%e,s=o-Math.floor(o)
+;r.push([0,1,2].map(function(e){return n[i][e]+(n[l][e]-n[i][e])*s}))}ue=[],[1,.55,.22].forEach(function(e){r.forEach(function(t){
+ue.push("rgb("+Math.round(t[0]*e)+","+Math.round(t[1]*e)+","+Math.round(t[2]*e)+")")})}),ue.push("rgb(255,40,60)","rgb(40,255,90)","rgb(50,90,255)"),
+de=x.stops.join(",")}();var ie,pe,be=(0|x.mode)>=19?0:0|x.mode,ye=r[be]||r[0],we=ye.out,xe=x.imgColors&&_
+;ie=c>=0?c:ye.P===1/0?o:x.loop?o%ye.P:Math.min(o,we);var Me=V/2,Se=W/2,Ae=x.interactive&&$>-1e3,Ce=110*Math.max(.6,z),Ee=Ce*Ce,Te=0;if(3===be){
+var ke,Fe=Math.floor(10*o),Pe=v(Fe,1)>.7;for(ke=0;ke<12;ke++)me[ke]=Pe&&v(Fe,ke+3)>.5?80*(v(Fe,ke+9)-.5)*z:0;Te=Pe&&v(Fe,2)>.35?6*z:0}
+var Le=9===be&&v(Math.floor(8*o),5)>.78?1:0,Oe=0,Ne=1,Ge=0,Be=1;if(14===be){var Re=o%1.1
+;Oe=Math.exp(-(Re-.1)*(Re-.1)*60)+.6*Math.exp(-(Re-.35)*(Re-.35)*60)}if(16===be){
+var Ie=u((ie-5.8)/1),De=-Math.PI/2*(1-d(u(ie/1.4)))+2*Math.PI*(h(u((ie-2)/1.4))+h(u((ie-4)/1.4)))+Math.PI/2*f(Ie);Ne=Math.cos(De),Ge=Math.sin(De),
+Be=1-Ie}for(fe.fill(0),pe=0;pe<H;pe++){var je=M[pe],qe=S[pe],Ve=1,We=1,Je=-1,ze=0,He=E[pe],Ue=T[pe],Ye=A[pe],$e=C[pe],Xe=F[pe],Qe=P[pe];switch(be){
+case 0:var _e=u((ie-.7*Ue)/1.9),Ke=1-d(_e),Ze=u((ie-we-1.7*Ye-.4*Ue)/2.3),et=Ze*Ze*Ze;je+=-(120+480*He)*z*Ke+(80+520*Xe)*z*et,
+qe+=260*(Qe-.5)*z*Ke+(300*(Xe-.5)-50)*z*et+30*Math.sin(2.2*ie+40*He)*z*et,Ve=Math.min(1,2*_e)*(1-Ze*Ze);break;case 1:
+var tt=u((ie-.7*Ue)/1.8),at=1-d(tt);je+=-(120+480*He)*z*at+.7*Math.sin(3.1*o+50*He),qe+=260*(Qe-.5)*z*at+.7*Math.cos(2.7*o+70*He),Ve=Math.min(1,2*tt),
+We=1+.7*Math.max(0,Math.sin(3*o-8*Ye));break;case 2:var nt;nt=ie<we?1-h(u((ie-.5*Ue)/1.8)):d(u((ie-we-.25*Ue)/1.2));var rt=(150+600*Xe)*z
+;je+=L[pe]*rt*nt+10*Math.sin(1.3*o+60*He)*z*nt,qe+=O[pe]*rt*nt+10*Math.cos(1.1*o+80*He)*z*nt,Ve=1-.4*nt;break;case 3:
+var ot=u(6*(ie-.9*$e)),it=u(5*(ie-we-.7*$e));Ve=ot*(1-it),je+=170*(He-.5)*z*(1-ot+it);var lt=Math.min(11,Math.max(0,qe/W*12|0));je+=me[lt],
+Te>0&&(je+=((Je=N[pe])-1)*Te),Ve*=.88+.12*Math.sin(40*o+30*$e);break;case 4:
+var st=u((ie-Ye-.2*Ue)/1.4),ct=1-d(st),ut=u((ie-we-Ye-.2*Ue)/1.4),dt=ut*ut,ft=M[pe]/z*.018+2.6*o,ht=st*(1-ut)
+;qe+=(80+220*Xe)*z*(ct+dt)+(12*Math.sin(ft)+6*Math.sin(.5*ft+o))*z*ht,Ve=Math.min(1,2*st)*(1-dt),We=1+.6*Math.max(0,Math.sin(ft))*ht;break;case 5:
+var mt=u((ie-Ue-.8*(1-$e))/1.3),pt=1-d(mt),gt=u((ie-we-1.5*$e-.6*Xe)/2);qe+=-(.5*W+Qe*W*.6)*pt+(.55*W+Qe*W*.5)*gt*gt,
+je+=40*(He-.5)*z*pt+110*(He-.5)*z*gt,Ve=Math.min(1,2*mt)*(1-gt*gt*gt);break;case 6:
+var vt=ie<we?1-d(u((ie-.5*Ue)/2)):f(u((ie-we-.4*Ue)/2)),bt=vt*(4+3*He),yt=Math.cos(bt),wt=Math.sin(bt),xt=1+1.6*vt*(.6+.8*Xe),Mt=je-Me,St=qe-Se
+;je=Me+(Mt*yt-St*wt)*xt,qe=Se+(Mt*wt+St*yt)*xt,Ve=1-vt*vt;break;case 8:
+var At=2.6*Ye,Ct=u(6*(ie-At)),Et=ie>=At?u(1-(ie-At)/.45):0,Tt=u(4*(ie-we-.9*(1-Ye)));je+=50*(He-.5)*z*(1-Ct),qe+=70*-Qe*z*(1-Ct)-40*z*Tt,Ve=Ct*(1-Tt),
+We=1+1.4*Et,ze=.5*Et;break;case 9:var kt=u((ie-.7*Ue)/1.4),Ft=1-d(kt);je+=-(100+300*He)*z*Ft,qe+=200*(Qe-.5)*z*Ft
+;var Pt=Math.sin(41*o+90*He)*Math.sin(7*o+30*Xe),Lt=Math.cos(37*o+80*Ue)*Math.sin(9*o+20*Qe);je+=Pt*(ht=(He<.45?1:.25)*(3+11*Le))*z,qe+=Lt*ht*z,
+Ve=Math.min(1,2*kt)*(.8+.2*Math.sin(50*o+40*He)),We=1+1.1*Le,ze=.4*Le;break;case 10:var Ot=1-d(u((ie-.5*Ue)/1.8)),Nt=(500+900*Xe)*z;je+=L[pe]*Nt*Ot,
+qe+=O[pe]*Nt*Ot;var Gt=f(u((ie-we-.3*Ue)/1.6)),Bt=1+7*Gt;je=Me+(je-Me)*Bt,qe=Se+(qe-Se)*Bt,Ve=(1-Ot*Ot)*(1-Gt);break;case 11:var Rt=ie-(.9*Ye+.15*Ue)
+;qe+=.9*-W*(1-p(u(Rt/1.3)));var It=u((ie-we-.6*(1-Ye)-.1*Ue)/.9);qe+=1.2*-W*It*It,Ve=u(8*Rt)*(1-It*It*It);break;case 12:
+var Dt=ie/1.6*1.2-.1,jt=1.2-(ie-we)/1.4*1.3,qt=ie<we?Dt:jt;Ve=u(ie<we?10*(Dt-Ye):10*(jt-Ye)+.5)
+;var Vt=u(1-16*Math.abs(Ye-qt))*(ie<1.8||ie>=we&&ie<we+1.6?1:0);We=1+2.2*Vt,ze=.45*Vt,qe+=8*(Qe-.5)*z*Vt;break;case 13:
+var Wt=je-Me,Jt=qe-Se,zt=Math.sqrt(Wt*Wt+Jt*Jt)||1,Ht=zt/(.4*V),Ut=ie<we?.6*ie:1.5-.75*(ie-we),Yt=u(7*(Ut-Ht)+(ie<we?0:.3)),$t=Math.sin(16*Ht-5*ie)*(6+10*Math.max(0,Math.sin(1.4*ie)))*z*Yt
+;je+=Wt/zt*$t,qe+=Jt/zt*$t;var Xt=u(1-9*Math.abs(Ht-Ut));Ve=Yt,We=1+1.6*Xt,ze=.35*Xt;break;case 14:var Qt=u((ie-.7*Ue)/1.6),_t=1-d(Qt),Kt=1+.05*Oe*Qt
+;je=Me+((je+=-(100+300*He)*z*_t)-Me)*Kt,qe=Se+((qe+=200*(Qe-.5)*z*_t)-Se)*Kt,Ve=Math.min(1,2*Qt),We=1+1.2*Oe*Qt,ze=.3*Oe*Qt;break;case 15:
+var Zt=g(u((ie-.3*Ue)/1.5)),ea=f(u((ie-we)/1.5)),ta=Zt*(1+6*ea);je=Me+(je-Me)*ta,qe=Se+(qe-Se)*ta,Ve=u(3*(ie-.3*Ue))*(1-ea);break;case 16:
+var aa=je-Me,na=70*(Xe-.5)*z,ra=900*z/(900*z-(-aa*Ge+na*Ne));je=Me+(aa*Ne+na*Ge)*ra,qe=Se+(qe-Se)*ra,Ve=Be*u(.55+3.5*(ra-1)),We=ra*ra;break;case 17:
+var oa=ie-2.2*Xe,ia=we+1.6*Qe;Ve=u(5*oa)*(1-u(6*(ie-ia)))*(.78+.22*Math.sin(3*o+60*He)),
+We=1+(oa>0?3*Math.exp(6*-oa):0)+(He>.9?1.6*Math.max(0,Math.sin(2*o+40*Qe)):0);break;case 18:
+var la=u((ie-we)/1.6),sa=70*(1-d(u(ie/2.2)))*z+(4+3*Math.sin(1.6*o))*z+90*f(la)*z,ca=6.2832*He+.7*o;je+=Math.cos(ca)*sa*(.4+Xe),
+qe+=Math.sin(ca)*sa*(.4+Xe),Ve=(1-.5*u(sa/(60*z)))*(1-.6*la);break;default:var ua=u((ie-.7*Ue)/1.8),da=1-d(ua);if(je+=-(120+480*He)*z*da,
+qe+=260*(Qe-.5)*z*da,Ve=Math.min(1,2*ua),He<.12+.45*(1-$e)){var fa=m(o*(.18+.35*Ue)+7.3*Xe);qe-=fa*fa*(120+220*Qe)*z*ua,
+je+=(Math.sin(1.7*o+40*He)*fa*26+(Xe-.5)*fa*40)*z*ua,Ve*=1-fa,We=1-.5*fa,ze=.3*fa}else Ve*=.82+.18*Math.sin(9*o+60*He),We=.95+.15*Math.sin(5*o+50*Xe)}
+if(Ae){var ha=je-$,ma=qe-X,pa=ha*ha+ma*ma;if(pa<Ee){var ga=Math.sqrt(pa)||1,va=1-ga/Ce,ba=va*va*Ce*.9;je+=ha/ga*ba,qe+=ma/ga*ba}}
+var ya=.75*Ye+.16*o*ye.cs+.18*He+ze;1===be&&(ya+=.18*Math.sin(7*o+40*He)+.12*Math.sin(2.3*o-6*Ye)),ya-=Math.floor(ya)
+;var wa=Ve>.66?0:Ve>.33?1:2,xa=Je>=0?192+Je:xe?a+3*j[pe]+wa:(ya*t|0)+t*wa;I[pe]=xa,fe[xa+1]++,G[pe]=je,B[pe]=qe,
+R[pe]=Ve<.04?0:U*k[pe]*(.5+.5*Ve)*(.75+.25*Math.sin(o*(4+6*He)+100*He))*We}for(pe=0;pe<n;pe++)fe[pe+1]+=fe[pe];for(pe=0;pe<=n;pe++)he[pe]=fe[pe]
+;for(pe=0;pe<H;pe++)D[he[I[pe]]++]=pe;q.globalCompositeOperation="lighter";var Ma,Sa,Aa="square"!==x.shape,Ca=-1;for(Aa&&q.beginPath(),
+Ma=0;Ma<H;Ma++)if(pe=D[Ma],!(R[pe]<=0))if(I[pe]!==Ca&&(Aa&&Ca>=0&&(q.fill(),q.beginPath()),Ca=I[pe],q.fillStyle=Ca>=a?Q[Ca-a]:ue[Ca]),Sa=R[pe]*J,Aa){
+var Ea=G[pe]*J,Ta=B[pe]*J,ka=.5*Sa;q.moveTo(Ea+ka,Ta),q.arc(Ea,Ta,ka,0,e)}else q.fillRect(G[pe]*J-Sa/2,B[pe]*J-Sa/2,Sa,Sa);if(Aa&&Ca>=0&&q.fill(),
+x.glow>0&&!x.lowq){var Fa,Pa=i;for(Fa=0;Fa<ce.length;Fa++)ce[Fa].x.globalCompositeOperation="copy",
+ce[Fa].x.drawImage(Pa,0,0,ce[Fa].c.width,ce[Fa].c.height),Pa=ce[Fa].c;q.globalAlpha=Math.min(1,.7*x.glow),q.drawImage(ce[1].c,0,0,i.width,i.height),
+q.globalAlpha=Math.min(1,.6*x.glow),q.drawImage(ce[3].c,0,0,i.width,i.height)}q.globalAlpha=1,q.globalCompositeOperation="source-over"}}return{cfg:x,
+build:function(e,t,a){var n=++Y;V=e,W=t,J=a||1,z=Math.max(.4,V/1e3),i.width=Math.round(V*J),i.height=Math.round(W*J),
+Z&&Z.width===i.width&&Z.height===i.height||((Z=document.createElement("canvas")).width=i.width,Z.height=i.height,ee=Z.getContext("2d")),ce=[]
+;var r,o=i.width,l=i.height;for(r=0;r<4;r++){o=Math.max(1,o>>1),l=Math.max(1,l>>1);var c=document.createElement("canvas");c.width=o,c.height=l,
+ce.push({c:c,x:c.getContext("2d")})}var u=x.image?Promise.resolve({ok:!0,weight:x.weight
+}):w(x.family,x.weight,x.text,x.fontData),d=x.image?y(x.image):Promise.resolve(null),f="image"===x.bgType&&x.bgImg?y(x.bgImg):Promise.resolve(null)
+;return Promise.all([u,d,f]).then(function(e){var t=e[0],a=e[1];if(ie=e[2],le=a,n!==Y)return null;var r=String(x.text).split("\n").map(function(e){
+return e.trim()}).filter(function(e){return e}).slice(0,12),o='"'+x.family+'", system-ui, sans-serif',l=document.createElement("canvas");l.width=V,
+l.height=W;var c=l.getContext("2d",{willReadFrequently:!0});if(a){var u=Math.min(V*x.size/a.width,.78*W/a.height)
+;c.drawImage(a,(V-a.width*u)/2,(W-a.height*u)/2,a.width*u,a.height*u),se={x:(V-a.width*u)/2,y:(W-a.height*u)/2,w:a.width*u,h:a.height*u}
+}else if(r.length){var d=V*x.size,f=1;c.font=t.weight+" 100px "+o,r.forEach(function(e){f=Math.max(f,c.measureText(e).width)})
+;var h=Math.min(100*d/f,1===r.length?.55*W:.8*W/(1.1*r.length));if(h<.16*W&&r.some(function(e){return e.indexOf(" ")>0})){for(var m={},p=function(e){
+return void 0!==m[e]?m[e]:m[e]=c.measureText(e).width},g=function(e){var t=[];return r.forEach(function(a){var n="";a.split(" ").forEach(function(a){
+var r=n?n+" "+a:a;!n||p(r)*e/100<=d?n=r:(t.push(n),n=a)}),n&&t.push(n)}),t},v=.3*W,b=g(v);v>.03*W;){if((b=g(v)).every(function(e){
+return p(e)*v/100<=1.001*d})&&b.length*v*1.12<=.82*W)break;v*=.94}r=b,h=v}var y=r.length;c.font=t.weight+" "+h+"px "+o,c.textAlign="center",
+c.textBaseline="alphabetic",c.fillStyle="#fff";var w=c.measureText("H").actualBoundingBoxAscent||.72*h,q=1.12*h;r.forEach(function(e,t){
+c.direction=s.test(e)?"rtl":"ltr",c.fillText(e,V/2,W/2+(t-(y-1)/2)*q+w/2)}),c.textAlign="left"
+;var J=/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/,$=r.map(function(e,t){var a=s.test(e);c.direction=a?"rtl":"ltr"
+;var n,r=c.measureText(e).width,o=V/2-r/2,i=W/2+(t-(y-1)/2)*q+w/2,l=[];if(a||J.test(e))for(var u,d=/\S+/g;u=d.exec(e);){
+var f=c.measureText(e.slice(0,u.index+u[0].length)).width,h=c.measureText(e.slice(0,u.index)).width;l.push({s:u[0],x:a?o+r-f:o+h,w:f-h})}else{var m=0
+;for(n=0;n<e.length;n++){var p=c.measureText(e.slice(0,n+1)).width;l.push({s:e.charAt(n),x:o+m,w:p-m}),m=p}}return{text:e,rtl:a,y:i,w:r,xl:o,units:l}
+});K={size:h,font:t.weight+" "+h+"px "+o,lines:$,capH:w,lh:q,top:$[0].y-1.05*w,bottom:$[$.length-1].y+.28*h},
+Z&&Z.width===i.width&&Z.height===i.height||((Z=document.createElement("canvas")).width=i.width,Z.height=i.height,ee=Z.getContext("2d"))}
+r.length&&!a||(K=null);var X=c.getImageData(0,0,V,W).data;if(te=K?X:null,a){var ae=document.createElement("canvas");ae.width=ae.height=48
+;var ne=ae.getContext("2d",{willReadFrequently:!0});ne.drawImage(a,0,0,48,48);var re,oe=ne.getImageData(0,0,48,48).data,ce=!0
+;for(re=3;re<oe.length;re+=4)if(oe[re]<245){ce=!1;break}if(ce)for(re=0;re<X.length;re+=4)if(X[re+3]>0){
+var ue=X[re]-oe[0],de=X[re+1]-oe[1],fe=X[re+2]-oe[2];ue*ue+de*de+fe*fe<4800&&(X[re+3]=0)}}var he=Math.max(1.4,x.step*z*(x.lowq?1.6:1)),me=pe(X,he)
+;me[0].length>3e4&&(me=pe(X,he*=Math.sqrt(me[0].length/3e4))),H=me[0].length,M=new Float32Array(H),S=new Float32Array(H),A=new Float32Array(H),
+C=new Float32Array(H),E=new Float32Array(H),T=new Float32Array(H),k=new Float32Array(H),F=new Float32Array(H),P=new Float32Array(H),
+L=new Float32Array(H),O=new Float32Array(H),N=new Uint8Array(H),G=new Float32Array(H),B=new Float32Array(H),R=new Float32Array(H),
+I=new Uint16Array(H),D=new Uint32Array(H),j=new Uint8Array(H);var ge,ve=1e9,be=-1e9,ye=1e9,we=-1e9;for(ge=0;ge<H;ge++){var xe=me[0][ge],Me=me[1][ge]
+;xe<ve&&(ve=xe),xe>be&&(be=xe),Me<ye&&(ye=Me),Me>we&&(we=Me)}var Se=Math.max(1,be-ve),Ae=Math.max(1,we-ye),Ce=V/2,Ee=W/2;for(ge=0;ge<H;ge++){
+M[ge]=me[0][ge],S[ge]=me[1][ge],A[ge]=(M[ge]-ve)/Se,C[ge]=(S[ge]-ye)/Ae,E[ge]=Math.random(),T[ge]=Math.random(),F[ge]=Math.random(),
+P[ge]=Math.random(),k[ge]=.6+.9*Math.random(),N[ge]=ge%3;var Te=Math.atan2(S[ge]-Ee,M[ge]-Ce)+.9*(Math.random()-.5);L[ge]=Math.cos(Te),
+O[ge]=Math.sin(Te)}if(_=!1,Q=[],a&&H){var ke,Fe=[],Pe=Math.max(1,H/4e3|0);for(ge=0;ge<H;ge+=Pe)ke=4*((0|S[ge])*V+(0|M[ge])),
+Fe.push([X[ke],X[ke+1],X[ke+2]]);var Le,Oe=function(e,t){for(var a=[e];a.length<t;){var n=-1,r=0,o=0;if(a.forEach(function(e,t){if(!(e.length<2)){
+var a,i=[255,255,255],l=[0,0,0];for(e.forEach(function(e){for(a=0;a<3;a++)e[a]<i[a]&&(i[a]=e[a]),e[a]>l[a]&&(l[a]=e[a])}),a=0;a<3;a++){
+var s=(l[a]-i[a])*e.length;s>r&&(r=s,n=t,o=a)}}}),n<0)break;var i=a[n];i.sort(function(e,t){return e[o]-t[o]});var l=i.length>>1
+;a.splice(n,1,i.slice(0,l),i.slice(l))}return a.map(function(e){var t=[0,0,0],a=e.length||1;return e.forEach(function(e){t[0]+=e[0],t[1]+=e[1],
+t[2]+=e[2]}),[Math.round(t[0]/a),Math.round(t[1]/a),Math.round(t[2]/a)]})}(Fe,32);for(ge=0;ge<H;ge++){ke=4*((0|S[ge])*V+(0|M[ge]));var Ne=0,Ge=1e9
+;for(Le=0;Le<Oe.length;Le++){var Be=X[ke]-Oe[Le][0],Re=X[ke+1]-Oe[Le][1],Ie=X[ke+2]-Oe[Le][2],De=Be*Be+Re*Re+Ie*Ie;De<Ge&&(Ge=De,Ne=Le)}j[ge]=Ne}
+Oe.forEach(function(e){[1,.55,.22].forEach(function(t){Q.push("rgb("+Math.round(e[0]*t)+","+Math.round(e[1]*t)+","+Math.round(e[2]*t)+")")})}),_=!0}
+return U=.62*he,{ok:t.ok,count:H}})},render:function(e){var t=x.bgType&&"none"!==x.bgType,a=+x.ox||0,n=+x.oy||0,r=+x.rot||0;if(t||a||n||r){ye(e,!0)
+;var o=V/2,l=W/2;a||n||r?(re&&re.width===i.width&&re.height===i.height||((re=document.createElement("canvas")).width=i.width,re.height=i.height,
+oe=re.getContext("2d")),oe.setTransform(1,0,0,1,0,0),oe.globalCompositeOperation="source-over",oe.globalAlpha=1,oe.clearRect(0,0,re.width,re.height),
+oe.drawImage(i,0,0),q.setTransform(1,0,0,1,0,0),q.globalCompositeOperation="source-over",q.globalAlpha=1,q.shadowBlur=0,
+q.clearRect(0,0,i.width,i.height),t?be():"transparent"!==x.bg&&(q.setTransform(J,0,0,J,0,0),q.fillStyle="#000",q.fillRect(0,0,V,W)),
+q.setTransform(J,0,0,J,0,0),q.translate(o+a*V/100,l+n*W/100),q.rotate(r*Math.PI/180),q.translate(-o,-l),
+q.drawImage(re,0,0,V,W)):(q.globalCompositeOperation="destination-over",be()),q.setTransform(1,0,0,1,0,0),q.globalCompositeOperation="source-over",
+q.globalAlpha=1}else ye(e,!1)},setPointer:function(e,t){$=e,X=t},recDuration:function(){var e=r[0|x.mode]||r[0]
+;return x.hybrid&&(0|x.mode)>=19?e.out+4.6:e.rec||e.P}}}function M(e,t,a){var n=t.map(function(t){return x(e,t.cfg)}),r=t.map(function(e){
+return(e.layers||[]).slice(0,6).map(function(e){var t,a=document.createElement("canvas"),n={};for(t in e)n[t]=e[t];return n.bg="transparent",
+n.bgType="none",n.rot=0,n.interactive=!1,n.image="",{c:a,e:x(a,n),delay:Math.max(0,+e.delay||0)}})}),o=[];r.forEach(function(e){e.forEach(function(e){
+o.push(e.e)})});var i=Math.max(0,+(a&&a.fade)||0),l=e.getContext("2d"),s=null,c=null,d=null,f=a&&a.beat||null;function h(e){
+return Math.max(0,+t[e].dur||0)}function m(e){return e<t.length-1?Math.min(i,.5*h(e),.5*h(e+1)):0}function p(){var e,a=0
+;for(e=0;e<t.length;e++)a+=h(e)-m(e);return Math.max(0,a)}function g(e){var a=p();if(a<=0)return[{i:0,local:e}];var n,r=e%a,o=function(){
+var e,a=[],n=0;for(e=0;e<t.length;e++)a.push(n),n+=h(e)-m(e);return a}(),i=[];for(n=0;n<t.length;n++)r>=o[n]&&r<o[n]+h(n)&&i.push({i:n,local:r-o[n]})
+;return i.length||i.push({i:t.length-1,local:r-o[t.length-1]}),i}function v(t){
+t&&t.width===e.width&&t.height===e.height||((t=document.createElement("canvas")).width=e.width,t.height=e.height);var a=t.getContext("2d")
+;return a.setTransform(1,0,0,1,0,0),a.globalCompositeOperation="copy",a.drawImage(e,0,0),t}function b(e,t){n[e].render(t)
+;var a,o=r[e],i=n[e].cfg.speed||1;for(a=0;a<o.length;a++){var s=t-o[a].delay*i;s<0||(o[a].e.render(s),l.setTransform(1,0,0,1,0,0),l.globalAlpha=1,
+l.globalCompositeOperation="source-over",l.drawImage(o[a].c,0,0))}}function y(t){if(f&&f.amount){var a=f.at(t);if(a>.02){d=v(d)
+;var n=e.width,r=e.height,o=1+.055*f.amount*a;l.setTransform(1,0,0,1,0,0),l.globalAlpha=1,l.globalCompositeOperation="copy",
+l.drawImage(d,(n-n*o)/2,(r-r*o)/2,n*o,r*o),l.globalCompositeOperation="lighter",l.globalAlpha=Math.min(.6,.35*f.amount*a),
+l.drawImage(d,(n-n*o)/2,(r-r*o)/2,n*o,r*o),l.globalAlpha=1,l.globalCompositeOperation="source-over"}}}return{engines:n,scenes:t,total:p,
+allEngines:function(){return n.concat(o)},layers:function(e){return r[e]||[]},setBeat:function(e){f=e||null},setFade:function(e){i=Math.max(0,+e||0)},
+build:function(e,t,a){var r=Promise.all(o.map(function(n){return n.build(e,t,a)}));return Promise.all(n.map(function(n){return n.build(e,t,a)
+})).then(function(e){return r.then(function(){return e.some(function(e){return!e})?null:e.filter(function(e){return!e.ok})[0]||e[0]})})},
+renderScene:function(e,t,a){b(e,t),void 0!==a&&y(a)},render:function(t){var a=g(t);if(1===a.length)return b(a[0].i,a[0].local*n[a[0].i].cfg.speed),
+y(t),a[0].i;var r=a[0],o=a[1],i=u(o.local/Math.max(1e-6,m(r.i)));return b(r.i,r.local*n[r.i].cfg.speed),s=v(s),b(o.i,o.local*n[o.i].cfg.speed),c=v(c),
+l.setTransform(1,0,0,1,0,0),l.globalAlpha=1,l.globalCompositeOperation="source-over",l.clearRect(0,0,e.width,e.height),
+l.globalCompositeOperation="lighter",l.globalAlpha=1-i,l.drawImage(s,0,0),l.globalAlpha=i,l.drawImage(c,0,0),l.globalAlpha=1,
+l.globalCompositeOperation="source-over",y(t),i>.5?o.i:r.i},setPointer:function(e,t){n.forEach(function(a){a.setPointer(e,t)})}}}return{create:x,
+createSeq:M,mount:function(e,t,a){a=a||{};var n,r={};Array.isArray(t)?n=t:t&&Array.isArray(t.scenes)?(n=t.scenes,r=t):n=[{cfg:t,dur:0}]
+;var o=document.createElement("canvas");o.style.cssText="position:absolute;left:0;top:0;width:100%;height:100%;display:block",
+"static"===getComputedStyle(e).position&&(e.style.position="relative"),e.appendChild(o)
+;var l=M(o,n,r),s=l.engines,c=r.quality||"auto",u="low"===c,d=0,f=0;l.allEngines().forEach(function(e){e.cfg.lowq=u})
+;var h=0,m=n.length>1,p=0,g=-1,v=performance.now(),b=!0,y=0,w=!1,x=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches
+;function S(){return[e.clientWidth,e.clientHeight,u?1:Math.min(window.devicePixelRatio||1,2)]}function A(e){return e&&a.onBuilt&&a.onBuilt(e),e}
+function C(){var e=S();return e[0]&&e[1]?l.build(e[0],e[1],e[2]).then(A):Promise.resolve(null)}function E(){clearTimeout(y),y=setTimeout(C,150)}
+var T=null;function k(t){var a=e.getBoundingClientRect();l.setPointer(t.clientX-a.left,t.clientY-a.top)}function F(){l.setPointer(-9999,-9999)}
+return window.ResizeObserver?(T=new ResizeObserver(E)).observe(e):window.addEventListener("resize",E),e.addEventListener("pointermove",k),
+e.addEventListener("pointerdown",k),e.addEventListener("pointerleave",F),e.addEventListener("pointercancel",F),
+window.IntersectionObserver&&new IntersectionObserver(function(e){b=e[0].isIntersecting}).observe(e),requestAnimationFrame(function e(t){if(!w){
+requestAnimationFrame(e);var n=Math.min(.1,(t-v)/1e3);if(v=t,b)if("auto"===c&&!u&&++f>60&&(n>.034?d++:d=Math.max(0,d-2),d>90&&(u=!0,
+l.allEngines().forEach(function(e){e.cfg.lowq=!0}),C(),a.onQuality&&a.onQuality("low"))),m){var r;x||(p+=n),x?(s[0].render(3.4),r=0):r=l.render(p),
+r!==g&&(g=r,a.onScene&&a.onScene(r))}else{var o=s[h];x||(p+=n*o.cfg.speed),l.renderScene(h,x?3.4:p)}}}),C(),{seq:l,canvas:o,update:function(e){
+var t,a=s[h],n=!1;for(t in e)i[t]&&a.cfg[t]!==e[t]&&(n=!0),a.cfg[t]=e[t];if(!n)return Promise.resolve(null);var r=S()
+;return r[0]&&r[1]?a.build(r[0],r[1],r[2]).then(A):Promise.resolve(null)},updateLayer:function(e,t){var a,n=l.layers(h)[e],r=!1
+;if(!n)return Promise.resolve(null);for(a in t)"delay"!==a?(i[a]&&n.e.cfg[a]!==t[a]&&(r=!0),n.e.cfg[a]=t[a]):n.delay=Math.max(0,+t[a]||0)
+;if(!r)return Promise.resolve(null);var o=S();return o[0]&&o[1]?n.e.build(o[0],o[1],o[2]).then(A):Promise.resolve(null)},setBeat:function(e){
+l.setBeat(e)},replay:function(){p=0},select:function(e){h=Math.max(0,Math.min(s.length-1,0|e)),m||(p=0)},setPlayAll:function(e){m=!!e,p=0,g=-1},
+setDur:function(e,t){n[e]&&(n[e].dur=t)},setFade:function(e){l.setFade(e)},setQuality:function(e){c=e,u="low"===e,d=0,
+l.allEngines().forEach(function(e){e.cfg.lowq=u}),C()},total:l.total,destroy:function(){w=!0,clearTimeout(y),
+T?T.disconnect():window.removeEventListener("resize",E),o.parentNode&&o.parentNode.removeChild(o)}}},loadFont:w}};!function(){
+var e=enginePack(),t=function(e){return document.querySelector(e)},a=t("#stage"),n={ar:{"סטודיו אפקטי טקסט":"استوديو تأثيرات النص",
+"כתבו טקסט בעברית, בערבית, ברוסית או באנגלית, בחרו אפקט, צבעים וגופן, ואז ייצאו סרטון, תמונה או קוד לאתר. האפקט בנוי מחלקיקים אמיתיים, ולכן האותיות נשארות חדות וללא עיוותים.":"اكتب نصًا بالعبرية أو العربية أو الروسية أو الإنجليزية، واختر التأثير والألوان والخط، ثم صدِّر فيديو أو صورة أو كودًا للموقع. التأثير مبني من جسيمات حقيقية، لذلك تبقى الحروف حادة وبلا تشوّه.",
+"שפת הממשק":"لغة الواجهة","הפעלה מחדש":"إعادة التشغيل","מסך מלא":"ملء الشاشة","איפוס הגדרות":"إعادة ضبط الإعدادات",
+"העבירו עכבר או אצבע מעל האותיות כדי לפזר את החלקיקים.":"مرّر الفأرة أو إصبعك فوق الحروف لتشتيت الجسيمات.","רצף סצנות":"تسلسل المشاهد",
+"כל סצנה היא עיצוב שלם משלה: טקסט או לוגו, אפקט, צבעים וגופן. כך אפשר לבנות פתיחה עם כמה כותרות ברצף. בחרו סצנה כדי לערוך אותה בהגדרות שמתחת, והרצף כולו מיוצא כסרטון אחד או כקוד אחד.":"كل مشهد هو تصميم كامل بذاته: نص أو شعار، تأثير، ألوان وخط. هكذا يمكنك بناء مقدمة بعدة عناوين متتالية. اختر مشهدًا لتحريره في الإعدادات أدناه، ويُصدَّر التسلسل كله كفيديو واحد أو كود واحد.",
+"הסצנות":"المشاهد","＋ סצנה חדשה":"＋ مشهد جديد","מחיקת הסצנה":"حذف المشهد","העברת הסצנה אחורה":"نقل المشهد للخلف","הקדמה":"تقديم",
+"העברת הסצנה קדימה":"نقل المشهد للأمام","דחייה":"تأخير","אורך הסצנה (שניות)":"مدة المشهد (بالثواني)","▶ נגן את כל הרצף":"▶ تشغيل التسلسل كاملاً",
+"■ עצירה וחזרה לסצנה הנבחרת":"■ إيقاف والعودة إلى المشهد المحدد","מוזיקת רקע (אופציונלי, MP3 / WAV / M4A)":"موسيقى خلفية (اختياري، MP3 / WAV / M4A)",
+"הסרה":"إزالة","עוצמה":"مستوى الصوت",
+"המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.":"تُضاف الموسيقى إلى الفيديو المُصدَّر مع تصاعد تدريجي في البداية وتلاشٍ في النهاية، وتُشغَّل أيضًا في معاينة التسلسل.",
+"עיצוב":"التصميم","הטקסט (עברית, ערבית, רוסית או אנגלית, עד 300 תווים)":"النص (عبرية أو عربية أو روسية أو إنجليزية، حتى 300 حرف)",
+"תבניות מוכנות":"قوالب جاهزة","או לוגו / תמונה במקום טקסט":"أو شعار / صورة بدل النص","הסרת הלוגו":"إزالة الشعار","צבעי הלוגו":"ألوان الشعار",
+"הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית.":"يتحول الشعار إلى جسيمات بألوانه الأصلية أو بألوان اللوحة. يُفضَّل PNG أو SVG بخلفية شفافة، وإن لم تكن هناك شفافية تُزال الخلفية تلقائيًا.",
+"אפקט":"التأثير","צבעים":"الألوان","צבע ראשון":"اللون الأول","צבע שני":"اللون الثاني","צבע שלישי":"اللون الثالث",
+"שלושה צבעים שעוברים זה לזה":"ثلاثة ألوان تنتقل من لون لآخر","גופן (Google Fonts)":"الخط (Google Fonts)",
+"סינון גופנים לפי כתב":"تصفية الخطوط حسب الكتابة","כל הגופנים":"كل الخطوط","לטינית":"اللاتينية","עברית":"العبرية","ערבית":"العربية","רוסית":"الروسية",
+"או כתבו שם גופן מ-Google Fonts, למשל Rubik Glitch":"أو اكتب اسم خط من Google Fonts، مثل Rubik Glitch",
+"שם גופן מ-Google Fonts":"اسم خط من Google Fonts","טעינת גופן":"تحميل الخط","עובי":"السُّمك","ברירת מחדל":"الافتراضي","רגיל 400":"عادي 400",
+"מודגש 700":"عريض 700","כבד 900":"ثقيل 900","צפיפות חלקיקים":"كثافة الجسيمات","מהירות":"السرعة","עוצמת זוהר":"شدة التوهج","גודל הטקסט":"حجم النص",
+"צורת חלקיק":"شكل الجسيم","רקע":"الخلفية","התנהגות":"السلوك","ייצוא":"التصدير","סרטון":"فيديو","פורמט":"الصيغة","גודל":"الحجم",
+"1920×1080 (יוטיוב, אתר)":"1920×1080 (يوتيوب، موقع)","1080×1920 (ריילס, טיקטוק, סטורי)":"1080×1920 (ريلز، تيك توك، ستوري)",
+"1080×1080 (פוסט מרובע)":"1080×1080 (منشور مربع)","קצב פריימים":"معدل الإطارات","30 פריימים לשנייה":"30 إطارًا في الثانية",
+"60 פריימים לשנייה (חלק יותר)":"60 إطارًا في الثانية (أكثر سلاسة)","אורך":"المدة","כל הרצף (אורך הסצנות)":"التسلسل كاملاً (مجموع مدد المشاهد)",
+"5 שניות":"5 ثوانٍ","10 שניות":"10 ثوانٍ","15 שניות":"15 ثانية","30 שניות":"30 ثانية","הקלטת סרטון":"تسجيل الفيديو","עצירה וסיום":"إيقاف وإنهاء",
+"שמירת הקובץ":"حفظ الملف","תמונה":"صورة",
+'תמונת PNG בגודל שנבחר בסרטון. התצוגה למעלה מקבלת את אותו יחס מסך, כך שמה שרואים הוא מה שמקבלים. עם רקע "שקוף" מתקבל קובץ עם שקיפות לעיצוב.':"صورة PNG بالحجم المحدد للفيديو. تحصل المعاينة بالأعلى على نسبة الأبعاد نفسها، فما تراه هو ما تحصل عليه. مع الخلفية «الشفافة» تحصل على ملف بشفافية للتصميم.",
+"שמירת PNG":"حفظ PNG","קוד לאתר":"كود للموقع",
+'הקוד עצמאי ולא צריך שום ספרייה. "קטע להטמעה" מתאים ל-Wix, Webflow, וורדפרס ובלוק HTML מותאם. "דף HTML מלא" נפתח ישר בדפדפן. את ה-JSON אפשר לשמור כדי לשחזר את ההגדרות.':"الكود مستقل ولا يحتاج إلى أي مكتبة. «مقطع للتضمين» مناسب لـ Wix وWebflow وWordPress وكتلة HTML مخصصة. «صفحة HTML كاملة» تُفتح مباشرة في المتصفح. يمكنك حفظ JSON لاستعادة الإعدادات.",
+"סוג הקוד":"نوع الكود","הקוד לייצוא":"الكود المُصدَّر","העתקה":"نسخ","שמירה כקובץ":"حفظ كملف",
+"טעינת הגדרות שמורות (JSON)":"تحميل إعدادات محفوظة (JSON)","הדביקו כאן JSON של הגדרות":"الصق هنا JSON للإعدادات","החלה":"تطبيق",
+"להקלטה ידנית אפשר גם להשתמש במסך מלא עם הקלטת מסך של המחשב. סרטון על רקע שחור אפשר להניח מעל וידאו אחר בעורך עם מצב מיזוג Screen או Add, והשחור נעלם.":"للتسجيل اليدوي يمكنك أيضًا استخدام ملء الشاشة مع تسجيل شاشة الحاسوب. يمكن وضع الفيديو ذي الخلفية السوداء فوق فيديو آخر في برنامج المونتاج بوضع الدمج Screen أو Add فيختفي اللون الأسود.",
+"קרח":"جليد","ניאון":"نيون","להבה":"لهب","זהב":"ذهب","זוהר":"شفق","שקיעה":"غروب","מטריקס":"ماتريكس","כסף":"فضة","צבעים משלי":"ألواني",
+"פירוק לחלקיקים":"تفكك إلى جسيمات","ריצוד צבעים":"وميض الألوان","פיצוץ והרכבה":"انفجار وإعادة تجميع","גליץ׳ דיגיטלי":"عطل رقمي (Glitch)",
+"גל זורם":"موجة متدفقة","חול נופל":"رمل متساقط","מערבולת":"دوامة","גחלים עולות":"جمر صاعد","הדפסה בניצוצות":"طباعة بالشرارات",
+"ברק חשמלי":"برق كهربائي","מסע בין כוכבים":"رحلة بين النجوم","עיגולים":"دوائر","ריבועים":"مربعات","שחור":"أسود",
+"שקוף (אתר, PNG, WebM)":"شفاف (موقع، PNG، WebM)","צבעי הלוגו המקוריים":"ألوان الشعار الأصلية","צבעי הפלטה":"ألوان اللوحة",
+"חוזר בלולאה":"يتكرر في حلقة","מתאסף ונשאר":"يتجمع ويبقى","פתיחת קולנוע":"افتتاحية سينمائية","סייבר ניאון":"سايبر نيون","אש":"نار",
+"זהב יוקרתי":"ذهب فاخر","מכונת כתיבה":"آلة كاتبة","שקיעה זורמת":"غروب متدفق","חשמל":"كهرباء","קטע להטמעה באתר":"مقطع للتضمين في الموقع",
+"דף HTML מלא":"صفحة HTML كاملة","הגדרות JSON":"إعدادات JSON","לוגו":"شعار","ריק":"فارغ","ש׳":"ث","אורך הרצף: {n} שניות":"مدة التسلسل: {n} ثانية",
+"הדפדפן לא תומך בקבצי שמע.":"المتصفح لا يدعم ملفات الصوت.","טוען את המוזיקה...":"جارٍ تحميل الموسيقى...",
+"לא ניתן לפענח את קובץ השמע. נסו MP3, WAV או M4A.":"تعذّر فك ترميز ملف الصوت. جرّب MP3 أو WAV أو M4A.","לוגו נטען":"تم تحميل الشعار",
+"הלוגו נטען.":"تم تحميل الشعار.","לא ניתן לקרוא את הקובץ. נסו PNG או SVG.":"تعذّرت قراءة الملف. جرّب PNG أو SVG.",
+"מסך מלא לא זמין כאן. אפשר להקליט את החלון כמו שהוא.":"ملء الشاشة غير متاح هنا. يمكنك تسجيل النافذة كما هي.",
+"טוען את {name}...":"جارٍ تحميل {name}...",
+'לא נמצא גופן בשם "{name}" ב-Google Fonts. בדקו את האיות.':'لم يُعثر على خط باسم "{name}" في Google Fonts. تحقق من الإملاء.',
+"הגופן {name} נטען.":"تم تحميل الخط {name}.",
+'הגופן "{name}" לא נמצא ב-Google Fonts, מוצג גופן גיבוי.':'الخط "{name}" غير موجود في Google Fonts، يُعرض خط بديل.',
+"הגופן {a} לא תומך בכתב של הטקסט, ולכן מוצג {b}.":"الخط {a} لا يدعم كتابة هذا النص، لذلك يُعرض {b}.",
+"שמירה לקובץ לא זמינה בתצוגה הזו":"الحفظ كملف غير متاح في هذا العرض","שמירה לקובץ לא זמינה בתצוגה הזו.":"الحفظ كملف غير متاح في هذا العرض.",
+"הקובץ {name} נשמר.":"تم حفظ الملف {name}.","הקובץ {name} הורד.":"تم تنزيل الملف {name}.","השמירה בוטלה.":"أُلغي الحفظ.",
+"השמירה נכשלה ({code}).":"فشل الحفظ ({code}).","שגיאה":"خطأ","הקוד הועתק.":"تم نسخ الكود.","סמנו את הקוד והעתיקו ידנית.":"حدّد الكود وانسخه يدويًا.",
+"ההגדרות הוחלו ({n} סצנות).":"تم تطبيق الإعدادات ({n} مشاهد).","ה-JSON לא תקין.":"JSON غير صالح.",
+"MP4 (H.264), מדויק ומומלץ":"MP4 (H.264)، دقيق ومُوصى به","WebM (VP9), מדויק":"WebM (VP9)، دقيق",
+"{fmt} (הקלטה בזמן אמת, פחות מדויק)":"{fmt} (تسجيل في الوقت الفعلي، أقل دقة)"," + שקיפות":" + شفافية",
+"הדפדפן הזה לא תומך בהקלטת סרטון. אפשר להשתמש בהקלטת מסך.":"هذا المتصفح لا يدعم تسجيل الفيديو. يمكنك استخدام تسجيل الشاشة.",
+"הדפדפן הזה לא מקודד שמע, ולכן הסרטון נוצר בלי המוזיקה.":"هذا المتصفح لا يشفّر الصوت، لذلك أُنشئ الفيديو بدون الموسيقى.",
+'הקלטה בזמן אמת לא כוללת מוזיקה. בחרו פורמט "מדויק" כדי לצרף אותה.':"التسجيل في الوقت الفعلي لا يتضمن الموسيقى. اختر صيغة «دقيق» لإضافتها.",
+"הרקע נשמר שחור, כי הפורמט הזה לא תומך בשקיפות.":"بقيت الخلفية سوداء لأن هذه الصيغة لا تدعم الشفافية.",
+"מקליט בזמן אמת... השאירו את הלשונית פתוחה.":"جارٍ التسجيل في الوقت الفعلي... أبقِ التبويب مفتوحًا.",
+"מצייר ומקודד פריים אחרי פריים...":"جارٍ رسم الإطارات وترميزها إطارًا بعد إطار...",
+'הסרטון מוכן ({mb} MB, {s} שניות). לחצו על "שמירת הקובץ".':"الفيديو جاهز ({mb} MB، {s} ثانية). اضغط «حفظ الملف».",
+"ההקלטה נכשלה: {err}. נסו גודל קטן יותר או פורמט אחר.":"فشل التسجيل: {err}. جرّب حجمًا أصغر أو صيغة أخرى.","מכין תמונה...":"جارٍ تحضير الصورة...",
+"יצירת התמונה נכשלה.":"فشل إنشاء الصورة.","העתקת תמונה":"نسخ الصورة","התמונה הועתקה ללוח.":"نُسخت الصورة إلى الحافظة.",
+"העתקת תמונה ללוח לא נתמכת כאן. אפשר לשמור את הקובץ.":"نسخ الصورة إلى الحافظة غير مدعوم هنا. يمكنك حفظ الملف.","הטקסט הודבק.":"تم لصق النص.",
+"הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים).":"تم لصق النص. أُزيلت بعض الأحرف أو قُصَّ النص (حتى 12 سطرًا و300 حرف).",
+"אפשר להדביק (Ctrl+V) טקסט, תמונה או לוגו, SVG או הגדרות JSON מכל מקום בדף, וגם לגרור לכאן קבצים.":"يمكنك لصق (Ctrl+V) نص أو صورة أو شعار أو SVG أو إعدادات JSON في أي مكان بالصفحة، كما يمكنك سحب الملفات وإفلاتها هنا.",
+"סוג הקובץ לא נתמך. אפשר לגרור תמונה, קובץ שמע, JSON או טקסט.":"نوع الملف غير مدعوم. يمكنك سحب صورة أو ملف صوت أو JSON أو نص.",
+"נפילה וקפיצה":"سقوط وارتداد","סריקת לייזר":"مسح بالليزر","אדווה":"تموّج","דופק":"نبض القلب","זום קולנועי":"تقريب سينمائي",
+"סיבוב תלת־ממד":"دوران ثلاثي الأبعاد","התגלות מנצנצת":"ظهور متلألئ","פוקוס":"ضبط البؤرة","כניסה דרמטית":"دخول درامي","לייזר":"ليزر",
+"תלת־ממד":"ثلاثي الأبعاد","חלקיקים":"جسيمات","פונט מלא (האותיות עצמן, בלי חלקיקים)":"خط كامل (الحروف نفسها بلا جسيمات)","ניאון זוהר":"نيون متوهج",
+"תלת־ממד מוצק":"ثلاثي الأبعاد صلب","מתכת כרום":"كروم معدني","קו מתאר מצייר":"مخطط يُرسم","מעבר צבעים זורם":"تدرج لوني متدفق","זכוכית":"زجاج",
+"רטרו שנות ה-80":"ريترو الثمانينات","גליץ׳ RGB":"تشويش RGB","אותיות קופצות":"حروف قافزة","זרקור":"كشّاف","השתקפות":"انعكاس","צל ארוך":"ظل طويل",
+"מכונת כתיבה עם סמן":"آلة كاتبة مع مؤشر","שלט ניאון":"لافتة نيون","לוגו כרום":"شعار كروم","רטרו 80":"ريترو 80","כותרת קינטית":"عنوان حركي",
+"אש בוערת":"نار مشتعلة","גלי מים":"أمواج الماء","תבליט אבן":"نقش حجري","שכבות נייר":"طبقات ورقية","שלט LED":"لوحة LED","פרוסות":"شرائح",
+"פיקסלציה":"بكسلة","נמס":"ذوبان","הולוגרמה":"هولوغرام","מדבקה":"ملصق","כותרת בוערת":"عنوان مشتعل","מיקום וסיבוב":"الموضع والتدوير",
+"מיקום אופקי":"الموضع الأفقي","מיקום אנכי":"الموضع العمودي","סיבוב":"تدوير","מרכוז":"توسيط","גרירה בתצוגה":"سحب في المعاينة",
+"רקע מאחורי הטקסט":"خلفية خلف النص","ללא":"بدون","צבע אחיד":"لون موحد","גרדיינט":"تدرج","הכהיית הרקע":"تعتيم الخلفية","הסרת הרקע":"إزالة الخلفية",
+"צבע הרקע":"لون الخلفية","צבע שני לרקע":"اللون الثاني للخلفية","תמונת רקע":"صورة الخلفية",
+"גופן משלכם (TTF / OTF / WOFF)":"خطك الخاص (TTF / OTF / WOFF)","הסרת הגופן":"إزالة الخط","הגופן נטען: {name}":"تم تحميل الخط: {name}",
+"לא ניתן לקרוא את קובץ הגופן.":"تعذّرت قراءة ملف الخط.","הקובץ גדול מדי (עד 3 MB).":"الملف كبير جدًا (حتى 3 MB).",
+"בסיום, הטקסט מתפרק לחלקיקים":"في النهاية ينحل النص إلى جسيمات","מעבר בין סצנות":"الانتقال بين المشاهد","חיתוך ישר":"قطع مباشر",
+"דהייה קצרה (0.5 שנ׳)":"تلاشٍ قصير (0.5 ث)","דהייה ארוכה (1 שנ׳)":"تلاشٍ طويل (1 ث)","ביצועים":"الأداء","אוטומטי":"تلقائي","איכות גבוהה":"جودة عالية",
+"חסכוני (למכשירים איטיים)":"موفّر (للأجهزة البطيئة)","המכשיר נראה איטי, עברנו למצב חסכוני.":"يبدو الجهاز بطيئًا، تم التحويل إلى الوضع الموفّر.",
+"העתקת קישור לשיתוף":"نسخ رابط المشاركة","הקישור הועתק. הוא לא כולל תמונות וקבצי גופן.":"تم نسخ الرابط. لا يتضمن الصور وملفات الخطوط.",
+"הקישור ארוך מדי לשיתוף. נסו פחות סצנות.":"الرابط أطول من أن يُشارَك. جرّب عددًا أقل من المشاهد.","פעימה לפי המוזיקה":"نبض مع الموسيقى",
+"עוצמת הפעימה":"شدة النبض",
+"הטקסט פועם ומבזיק בקצב הבס של המוזיקה. עובד בתצוגת הרצף ובסרטון, לא בקוד לאתר.":"يخفق النص ويومض مع إيقاع الجهير في الموسيقى. يعمل في معاينة التسلسل وفي الفيديو، وليس في كود الموقع.",
+"טענו קובץ מוזיקה כדי שהפעימה תעבוד.":"حمّل ملف موسيقى كي يعمل النبض.","פרויקטים שמורים":"المشاريع المحفوظة","שם הפרויקט":"اسم المشروع",
+"שמירת פרויקט":"حفظ المشروع","הפרויקטים השמורים":"المشاريع المحفوظة","פתיחה":"فتح","מחיקה":"حذف","שמירת קובץ פרויקט":"حفظ ملف المشروع",
+"פתיחת קובץ פרויקט":"فتح ملف مشروع",
+"הפרויקטים נשמרים בדפדפן הזה, כולל תמונות, לוגו וגופנים. כדי לעבור למחשב אחר או לגבות, שמרו קובץ פרויקט ופתחו אותו שם.":"تُحفظ المشاريع في هذا المتصفح، بما فيها الصور والشعارات والخطوط. للانتقال إلى جهاز آخر أو للنسخ الاحتياطي، احفظ ملف مشروع وافتحه هناك.",
+"השמירה בדפדפן לא זמינה כאן. אפשר לשמור קובץ פרויקט.":"الحفظ داخل المتصفح غير متاح هنا. يمكنك حفظ ملف مشروع.",
+"אין פרויקטים שמורים":"لا توجد مشاريع محفوظة",'הפרויקט "{name}" נשמר.':'تم حفظ المشروع "{name}".','הפרויקט "{name}" נפתח.':'تم فتح المشروع "{name}".',
+"הפרויקט נמחק.":"تم حذف المشروع.","הפרויקט נפתח ({n} סצנות).":"تم فتح المشروع ({n} مشاهد).","לא ניתן היה לשמור את הפרויקט.":"تعذّر حفظ المشروع.",
+"שכבות טקסט נוספות":"طبقات نص إضافية",
+"אפשר להוסיף לסצנה עוד טקסטים שמופיעים יחד עם הטקסט הראשי, כל אחד עם אפקט, צבעים, גודל, מיקום ועיכוב הופעה משלו, למשל כותרת וכתובית מתחתיה.":"يمكنك إضافة نصوص أخرى إلى المشهد تظهر مع النص الرئيسي، لكل منها تأثيره وألوانه وحجمه وموضعه وتأخير ظهوره، مثل عنوان وتحته عنوان فرعي.",
+"＋ שכבת טקסט":"＋ طبقة نص","שכבה":"طبقة","מחיקת השכבה":"حذف الطبقة","טקסט השכבה":"نص الطبقة","אפקט השכבה":"تأثير الطبقة","צבעי השכבה":"ألوان الطبقة",
+"עיכוב הופעה":"تأخير الظهور","GIF (אנימציה, בלי שמע)":"GIF (صورة متحركة، بلا صوت)",
+"GIF: {w}×{h}, {f} פריימים לשנייה. הקובץ לא כולל שמע.":"GIF: ‏{w}×{h}، {f} إطارًا في الثانية. لا يتضمن الملف صوتًا."},ru:{
+"סטודיו אפקטי טקסט":"Студия текстовых эффектов",
+"כתבו טקסט בעברית, בערבית, ברוסית או באנגלית, בחרו אפקט, צבעים וגופן, ואז ייצאו סרטון, תמונה או קוד לאתר. האפקט בנוי מחלקיקים אמיתיים, ולכן האותיות נשארות חדות וללא עיוותים.":"Напишите текст на иврите, арабском, русском или английском, выберите эффект, цвета и шрифт, а затем экспортируйте видео, изображение или код для сайта. Эффект состоит из настоящих частиц, поэтому буквы остаются чёткими и без искажений.",
+"שפת הממשק":"Язык интерфейса","הפעלה מחדש":"Запустить заново","מסך מלא":"Во весь экран","איפוס הגדרות":"Сбросить настройки",
+"העבירו עכבר או אצבע מעל האותיות כדי לפזר את החלקיקים.":"Проведите мышью или пальцем по буквам, чтобы разбросать частицы.",
+"רצף סצנות":"Последовательность сцен",
+"כל סצנה היא עיצוב שלם משלה: טקסט או לוגו, אפקט, צבעים וגופן. כך אפשר לבנות פתיחה עם כמה כותרות ברצף. בחרו סצנה כדי לערוך אותה בהגדרות שמתחת, והרצף כולו מיוצא כסרטון אחד או כקוד אחד.":"Каждая сцена — отдельный законченный дизайн: текст или логотип, эффект, цвета и шрифт. Так можно собрать заставку из нескольких заголовков подряд. Выберите сцену, чтобы изменить её в настройках ниже; вся последовательность экспортируется одним видео или одним кодом.",
+"הסצנות":"Сцены","＋ סצנה חדשה":"＋ Новая сцена","מחיקת הסצנה":"Удалить сцену","העברת הסצנה אחורה":"Переместить сцену назад","הקדמה":"Раньше",
+"העברת הסצנה קדימה":"Переместить сцену вперёд","דחייה":"Позже","אורך הסצנה (שניות)":"Длительность сцены (сек.)",
+"▶ נגן את כל הרצף":"▶ Воспроизвести всю последовательность","■ עצירה וחזרה לסצנה הנבחרת":"■ Остановить и вернуться к выбранной сцене",
+"מוזיקת רקע (אופציונלי, MP3 / WAV / M4A)":"Фоновая музыка (необязательно, MP3 / WAV / M4A)","הסרה":"Удалить","עוצמה":"Громкость",
+"המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.":"Музыка добавляется в экспортируемое видео с плавным нарастанием в начале и затуханием в конце, а также играет при просмотре последовательности.",
+"עיצוב":"Дизайн","הטקסט (עברית, ערבית, רוסית או אנגלית, עד 300 תווים)":"Текст (иврит, арабский, русский или английский, до 300 символов)",
+"תבניות מוכנות":"Готовые шаблоны","או לוגו / תמונה במקום טקסט":"Или логотип / изображение вместо текста","הסרת הלוגו":"Убрать логотип",
+"צבעי הלוגו":"Цвета логотипа",
+"הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית.":"Логотип превращается в частицы — в исходных цветах или в цветах палитры. Лучше всего PNG или SVG с прозрачным фоном; если прозрачности нет, фон удаляется автоматически.",
+"אפקט":"Эффект","צבעים":"Цвета","צבע ראשון":"Первый цвет","צבע שני":"Второй цвет","צבע שלישי":"Третий цвет",
+"שלושה צבעים שעוברים זה לזה":"Три цвета с плавным переходом","גופן (Google Fonts)":"Шрифт (Google Fonts)",
+"סינון גופנים לפי כתב":"Фильтр шрифтов по письменности","כל הגופנים":"Все шрифты","לטינית":"Латиница","עברית":"Иврит","ערבית":"Арабский",
+"רוסית":"Русский","או כתבו שם גופן מ-Google Fonts, למשל Rubik Glitch":"Или введите название шрифта из Google Fonts, например Rubik Glitch",
+"שם גופן מ-Google Fonts":"Название шрифта из Google Fonts","טעינת גופן":"Загрузить шрифт","עובי":"Насыщенность","ברירת מחדל":"По умолчанию",
+"רגיל 400":"Обычный 400","מודגש 700":"Жирный 700","כבד 900":"Сверхжирный 900","צפיפות חלקיקים":"Плотность частиц","מהירות":"Скорость",
+"עוצמת זוהר":"Сила свечения","גודל הטקסט":"Размер текста","צורת חלקיק":"Форма частиц","רקע":"Фон","התנהגות":"Поведение","ייצוא":"Экспорт",
+"סרטון":"Видео","פורמט":"Формат","גודל":"Размер","1920×1080 (יוטיוב, אתר)":"1920×1080 (YouTube, сайт)",
+"1080×1920 (ריילס, טיקטוק, סטורי)":"1080×1920 (Reels, TikTok, сторис)","1080×1080 (פוסט מרובע)":"1080×1080 (квадратный пост)",
+"קצב פריימים":"Частота кадров","30 פריימים לשנייה":"30 кадров в секунду","60 פריימים לשנייה (חלק יותר)":"60 кадров в секунду (плавнее)",
+"אורך":"Длительность","כל הרצף (אורך הסצנות)":"Вся последовательность (сумма длительностей сцен)","5 שניות":"5 секунд","10 שניות":"10 секунд",
+"15 שניות":"15 секунд","30 שניות":"30 секунд","הקלטת סרטון":"Записать видео","עצירה וסיום":"Остановить и завершить","שמירת הקובץ":"Сохранить файл",
+"תמונה":"Изображение",
+'תמונת PNG בגודל שנבחר בסרטון. התצוגה למעלה מקבלת את אותו יחס מסך, כך שמה שרואים הוא מה שמקבלים. עם רקע "שקוף" מתקבל קובץ עם שקיפות לעיצוב.':"PNG-изображение выбранного для видео размера. Предпросмотр сверху имеет такое же соотношение сторон, поэтому вы получаете то, что видите. С «прозрачным» фоном получится файл с прозрачностью для дизайна.",
+"שמירת PNG":"Сохранить PNG","קוד לאתר":"Код для сайта",
+'הקוד עצמאי ולא צריך שום ספרייה. "קטע להטמעה" מתאים ל-Wix, Webflow, וורדפרס ובלוק HTML מותאם. "דף HTML מלא" נפתח ישר בדפדפן. את ה-JSON אפשר לשמור כדי לשחזר את ההגדרות.':"Код автономный и не требует библиотек. «Фрагмент для вставки» подходит для Wix, Webflow, WordPress и блока произвольного HTML. «Полная HTML-страница» открывается прямо в браузере. JSON можно сохранить, чтобы позже восстановить настройки.",
+"סוג הקוד":"Тип кода","הקוד לייצוא":"Код для экспорта","העתקה":"Копировать","שמירה כקובץ":"Сохранить в файл",
+"טעינת הגדרות שמורות (JSON)":"Загрузить сохранённые настройки (JSON)","הדביקו כאן JSON של הגדרות":"Вставьте сюда JSON с настройками",
+"החלה":"Применить",
+"להקלטה ידנית אפשר גם להשתמש במסך מלא עם הקלטת מסך של המחשב. סרטון על רקע שחור אפשר להניח מעל וידאו אחר בעורך עם מצב מיזוג Screen או Add, והשחור נעלם.":"Для ручной записи можно также включить полный экран и записать экран компьютера. Видео на чёрном фоне можно положить поверх другого видео в редакторе в режиме наложения Screen или Add — чёрный цвет исчезнет.",
+"קרח":"Лёд","ניאון":"Неон","להבה":"Пламя","זהב":"Золото","זוהר":"Сияние","שקיעה":"Закат","מטריקס":"Матрица","כסף":"Серебро","צבעים משלי":"Свои цвета",
+"פירוק לחלקיקים":"Распад на частицы","ריצוד צבעים":"Мерцание цветов","פיצוץ והרכבה":"Взрыв и сборка","גליץ׳ דיגיטלי":"Цифровой глитч",
+"גל זורם":"Бегущая волна","חול נופל":"Падающий песок","מערבולת":"Вихрь","גחלים עולות":"Поднимающиеся угли","הדפסה בניצוצות":"Печать искрами",
+"ברק חשמלי":"Электрическая молния","מסע בין כוכבים":"Звёздный полёт","עיגולים":"Круги","ריבועים":"Квадраты","שחור":"Чёрный",
+"שקוף (אתר, PNG, WebM)":"Прозрачный (сайт, PNG, WebM)","צבעי הלוגו המקוריים":"Исходные цвета логотипа","צבעי הפלטה":"Цвета палитры",
+"חוזר בלולאה":"Зациклено","מתאסף ונשאר":"Собирается и остаётся","פתיחת קולנוע":"Кинематографичная заставка","סייבר ניאון":"Киберпанк-неон",
+"אש":"Огонь","זהב יוקרתי":"Роскошное золото","מכונת כתיבה":"Печатная машинка","שקיעה זורמת":"Текучий закат","חשמל":"Электричество",
+"קטע להטמעה באתר":"Фрагмент для вставки на сайт","דף HTML מלא":"Полная HTML-страница","הגדרות JSON":"Настройки JSON","לוגו":"Логотип","ריק":"Пусто",
+"ש׳":"с","אורך הרצף: {n} שניות":"Длительность последовательности: {n} с","הדפדפן לא תומך בקבצי שמע.":"Браузер не поддерживает аудиофайлы.",
+"טוען את המוזיקה...":"Загружаю музыку...",
+"לא ניתן לפענח את קובץ השמע. נסו MP3, WAV או M4A.":"Не удалось декодировать аудиофайл. Попробуйте MP3, WAV или M4A.","לוגו נטען":"Логотип загружен",
+"הלוגו נטען.":"Логотип загружен.","לא ניתן לקרוא את הקובץ. נסו PNG או SVG.":"Не удалось прочитать файл. Попробуйте PNG или SVG.",
+"מסך מלא לא זמין כאן. אפשר להקליט את החלון כמו שהוא.":"Полноэкранный режим здесь недоступен. Можно записать окно как есть.",
+"טוען את {name}...":"Загружаю {name}...",
+'לא נמצא גופן בשם "{name}" ב-Google Fonts. בדקו את האיות.':"Шрифт «{name}» не найден в Google Fonts. Проверьте написание.",
+"הגופן {name} נטען.":"Шрифт {name} загружен.",
+'הגופן "{name}" לא נמצא ב-Google Fonts, מוצג גופן גיבוי.':"Шрифт «{name}» не найден в Google Fonts, показан запасной шрифт.",
+"הגופן {a} לא תומך בכתב של הטקסט, ולכן מוצג {b}.":"Шрифт {a} не поддерживает письменность текста, поэтому используется {b}.",
+"שמירה לקובץ לא זמינה בתצוגה הזו":"Сохранение в файл недоступно в этом режиме просмотра",
+"שמירה לקובץ לא זמינה בתצוגה הזו.":"Сохранение в файл недоступно в этом режиме просмотра.","הקובץ {name} נשמר.":"Файл {name} сохранён.",
+"הקובץ {name} הורד.":"Файл {name} скачан.","השמירה בוטלה.":"Сохранение отменено.","השמירה נכשלה ({code}).":"Не удалось сохранить ({code}).",
+"שגיאה":"ошибка","הקוד הועתק.":"Код скопирован.","סמנו את הקוד והעתיקו ידנית.":"Выделите код и скопируйте вручную.",
+"ההגדרות הוחלו ({n} סצנות).":"Настройки применены (сцен: {n}).","ה-JSON לא תקין.":"Некорректный JSON.",
+"MP4 (H.264), מדויק ומומלץ":"MP4 (H.264), точный, рекомендуется","WebM (VP9), מדויק":"WebM (VP9), точный",
+"{fmt} (הקלטה בזמן אמת, פחות מדויק)":"{fmt} (запись в реальном времени, менее точно)"," + שקיפות":" + прозрачность",
+"הדפדפן הזה לא תומך בהקלטת סרטון. אפשר להשתמש בהקלטת מסך.":"Этот браузер не поддерживает запись видео. Можно использовать запись экрана.",
+"הדפדפן הזה לא מקודד שמע, ולכן הסרטון נוצר בלי המוזיקה.":"Этот браузер не кодирует звук, поэтому видео создано без музыки.",
+'הקלטה בזמן אמת לא כוללת מוזיקה. בחרו פורמט "מדויק" כדי לצרף אותה.':"Запись в реальном времени не включает музыку. Выберите «точный» формат, чтобы добавить её.",
+"הרקע נשמר שחור, כי הפורמט הזה לא תומך בשקיפות.":"Фон остался чёрным, потому что этот формат не поддерживает прозрачность.",
+"מקליט בזמן אמת... השאירו את הלשונית פתוחה.":"Идёт запись в реальном времени... Не закрывайте вкладку.",
+"מצייר ומקודד פריים אחרי פריים...":"Рисую и кодирую кадр за кадром...",
+'הסרטון מוכן ({mb} MB, {s} שניות). לחצו על "שמירת הקובץ".':"Видео готово ({mb} МБ, {s} с). Нажмите «Сохранить файл».",
+"ההקלטה נכשלה: {err}. נסו גודל קטן יותר או פורמט אחר.":"Запись не удалась: {err}. Попробуйте меньший размер или другой формат.",
+"מכין תמונה...":"Готовлю изображение...","יצירת התמונה נכשלה.":"Не удалось создать изображение.","העתקת תמונה":"Копировать изображение",
+"התמונה הועתקה ללוח.":"Изображение скопировано в буфер обмена.",
+"העתקת תמונה ללוח לא נתמכת כאן. אפשר לשמור את הקובץ.":"Копирование изображения в буфер обмена здесь не поддерживается. Можно сохранить файл.",
+"הטקסט הודבק.":"Текст вставлен.",
+"הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים).":"Текст вставлен. Часть символов удалена или текст сокращён (до 12 строк и 300 символов).",
+"אפשר להדביק (Ctrl+V) טקסט, תמונה או לוגו, SVG או הגדרות JSON מכל מקום בדף, וגם לגרור לכאן קבצים.":"Нажмите Ctrl+V в любом месте страницы, чтобы вставить текст, изображение или логотип, SVG или настройки JSON. Файлы можно перетащить сюда.",
+"סוג הקובץ לא נתמך. אפשר לגרור תמונה, קובץ שמע, JSON או טקסט.":"Тип файла не поддерживается. Можно перетащить изображение, аудио, JSON или текст.",
+"נפילה וקפיצה":"Падение и отскок","סריקת לייזר":"Лазерное сканирование","אדווה":"Рябь","דופק":"Пульс","זום קולנועי":"Кинозум",
+"סיבוב תלת־ממד":"3D-вращение","התגלות מנצנצת":"Мерцающее появление","פוקוס":"Фокусировка","כניסה דרמטית":"Драматичное появление","לייזר":"Лазер",
+"תלת־ממד":"3D","חלקיקים":"Частицы","פונט מלא (האותיות עצמן, בלי חלקיקים)":"Сплошной шрифт (сами буквы, без частиц)","ניאון זוהר":"Неоновая трубка",
+"תלת־ממד מוצק":"Объёмный 3D","מתכת כרום":"Хромированный металл","קו מתאר מצייר":"Рисуемый контур","מעבר צבעים זורם":"Плавный градиент",
+"זכוכית":"Стекло","רטרו שנות ה-80":"Ретро 80-х","גליץ׳ RGB":"RGB-глитч","אותיות קופצות":"Прыгающие буквы","זרקור":"Прожектор","השתקפות":"Отражение",
+"צל ארוך":"Длинная тень","מכונת כתיבה עם סמן":"Печатная машинка с курсором","שלט ניאון":"Неоновая вывеска","לוגו כרום":"Хромированный логотип",
+"רטרו 80":"Ретро 80","כותרת קינטית":"Кинетический заголовок","אש בוערת":"Горящий огонь","גלי מים":"Водная рябь","תבליט אבן":"Каменный рельеф",
+"שכבות נייר":"Бумажные слои","שלט LED":"LED-табло","פרוסות":"Полосы","פיקסלציה":"Пикселизация","נמס":"Таяние","הולוגרמה":"Голограмма",
+"מדבקה":"Стикер","כותרת בוערת":"Пылающий заголовок","מיקום וסיבוב":"Положение и поворот","מיקום אופקי":"Горизонталь","מיקום אנכי":"Вертикаль",
+"סיבוב":"Поворот","מרכוז":"По центру","גרירה בתצוגה":"Перетаскивание в просмотре","רקע מאחורי הטקסט":"Фон за текстом","ללא":"Нет",
+"צבע אחיד":"Сплошной цвет","גרדיינט":"Градиент","הכהיית הרקע":"Затемнение фона","הסרת הרקע":"Убрать фон","צבע הרקע":"Цвет фона",
+"צבע שני לרקע":"Второй цвет фона","תמונת רקע":"Фоновое изображение","גופן משלכם (TTF / OTF / WOFF)":"Свой шрифт (TTF / OTF / WOFF)",
+"הסרת הגופן":"Убрать шрифт","הגופן נטען: {name}":"Шрифт загружен: {name}","לא ניתן לקרוא את קובץ הגופן.":"Не удалось прочитать файл шрифта.",
+"הקובץ גדול מדי (עד 3 MB).":"Файл слишком большой (до 3 МБ).","בסיום, הטקסט מתפרק לחלקיקים":"В конце текст распадается на частицы",
+"מעבר בין סצנות":"Переход между сценами","חיתוך ישר":"Прямая склейка","דהייה קצרה (0.5 שנ׳)":"Короткое затухание (0,5 с)",
+"דהייה ארוכה (1 שנ׳)":"Длинное затухание (1 с)","ביצועים":"Производительность","אוטומטי":"Авто","איכות גבוהה":"Высокое качество",
+"חסכוני (למכשירים איטיים)":"Экономичный (для медленных устройств)",
+"המכשיר נראה איטי, עברנו למצב חסכוני.":"Устройство кажется медленным, включён экономичный режим.",
+"העתקת קישור לשיתוף":"Скопировать ссылку для обмена",
+"הקישור הועתק. הוא לא כולל תמונות וקבצי גופן.":"Ссылка скопирована. В неё не входят изображения и файлы шрифтов.",
+"הקישור ארוך מדי לשיתוף. נסו פחות סצנות.":"Ссылка слишком длинная. Попробуйте меньше сцен.","פעימה לפי המוזיקה":"Пульс под музыку",
+"עוצמת הפעימה":"Сила пульса",
+"הטקסט פועם ומבזיק בקצב הבס של המוזיקה. עובד בתצוגת הרצף ובסרטון, לא בקוד לאתר.":"Текст пульсирует и вспыхивает в такт басу музыки. Работает в просмотре последовательности и в видео, но не в коде для сайта.",
+"טענו קובץ מוזיקה כדי שהפעימה תעבוד.":"Загрузите музыкальный файл, чтобы пульс заработал.","פרויקטים שמורים":"Сохранённые проекты",
+"שם הפרויקט":"Название проекта","שמירת פרויקט":"Сохранить проект","הפרויקטים השמורים":"Сохранённые проекты","פתיחה":"Открыть","מחיקה":"Удалить",
+"שמירת קובץ פרויקט":"Сохранить файл проекта","פתיחת קובץ פרויקט":"Открыть файл проекта",
+"הפרויקטים נשמרים בדפדפן הזה, כולל תמונות, לוגו וגופנים. כדי לעבור למחשב אחר או לגבות, שמרו קובץ פרויקט ופתחו אותו שם.":"Проекты хранятся в этом браузере вместе с изображениями, логотипами и шрифтами. Чтобы перенести на другой компьютер или сделать резервную копию, сохраните файл проекта и откройте его там.",
+"השמירה בדפדפן לא זמינה כאן. אפשר לשמור קובץ פרויקט.":"Сохранение в браузере здесь недоступно. Можно сохранить файл проекта.",
+"אין פרויקטים שמורים":"Нет сохранённых проектов",'הפרויקט "{name}" נשמר.':"Проект «{name}» сохранён.",
+'הפרויקט "{name}" נפתח.':"Проект «{name}» открыт.","הפרויקט נמחק.":"Проект удалён.","הפרויקט נפתח ({n} סצנות).":"Проект открыт (сцен: {n}).",
+"לא ניתן היה לשמור את הפרויקט.":"Не удалось сохранить проект.","שכבות טקסט נוספות":"Дополнительные текстовые слои",
+"אפשר להוסיף לסצנה עוד טקסטים שמופיעים יחד עם הטקסט הראשי, כל אחד עם אפקט, צבעים, גודל, מיקום ועיכוב הופעה משלו, למשל כותרת וכתובית מתחתיה.":"В сцену можно добавить ещё тексты, которые появляются вместе с основным: у каждого свой эффект, цвета, размер, положение и задержка появления. Например, заголовок и подпись под ним.",
+"＋ שכבת טקסט":"＋ Текстовый слой","שכבה":"Слой","מחיקת השכבה":"Удалить слой","טקסט השכבה":"Текст слоя","אפקט השכבה":"Эффект слоя",
+"צבעי השכבה":"Цвета слоя","עיכוב הופעה":"Задержка появления","GIF (אנימציה, בלי שמע)":"GIF (анимация, без звука)",
+"GIF: {w}×{h}, {f} פריימים לשנייה. הקובץ לא כולל שמע.":"GIF: {w}×{h}, {f} кадров в секунду. В файле нет звука."},en:{
+"סטודיו אפקטי טקסט":"Text Effects Studio",
+"כתבו טקסט בעברית, בערבית, ברוסית או באנגלית, בחרו אפקט, צבעים וגופן, ואז ייצאו סרטון, תמונה או קוד לאתר. האפקט בנוי מחלקיקים אמיתיים, ולכן האותיות נשארות חדות וללא עיוותים.":"Write text in Hebrew, Arabic, Russian or English, choose an effect, colors and a font, then export a video, an image or code for your website. The effect is built from real particles, so the letters stay sharp and undistorted.",
+"שפת הממשק":"Interface language","הפעלה מחדש":"Replay","מסך מלא":"Fullscreen","איפוס הגדרות":"Reset settings",
+"העבירו עכבר או אצבע מעל האותיות כדי לפזר את החלקיקים.":"Move your mouse or finger over the letters to scatter the particles.",
+"רצף סצנות":"Scene sequence",
+"כל סצנה היא עיצוב שלם משלה: טקסט או לוגו, אפקט, צבעים וגופן. כך אפשר לבנות פתיחה עם כמה כותרות ברצף. בחרו סצנה כדי לערוך אותה בהגדרות שמתחת, והרצף כולו מיוצא כסרטון אחד או כקוד אחד.":"Each scene is a complete design of its own: text or logo, effect, colors and font. Use scenes to build an intro with several titles in a row. Select a scene to edit it in the settings below; the whole sequence exports as one video or one piece of code.",
+"הסצנות":"Scenes","＋ סצנה חדשה":"＋ New scene","מחיקת הסצנה":"Delete scene","העברת הסצנה אחורה":"Move scene earlier","הקדמה":"Earlier",
+"העברת הסצנה קדימה":"Move scene later","דחייה":"Later","אורך הסצנה (שניות)":"Scene length (seconds)","▶ נגן את כל הרצף":"▶ Play the whole sequence",
+"■ עצירה וחזרה לסצנה הנבחרת":"■ Stop and return to the selected scene",
+"מוזיקת רקע (אופציונלי, MP3 / WAV / M4A)":"Background music (optional, MP3 / WAV / M4A)","הסרה":"Remove","עוצמה":"Volume",
+"המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.":"The music is added to the exported video with a fade in at the start and a fade out at the end, and also plays while you preview the sequence.",
+"עיצוב":"Design","הטקסט (עברית, ערבית, רוסית או אנגלית, עד 300 תווים)":"Text (Hebrew, Arabic, Russian or English, up to 300 characters)",
+"תבניות מוכנות":"Presets","או לוגו / תמונה במקום טקסט":"Or a logo / image instead of text","הסרת הלוגו":"Remove logo","צבעי הלוגו":"Logo colors",
+"הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית.":"The logo turns into particles, in its original colors or the palette colors. PNG or SVG with a transparent background works best; without transparency the background is removed automatically.",
+"אפקט":"Effect","צבעים":"Colors","צבע ראשון":"First color","צבע שני":"Second color","צבע שלישי":"Third color",
+"שלושה צבעים שעוברים זה לזה":"Three colors that blend into each other","גופן (Google Fonts)":"Font (Google Fonts)",
+"סינון גופנים לפי כתב":"Filter fonts by script","כל הגופנים":"All fonts","לטינית":"Latin","עברית":"Hebrew","ערבית":"Arabic","רוסית":"Russian",
+"או כתבו שם גופן מ-Google Fonts, למשל Rubik Glitch":"Or type a Google Fonts name, e.g. Rubik Glitch",
+"שם גופן מ-Google Fonts":"Google Fonts font name","טעינת גופן":"Load font","עובי":"Weight","ברירת מחדל":"Default","רגיל 400":"Regular 400",
+"מודגש 700":"Bold 700","כבד 900":"Black 900","צפיפות חלקיקים":"Particle density","מהירות":"Speed","עוצמת זוהר":"Glow intensity",
+"גודל הטקסט":"Text size","צורת חלקיק":"Particle shape","רקע":"Background","התנהגות":"Behavior","ייצוא":"Export","סרטון":"Video","פורמט":"Format",
+"גודל":"Size","1920×1080 (יוטיוב, אתר)":"1920×1080 (YouTube, website)","1080×1920 (ריילס, טיקטוק, סטורי)":"1080×1920 (Reels, TikTok, Stories)",
+"1080×1080 (פוסט מרובע)":"1080×1080 (square post)","קצב פריימים":"Frame rate","30 פריימים לשנייה":"30 frames per second",
+"60 פריימים לשנייה (חלק יותר)":"60 frames per second (smoother)","אורך":"Length","כל הרצף (אורך הסצנות)":"Whole sequence (total scene length)",
+"5 שניות":"5 seconds","10 שניות":"10 seconds","15 שניות":"15 seconds","30 שניות":"30 seconds","הקלטת סרטון":"Record video",
+"עצירה וסיום":"Stop and finish","שמירת הקובץ":"Save file","תמונה":"Image",
+'תמונת PNG בגודל שנבחר בסרטון. התצוגה למעלה מקבלת את אותו יחס מסך, כך שמה שרואים הוא מה שמקבלים. עם רקע "שקוף" מתקבל קובץ עם שקיפות לעיצוב.':'A PNG image at the size chosen for the video. The preview above uses the same aspect ratio, so what you see is what you get. With a "transparent" background you get a file with transparency for design work.',
+"שמירת PNG":"Save PNG","קוד לאתר":"Code for your website",
+'הקוד עצמאי ולא צריך שום ספרייה. "קטע להטמעה" מתאים ל-Wix, Webflow, וורדפרס ובלוק HTML מותאם. "דף HTML מלא" נפתח ישר בדפדפן. את ה-JSON אפשר לשמור כדי לשחזר את ההגדרות.':'The code is self-contained and needs no library. "Embed snippet" works for Wix, Webflow, WordPress and custom HTML blocks. "Full HTML page" opens directly in a browser. Save the JSON to restore your settings later.',
+"סוג הקוד":"Code type","הקוד לייצוא":"Code to export","העתקה":"Copy","שמירה כקובץ":"Save as file",
+"טעינת הגדרות שמורות (JSON)":"Load saved settings (JSON)","הדביקו כאן JSON של הגדרות":"Paste settings JSON here","החלה":"Apply",
+"להקלטה ידנית אפשר גם להשתמש במסך מלא עם הקלטת מסך של המחשב. סרטון על רקע שחור אפשר להניח מעל וידאו אחר בעורך עם מצב מיזוג Screen או Add, והשחור נעלם.":"For manual recording you can also go fullscreen and use your computer's screen recorder. A video on a black background can be placed over another video in an editor using the Screen or Add blend mode, and the black disappears.",
+"קרח":"Ice","ניאון":"Neon","להבה":"Flame","זהב":"Gold","זוהר":"Aurora","שקיעה":"Sunset","מטריקס":"Matrix","כסף":"Silver","צבעים משלי":"My colors",
+"פירוק לחלקיקים":"Particle dissolve","ריצוד צבעים":"Color shimmer","פיצוץ והרכבה":"Burst and reassemble","גליץ׳ דיגיטלי":"Digital glitch",
+"גל זורם":"Flowing wave","חול נופל":"Falling sand","מערבולת":"Vortex","גחלים עולות":"Rising embers","הדפסה בניצוצות":"Typing with sparks",
+"ברק חשמלי":"Electric lightning","מסע בין כוכבים":"Star warp","עיגולים":"Circles","ריבועים":"Squares","שחור":"Black",
+"שקוף (אתר, PNG, WebM)":"Transparent (website, PNG, WebM)","צבעי הלוגו המקוריים":"Original logo colors","צבעי הפלטה":"Palette colors",
+"חוזר בלולאה":"Loops","מתאסף ונשאר":"Assembles and stays","פתיחת קולנוע":"Cinematic opening","סייבר ניאון":"Cyber neon","אש":"Fire",
+"זהב יוקרתי":"Luxury gold","מכונת כתיבה":"Typewriter","שקיעה זורמת":"Flowing sunset","חשמל":"Electricity",
+"קטע להטמעה באתר":"Embed snippet for a website","דף HTML מלא":"Full HTML page","הגדרות JSON":"JSON settings","לוגו":"Logo","ריק":"Empty","ש׳":"s",
+"אורך הרצף: {n} שניות":"Sequence length: {n} seconds","הדפדפן לא תומך בקבצי שמע.":"Your browser doesn't support audio files.",
+"טוען את המוזיקה...":"Loading the music...","לא ניתן לפענח את קובץ השמע. נסו MP3, WAV או M4A.":"Couldn't decode the audio file. Try MP3, WAV or M4A.",
+"לוגו נטען":"Logo loaded","הלוגו נטען.":"Logo loaded.","לא ניתן לקרוא את הקובץ. נסו PNG או SVG.":"Couldn't read the file. Try PNG or SVG.",
+"מסך מלא לא זמין כאן. אפשר להקליט את החלון כמו שהוא.":"Fullscreen isn't available here. You can record the window as it is.",
+"טוען את {name}...":"Loading {name}...",
+'לא נמצא גופן בשם "{name}" ב-Google Fonts. בדקו את האיות.':'No font named "{name}" was found in Google Fonts. Check the spelling.',
+"הגופן {name} נטען.":"Font {name} loaded.",
+'הגופן "{name}" לא נמצא ב-Google Fonts, מוצג גופן גיבוי.':'The font "{name}" wasn\'t found in Google Fonts; showing a fallback font.',
+"הגופן {a} לא תומך בכתב של הטקסט, ולכן מוצג {b}.":"The font {a} doesn't support this text's script, so {b} is used instead.",
+"שמירה לקובץ לא זמינה בתצוגה הזו":"Saving to a file isn't available in this view",
+"שמירה לקובץ לא זמינה בתצוגה הזו.":"Saving to a file isn't available in this view.","הקובץ {name} נשמר.":"The file {name} was saved.",
+"הקובץ {name} הורד.":"The file {name} was downloaded.","השמירה בוטלה.":"Saving was cancelled.","השמירה נכשלה ({code}).":"Saving failed ({code}).",
+"שגיאה":"error","הקוד הועתק.":"The code was copied.","סמנו את הקוד והעתיקו ידנית.":"Select the code and copy it manually.",
+"ההגדרות הוחלו ({n} סצנות).":"Settings applied ({n} scenes).","ה-JSON לא תקין.":"Invalid JSON.",
+"MP4 (H.264), מדויק ומומלץ":"MP4 (H.264), exact, recommended","WebM (VP9), מדויק":"WebM (VP9), exact",
+"{fmt} (הקלטה בזמן אמת, פחות מדויק)":"{fmt} (real-time recording, less exact)"," + שקיפות":" + transparency",
+"הדפדפן הזה לא תומך בהקלטת סרטון. אפשר להשתמש בהקלטת מסך.":"This browser doesn't support video recording. You can use a screen recorder instead.",
+"הדפדפן הזה לא מקודד שמע, ולכן הסרטון נוצר בלי המוזיקה.":"This browser can't encode audio, so the video was created without the music.",
+'הקלטה בזמן אמת לא כוללת מוזיקה. בחרו פורמט "מדויק" כדי לצרף אותה.':'Real-time recording doesn\'t include music. Choose an "exact" format to add it.',
+"הרקע נשמר שחור, כי הפורמט הזה לא תומך בשקיפות.":"The background stayed black because this format doesn't support transparency.",
+"מקליט בזמן אמת... השאירו את הלשונית פתוחה.":"Recording in real time... keep the tab open.",
+"מצייר ומקודד פריים אחרי פריים...":"Rendering and encoding frame by frame...",
+'הסרטון מוכן ({mb} MB, {s} שניות). לחצו על "שמירת הקובץ".':'The video is ready ({mb} MB, {s} seconds). Click "Save file".',
+"ההקלטה נכשלה: {err}. נסו גודל קטן יותר או פורמט אחר.":"Recording failed: {err}. Try a smaller size or another format.",
+"מכין תמונה...":"Preparing the image...","יצירת התמונה נכשלה.":"Creating the image failed.","העתקת תמונה":"Copy image",
+"התמונה הועתקה ללוח.":"The image was copied to the clipboard.",
+"העתקת תמונה ללוח לא נתמכת כאן. אפשר לשמור את הקובץ.":"Copying an image to the clipboard isn't supported here. You can save the file instead.",
+"הטקסט הודבק.":"Text pasted.",
+"הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים).":"Text pasted. Some characters were removed or the text was shortened (up to 12 lines and 300 characters).",
+"אפשר להדביק (Ctrl+V) טקסט, תמונה או לוגו, SVG או הגדרות JSON מכל מקום בדף, וגם לגרור לכאן קבצים.":"Press Ctrl+V anywhere on the page to paste text, an image or logo, SVG, or settings JSON. You can also drag files here.",
+"סוג הקובץ לא נתמך. אפשר לגרור תמונה, קובץ שמע, JSON או טקסט.":"Unsupported file type. You can drop an image, audio, JSON or text file.",
+"נפילה וקפיצה":"Drop and bounce","סריקת לייזר":"Laser scan","אדווה":"Ripple","דופק":"Heartbeat","זום קולנועי":"Cinematic zoom",
+"סיבוב תלת־ממד":"3D spin","התגלות מנצנצת":"Sparkle reveal","פוקוס":"Focus pull","כניסה דרמטית":"Dramatic entrance","לייזר":"Laser","תלת־ממד":"3D",
+"חלקיקים":"Particles","פונט מלא (האותיות עצמן, בלי חלקיקים)":"Solid font (the letters themselves, no particles)","ניאון זוהר":"Neon tube",
+"תלת־ממד מוצק":"Solid 3D extrude","מתכת כרום":"Chrome metal","קו מתאר מצייר":"Drawn outline","מעבר צבעים זורם":"Flowing gradient","זכוכית":"Glass",
+"רטרו שנות ה-80":"Retro 80s","גליץ׳ RGB":"RGB glitch","אותיות קופצות":"Bouncing letters","זרקור":"Spotlight","השתקפות":"Reflection",
+"צל ארוך":"Long shadow","מכונת כתיבה עם סמן":"Typewriter with cursor","שלט ניאון":"Neon sign","לוגו כרום":"Chrome logo","רטרו 80":"Retro 80s",
+"כותרת קינטית":"Kinetic title","אש בוערת":"Burning fire","גלי מים":"Water waves","תבליט אבן":"Stone emboss","שכבות נייר":"Paper layers",
+"שלט LED":"LED matrix","פרוסות":"Slices","פיקסלציה":"Pixelate","נמס":"Melt","הולוגרמה":"Hologram","מדבקה":"Sticker","כותרת בוערת":"Blazing title",
+"מיקום וסיבוב":"Position and rotation","מיקום אופקי":"Horizontal position","מיקום אנכי":"Vertical position","סיבוב":"Rotation","מרכוז":"Center",
+"גרירה בתצוגה":"Drag in preview","רקע מאחורי הטקסט":"Background behind the text","ללא":"None","צבע אחיד":"Solid color","גרדיינט":"Gradient",
+"הכהיית הרקע":"Background dimming","הסרת הרקע":"Remove background","צבע הרקע":"Background color","צבע שני לרקע":"Second background color",
+"תמונת רקע":"Background image","גופן משלכם (TTF / OTF / WOFF)":"Your own font (TTF / OTF / WOFF)","הסרת הגופן":"Remove font",
+"הגופן נטען: {name}":"Font loaded: {name}","לא ניתן לקרוא את קובץ הגופן.":"Couldn't read the font file.",
+"הקובץ גדול מדי (עד 3 MB).":"The file is too large (up to 3 MB).","בסיום, הטקסט מתפרק לחלקיקים":"At the end the text dissolves into particles",
+"מעבר בין סצנות":"Transition between scenes","חיתוך ישר":"Hard cut","דהייה קצרה (0.5 שנ׳)":"Short fade (0.5 s)",
+"דהייה ארוכה (1 שנ׳)":"Long fade (1 s)","ביצועים":"Performance","אוטומטי":"Auto","איכות גבוהה":"High quality",
+"חסכוני (למכשירים איטיים)":"Light (for slow devices)","המכשיר נראה איטי, עברנו למצב חסכוני.":"The device seems slow, so light mode was switched on.",
+"העתקת קישור לשיתוף":"Copy share link","הקישור הועתק. הוא לא כולל תמונות וקבצי גופן.":"The link was copied. It doesn't include images or font files.",
+"הקישור ארוך מדי לשיתוף. נסו פחות סצנות.":"The link is too long to share. Try fewer scenes.","פעימה לפי המוזיקה":"Beat sync",
+"עוצמת הפעימה":"Beat strength",
+"הטקסט פועם ומבזיק בקצב הבס של המוזיקה. עובד בתצוגת הרצף ובסרטון, לא בקוד לאתר.":"The text pulses and flashes with the bass of the music. Works in the sequence preview and in exported video, not in website code.",
+"טענו קובץ מוזיקה כדי שהפעימה תעבוד.":"Load a music file to make the beat sync work.","פרויקטים שמורים":"Saved projects","שם הפרויקט":"Project name",
+"שמירת פרויקט":"Save project","הפרויקטים השמורים":"Saved projects","פתיחה":"Open","מחיקה":"Delete","שמירת קובץ פרויקט":"Save project file",
+"פתיחת קובץ פרויקט":"Open a project file",
+"הפרויקטים נשמרים בדפדפן הזה, כולל תמונות, לוגו וגופנים. כדי לעבור למחשב אחר או לגבות, שמרו קובץ פרויקט ופתחו אותו שם.":"Projects are stored in this browser, including images, logos and fonts. To move to another computer or to back up, save a project file and open it there.",
+"השמירה בדפדפן לא זמינה כאן. אפשר לשמור קובץ פרויקט.":"Saving in the browser is not available here. You can save a project file.",
+"אין פרויקטים שמורים":"No saved projects",'הפרויקט "{name}" נשמר.':'Project "{name}" saved.','הפרויקט "{name}" נפתח.':'Project "{name}" opened.',
+"הפרויקט נמחק.":"Project deleted.","הפרויקט נפתח ({n} סצנות).":"Project opened ({n} scenes).",
+"לא ניתן היה לשמור את הפרויקט.":"The project could not be saved.","שכבות טקסט נוספות":"Extra text layers",
+"אפשר להוסיף לסצנה עוד טקסטים שמופיעים יחד עם הטקסט הראשי, כל אחד עם אפקט, צבעים, גודל, מיקום ועיכוב הופעה משלו, למשל כותרת וכתובית מתחתיה.":"You can add more texts to the scene that appear together with the main text, each with its own effect, colors, size, position and entrance delay, for example a title with a subtitle under it.",
+"＋ שכבת טקסט":"＋ Text layer","שכבה":"Layer","מחיקת השכבה":"Delete layer","טקסט השכבה":"Layer text","אפקט השכבה":"Layer effect",
+"צבעי השכבה":"Layer colors","עיכוב הופעה":"Entrance delay","GIF (אנימציה, בלי שמע)":"GIF (animation, no sound)",
+"GIF: {w}×{h}, {f} פריימים לשנייה. הקובץ לא כולל שמע.":"GIF: {w}×{h}, {f} frames per second. The file has no sound."}},r={ice:{name:"קרח",
+accent:"#4cc9ff",stops:["#1f6bff","#4cc9ff","#e2f8ff","#5a7dff"]},neon:{name:"ניאון",accent:"#ff4de0",stops:["#ff2bd6","#7a5cff","#ffffff","#00e5ff"]
+},ember:{name:"להבה",accent:"#ff9100",stops:["#ff3d00","#ff9100","#fff0b0","#ff4f7b"]},gold:{name:"זהב",accent:"#ffd76a",
+stops:["#c58a12","#ffd76a","#fff8dc","#e8a92a"]},aurora:{name:"זוהר",accent:"#03e1ff",stops:["#9b5cff","#00c8ff","#d6fff3","#00ff9d"]},sunset:{
+name:"שקיעה",accent:"#ffb36b",stops:["#ff5f6d","#ffc371","#fff1c1","#845ec2"]},matrix:{name:"מטריקס",accent:"#39ff6a",
+stops:["#008f11","#00ff41","#d2ffd9","#00b82e"]},mono:{name:"כסף",accent:"#c9d4e6",stops:["#7f8ca6","#dfe6f3","#ffffff","#a9b6cc"]},custom:{
+name:"צבעים משלי",accent:"#00e5ff",stops:null}
+},o=["פירוק לחלקיקים","ריצוד צבעים","פיצוץ והרכבה","גליץ׳ דיגיטלי","גל זורם","חול נופל","מערבולת","גחלים עולות","הדפסה בניצוצות","ברק חשמלי","מסע בין כוכבים","נפילה וקפיצה","סריקת לייזר","אדווה","דופק","זום קולנועי","סיבוב תלת־ממד","התגלות מנצנצת","פוקוס","ניאון זוהר","תלת־ממד מוצק","מתכת כרום","קו מתאר מצייר","מעבר צבעים זורם","זכוכית","רטרו שנות ה-80","גליץ׳ RGB","אותיות קופצות","זרקור","השתקפות","צל ארוך","מכונת כתיבה עם סמן","אש בוערת","גלי מים","תבליט אבן","שכבות נייר","שלט LED","פרוסות","פיקסלציה","נמס","הולוגרמה","מדבקה"],i=[["Montserrat",800,"lc"],["Anton",400,"l"],["Bebas Neue",400,"l"],["Oswald",700,"lc"],["Archivo Black",400,"l"],["Bungee",400,"l"],["Black Ops One",400,"l"],["Russo One",400,"lc"],["Alfa Slab One",400,"l"],["Titan One",400,"l"],["Orbitron",800,"l"],["Audiowide",400,"l"],["Michroma",400,"l"],["Syncopate",700,"l"],["Unbounded",800,"lc"],["Exo 2",800,"lc"],["Rajdhani",700,"l"],["Press Start 2P",400,"lc"],["Share Tech Mono",400,"l"],["Space Grotesk",700,"l"],["Playfair Display",800,"lc"],["Cinzel",800,"l"],["Abril Fatface",400,"l"],["Cormorant Garamond",700,"lc"],["DM Serif Display",400,"l"],["Pacifico",400,"lc"],["Lobster",400,"lc"],["Permanent Marker",400,"l"],["Caveat",700,"lc"],["Righteous",400,"l"],["Poppins",800,"l"],["Raleway",800,"lc"],["Sora",800,"l"],["Outfit",800,"l"],["Rubik",800,"lhac"],["Heebo",800,"lh"],["Assistant",800,"lh"],["Alef",700,"lh"],["Secular One",400,"lh"],["Suez One",400,"lh"],["Karantina",700,"lh"],["Frank Ruhl Libre",900,"lh"],["Varela Round",400,"lh"],["Miriam Libre",700,"lh"],["David Libre",700,"lh"],["Open Sans",800,"lch"],["Amatic SC",700,"lhc"],["Cairo",900,"la"],["Tajawal",800,"la"],["Almarai",800,"la"],["Changa",800,"la"],["Lalezar",400,"la"],["Reem Kufi",700,"la"],["Amiri",700,"la"],["El Messiri",700,"lac"],["Aref Ruqaa",700,"la"],["Lemonada",700,"la"],["Markazi Text",700,"la"],["Noto Kufi Arabic",800,"la"],["Rubik Mono One",400,"lc"],["Comfortaa",700,"lc"],["Jura",700,"lc"],["Yeseva One",400,"lc"],["Stalinist One",400,"lc"],["Fira Sans Extra Condensed",800,"lc"],["Philosopher",700,"lc"],["Neucha",400,"lc"],["Bad Script",400,"lc"],["Marck Script",400,"lc"]],l={}
+;i.forEach(function(e){l[e[0]]=e[2]});var s={};function c(e){var t="";return/[A-Za-z0-9\u00C0-\u024F]/.test(e)&&(t+="l"),
+/[\u0590-\u05FF]/.test(e)&&(t+="h"),/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(e)&&(t+="a"),
+/[\u0400-\u052F]/.test(e)&&(t+="c"),t}function u(e,t){var a=l[e];if(!a)return!0;for(var n=0;n<t.length;n++)if(a.indexOf(t[n])<0)return!1;return!0}
+i.forEach(function(e){s[e[0]]=e[1]})
+;var d=/[^\x20-\x7E\u00A0-\u024F\u0400-\u052F\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF\u200E\u200F\n]/g,f={
+text:"VFX",mode:0,pal:"ice",custom:["#ff2d95","#7a5cff","#00e5ff"],family:"Montserrat",weightSel:0,step:3,speed:1,glow:1,size:.76,shape:"round",
+bg:"black",loop:!0,kind:"embed",image:"",imgColors:!0,fscript:"all",ox:0,oy:0,rot:0,bgType:"none",bgA:"#0b1020",bgB:"#1b2a6b",bgImg:"",bgDim:.35,
+fontData:"",hybrid:!1,fade:0,quality:"auto",layers:[],beat:!1,beatAmt:.6},h=!1,m=JSON.parse(JSON.stringify(f));function p(e){
+return"custom"===(e=e||f).pal?e.custom.slice():r[e.pal].stops.slice()}function g(e){return(e=e||f).weightSel||s[e.family]||700}function v(e){
+var t=(e=e||f).image?"":c(e.text);if(!t||u(e.family,t))return{family:e.family,weight:g(e),sub:!1}
+;var a,n=["Montserrat","Heebo","Cairo","Open Sans","El Messiri","Rubik"];for(a=0;a<n.length;a++)if(u(n[a],t))return{family:n[a],weight:s[n[a]],sub:!0}
+;return{family:"Rubik",weight:800,sub:!0}}function b(e){var t=v(e);return{family:t.family,weight:t.weight}}function y(e){var t=v(e=e||f);return{
+text:e.text,mode:e.mode,stops:p(e),family:t.family,weight:t.weight,step:e.step,speed:e.speed,glow:e.glow,shape:e.shape,bg:e.bg,loop:e.loop,
+size:e.size,interactive:!h,image:e.image,imgColors:e.imgColors,ox:e.ox,oy:e.oy,rot:e.rot,bgType:e.bgType,bgA:e.bgA,bgB:e.bgB,bgImg:e.bgImg,
+bgDim:e.bgDim,hybrid:e.hybrid,fontData:e.fontData}}function w(e,t,a){e.textContent=t||"",e.className="msg"+(a?" err":"")}var x={he:{name:"עברית",
+dir:"rtl"},ar:{name:"العربية",dir:"rtl"},ru:{name:"Русский",dir:"ltr"},en:{name:"English",dir:"ltr"}},M="he";try{
+var S=localStorage.getItem("ptx-lang"),A=(navigator.language||"").slice(0,2).toLowerCase();S&&x[S]?M=S:"ar"!==A&&"ru"!==A||(M=A)}catch(e){}
+function C(e,t){var a=n[M],r="he"!==M&&a&&a[e]||e;return t&&(r=r.replace(/\{(\w+)\}/g,function(e,a){return void 0!==t[a]?t[a]:e})),r}
+var E=/[\u0590-\u05FF]/,T=new WeakMap;function k(e){for(var t,a=document.createTreeWalker(e,NodeFilter.SHOW_TEXT,null),n=[];t=a.nextNode();)n.push(t)
+;n.forEach(function(e){var t=e.parentNode;if(!(!t||/^(SCRIPT|STYLE|TEXTAREA)$/.test(t.nodeName)||t.closest&&t.closest("[data-notr]"))){var a=T.get(e)
+;if(!a){var n=e.nodeValue,r=n.replace(/\s+/g," ").trim();if(!E.test(r))return;a={key:r,lead:/^\s/.test(n)?" ":"",trail:/\s$/.test(n)?" ":""},
+T.set(e,a)}e.nodeValue=a.lead+C(a.key)+a.trail}}),Array.prototype.forEach.call(e.querySelectorAll("[aria-label],[placeholder],[title]"),function(e){
+e.closest&&e.closest("[data-notr]")||["aria-label","placeholder","title"].forEach(function(t){var a=e.getAttribute(t);if(null!==a){
+var n=e.getAttribute("data-o-"+t);if(null===n){if(!E.test(a))return;n=a,e.setAttribute("data-o-"+t,n)}e.setAttribute(t,C(n))}})})}
+var F=["text","mode","pal","custom","family","weightSel","step","speed","glow","size","shape","bg","loop","image","imgColors","ox","oy","rot","bgType","bgA","bgB","bgImg","bgDim","hybrid","fontData","layers"]
+;function P(e){return void 0===e?void 0:JSON.parse(JSON.stringify(e))}function L(e){var t={};return F.forEach(function(a){
+t[a]=P(void 0!==e[a]?e[a]:m[a])}),t}function O(e){var t=L(m);return e&&"object"==typeof e&&F.forEach(function(a){
+void 0!==e[a]&&typeof e[a]==typeof t[a]&&("pal"!==a||r[e[a]])&&("mode"!==a||e[a]>=0&&e[a]<o.length)&&(t[a]=P(e[a]))}),
+t.layers=e&&Array.isArray(e.layers)?e.layers.slice(0,4).map(N):[],t}function N(e){var t=function(e,t,a,n){return e=Number(e),
+isFinite(e)?Math.max(t,Math.min(a,e)):n};return{text:"string"==typeof(e=e||{}).text?e.text.replace(d,"").slice(0,120):"",
+mode:"number"==typeof e.mode&&e.mode>=0&&e.mode<o.length?e.mode:0,pal:"string"==typeof e.pal&&r[e.pal]&&r[e.pal].stops?e.pal:"ice",
+size:t(e.size,.2,.95,.45),ox:t(e.ox,-50,50,0),oy:t(e.oy,-50,50,28),delay:t(e.delay,0,30,.6)}}function G(e){var t=Object.keys(r).filter(function(t){
+return r[t].stops&&Array.isArray(e.stops)&&r[t].stops.join()===e.stops.join()})[0];return N({text:e.text,mode:e.mode,pal:t,size:e.size,ox:e.ox,
+oy:e.oy,delay:e.delay})}function B(e){return(e.layers||[]).map(function(t){return function(e,t){var a=y(Object.assign({},e,{text:t.text,mode:t.mode,
+pal:t.pal,size:t.size,ox:t.ox,oy:t.oy,rot:0,image:"",bgType:"none",bg:"transparent",hybrid:!1}));return a.interactive=!1,a.delay=t.delay,a}(e,t)})}
+function R(e,t){var a={cfg:y(e.d),dur:void 0===t?e.dur:t},n=B(e.d);return n.length&&(a.layers=n),a}function I(t){
+var a=e.create(document.createElement("canvas"),y(t)).recDuration()/t.speed;return t.loop||(a=Math.min(a,5)),Math.max(2.5,Math.round(2*a)/2)}
+var D=[],j=0;try{var q=JSON.parse(localStorage.getItem("ptx-v2")||localStorage.getItem("ptx-v1")||"null"),V=(location.hash||"").match(/^#p=([\w-]+)$/)
+;if(V)try{var W=JSON.parse(decodeURIComponent(escape(atob(V[1].replace(/-/g,"+").replace(/_/g,"/")))));W&&Array.isArray(W.scenes)&&(q=W)}catch(e){}
+q&&"object"==typeof q&&("string"==typeof q.kind&&(f.kind=q.kind),"number"==typeof q.fade&&(f.fade=Math.max(0,Math.min(2,q.fade))),
+"auto"!==q.quality&&"high"!==q.quality&&"low"!==q.quality||(f.quality=q.quality),"boolean"==typeof q.beat&&(f.beat=q.beat),
+"number"==typeof q.beatAmt&&(f.beatAmt=Math.max(.2,Math.min(1,q.beatAmt))),
+Array.isArray(q.scenes)&&q.scenes.length?(q.scenes.slice(0,12).forEach(function(e){D.push({d:O(e&&e.d),dur:Math.min(120,Math.max(1,+(e&&e.dur)||5))})
+}),j=Math.min(D.length-1,Math.max(0,0|q.cur))):D.push({d:O(q),dur:0}))}catch(e){}function J(){D[j].d=L(f)}function z(){function e(e,t){var a=P(e)
+;return["image","bgImg","fontData"].forEach(function(e){(t||a[e]&&a[e].length>6e5)&&(a[e]="")}),
+/^Custom /.test(a.family)&&!a.fontData&&(a.family="Montserrat"),a}J();var t={kind:f.kind,cur:j,fade:f.fade,quality:f.quality,beat:f.beat,
+beatAmt:f.beatAmt,scenes:D.map(function(t){return{d:e(t.d,!1),dur:t.dur}})};try{localStorage.setItem("ptx-v2",JSON.stringify(t))}catch(a){try{
+t.scenes=D.map(function(t){return{d:e(t.d,!0),dur:t.dur}}),localStorage.setItem("ptx-v2",JSON.stringify(t))}catch(e){}}}function H(){
+t("#txt").value=f.text,t("#den").value=7-f.step,t("#spd").value=f.speed,t("#glow").value=f.glow,t("#size").value=Math.round(100*f.size),
+t("#wt").value=String(f.weightSel),["c1","c2","c3"].forEach(function(e,a){t("#"+e).value=f.custom[a]}),
+t("#imgName").textContent=f.image?C("לוגו נטען"):"",t("#imgClear").hidden=!f.image,t("#imgcols").hidden=!f.image,t("#txt").disabled=!!f.image,
+t("#txt").style.opacity=f.image?.45:1,t("#ox").value=f.ox,t("#oy").value=f.oy,t("#rot").value=f.rot,t("#bga").value=f.bgA,t("#bgb").value=f.bgB,
+t("#bgdim").value=Math.round(100*f.bgDim),t("#bgcolors").hidden=!("color"===f.bgType||"gradient"===f.bgType),t("#bgb").hidden="gradient"!==f.bgType,
+t("#bgimgrow").hidden="image"!==f.bgType,t("#bgdimrow").hidden="image"!==f.bgType,t("#bgimgClear").hidden=!f.bgImg,t("#fontClear").hidden=!f.fontData,
+t("#fadesel").value=String(f.fade),t("#qual").value=f.quality,t("#hybridRow").hidden=f.mode<19||!!f.image,
+t("#hybrid").setAttribute("aria-pressed",f.hybrid?"true":"false"),t("#beatBtn").setAttribute("aria-pressed",f.beat?"true":"false"),
+t("#beatAmt").value=Math.round(100*f.beatAmt),Ie(),U()}function U(){var e=function(e,a){var n=t("#v-"+e);n&&(n.textContent=a)}
+;e("den",t("#den").value),e("spd",Number(t("#spd").value).toFixed(1)+"×"),e("glow",Number(t("#glow").value).toFixed(1)),
+e("size",t("#size").value+"%"),e("ox",t("#ox").value+"%"),e("oy",t("#oy").value+"%"),e("rot",t("#rot").value+"°"),e("bgdim",t("#bgdim").value+"%"),
+e("avol",t("#avol").value+"%"),e("beatAmt",t("#beatAmt").value+"%")}D.length||D.push({d:L(m),dur:0}),D.forEach(function(e){
+/^Custom /.test(e.d.family)&&!e.d.fontData&&(e.d.family="Montserrat")}),Object.assign(f,P(D[j].d)),D.forEach(function(e){e.dur||(e.dur=I(e.d))}),H()
+;var Y=t("#fmsg"),$=!1,X=-1;function Q(){return{scenes:D.map(function(e){return R(e)}),fade:f.fade,quality:f.quality}}var _={onBuilt:function(e){
+e.ok?se():w(Y,C('הגופן "{name}" לא נמצא ב-Google Fonts, מוצג גופן גיבוי.',{name:v(f).family}),!0)},onQuality:function(){
+w(t("#vmsg"),C("המכשיר נראה איטי, עברנו למצב חסכוני.")),t("#qual").value="low",f.quality="low"},onScene:function(e){X=e,
+Array.prototype.forEach.call(document.querySelectorAll("#scenes .chip"),function(t,a){t.classList.toggle("playing",$&&a===e)})}},K=e.mount(a,Q(),_)
+;K.select(j),K.setPlayAll(!1);var Z,ee,te={};function ae(e,t,a){te[t]=e,a.forEach(function(a){var n=document.createElement("button");n.type="button",
+n.className="chip"+(a.cls?" "+a.cls:""),n.innerHTML=a.html,n.dataset.v=String(a.v),a.style&&(n.style.cssText=a.style),a.title&&(n.title=a.title,
+n.setAttribute("aria-label",a.title)),n.addEventListener("click",function(){re(t,a.v)}),e.appendChild(n)})}function ne(){
+Object.keys(te).forEach(function(e){var t=String("family"===e?f.family:f[e]);Array.prototype.forEach.call(te[e].children,function(e){
+e.setAttribute("aria-pressed",e.dataset.v===t?"true":"false")})}),t("#custom").hidden="custom"!==f.pal,t("#hybridRow").hidden=f.mode<19||!!f.image,
+t("#hybrid").setAttribute("aria-pressed",f.hybrid?"true":"false"),
+document.documentElement.style.setProperty("--accent","custom"===f.pal?f.custom[1]:r[f.pal].accent),a.classList.toggle("transp","transparent"===f.bg)}
+function re(e,t){"mode"===e?(f.mode=Number(t),K.update({mode:f.mode}),K.replay()):"pal"===e?(f.pal=t,K.update({stops:p()})):"family"===e?(f.family=t,
+K.update(b()),K.replay(),w(Y,""),le=!1):"fscript"===e?(f.fscript=t,oe()):"shape"===e?(f.shape=t,K.update({shape:t})):"bg"===e?(f.bg=t,K.update({bg:t
+})):"loop"===e?(f.loop="true"===t||!0===t,K.update({loop:f.loop}),K.replay()):"kind"===e?f.kind=t:"bgType"===e?(f.bgType=t,K.update({bgType:t}),
+H()):"imgColors"===e&&(f.imgColors="true"===t||!0===t,K.update({imgColors:f.imgColors})),ne(),at()}function oe(){
+Array.prototype.forEach.call(te.family.children,function(e){var t=l[e.dataset.v];e.hidden=!("all"===f.fscript||!t||t.indexOf(f.fscript)>=0)})}
+if(ae(t("#modes"),"mode",o.map(function(e,t){return{v:t,html:e}})),Z=t("#modes"),ee=Z.children,
+[[0,"חלקיקים"],[19,"פונט מלא (האותיות עצמן, בלי חלקיקים)"]].forEach(function(e){var t=document.createElement("span");t.className="grp",
+t.textContent=e[1],Z.insertBefore(t,ee[0===e[0]?0:e[0]+1])}),ae(t("#pals"),"pal",Object.keys(r).map(function(e){var t=r[e];return{v:e,
+html:(t.stops?'<span class="swatch" style="background:linear-gradient(90deg,'+t.stops.join(",")+')"></span>':'<span class="swatch" style="background:conic-gradient(from 90deg,#ff2d95,#7a5cff,#00e5ff,#39ff6a,#ffd76a,#ff2d95)"></span>')+t.name
+}})),ae(t("#fonts"),"family",i.map(function(e){return{v:e[0],html:e[0],cls:"fnt",style:'font-family:"'+e[0]+'",system-ui,sans-serif;font-weight:'+e[1]
+}})),ae(t("#fscripts"),"fscript",[{v:"all",html:"כל הגופנים"},{v:"l",html:"לטינית"},{v:"h",html:"עברית"},{v:"a",html:"ערבית"},{v:"c",html:"רוסית"}]),
+ae(t("#bgtypes"),"bgType",[{v:"none",html:"ללא"},{v:"color",html:"צבע אחיד"},{v:"gradient",html:"גרדיינט"},{v:"image",html:"תמונה"}]),
+ae(t("#shapes"),"shape",[{v:"round",html:"עיגולים"},{v:"square",html:"ריבועים"}]),ae(t("#bgs"),"bg",[{v:"black",html:"שחור"},{v:"transparent",
+html:"שקוף (אתר, PNG, WebM)"}]),ae(t("#imgcols"),"imgColors",[{v:"true",html:"צבעי הלוגו המקוריים"},{v:"false",html:"צבעי הפלטה"}]),
+ae(t("#loops"),"loop",[{v:"true",html:"חוזר בלולאה"},{v:"false",html:"מתאסף ונשאר"}]),window.IntersectionObserver){
+var ie=new IntersectionObserver(function(t){t.forEach(function(t){t.isIntersecting&&(ie.unobserve(t.target),
+e.loadFont(t.target.dataset.v,s[t.target.dataset.v]||700))})},{root:t("#fonts"),rootMargin:"120px"})
+;Array.prototype.forEach.call(te.family.children,function(e){ie.observe(e)})}else i.forEach(function(t,a){setTimeout(function(){e.loadFont(t[0],t[1])
+},600+140*a)});oe();var le=!1;function se(){var e=v(f);e.sub?(w(Y,C("הגופן {a} לא תומך בכתב של הטקסט, ולכן מוצג {b}.",{a:f.family,b:e.family})),
+le=!0):le&&(w(Y,""),le=!1)}s[f.family]||Ze(f.family,f.weightSel||700);var ce=t("#scenes"),ue=t("#sdur");function de(e){
+return(e||"").split("\n")[0].trim()}function fe(){var e,t=D.reduce(function(e,t){return e+t.dur},0)
+;for(e=0;e<D.length-1;e++)t-=Math.min(f.fade,.5*D[e].dur,.5*D[e+1].dur);return Math.max(0,t)}function he(){ce.innerHTML="",D.forEach(function(e,t){
+var a=t===j?f:e.d,n=document.createElement("button");n.type="button",n.className="chip scene",n.dataset.i=String(t),
+n.setAttribute("aria-pressed",t===j?"true":"false"),n.textContent=t+1+" · "+(a.image?C("לוגו"):de(a.text)||C("ריק"))+" · "+e.dur+" "+C("ש׳"),
+$&&t===X&&n.classList.add("playing"),n.addEventListener("click",function(){!function(e){if(e===j)return;J(),j=e,Object.assign(f,P(D[e].d)),
+K.select(e),H(),ne(),w(Y,""),he(),at()}(t)}),ce.appendChild(n)}),document.activeElement!==ue&&(ue.value=D[j].dur),t("#sDel").disabled=D.length<2,
+t("#sLeft").disabled=0===j,t("#sRight").disabled=j===D.length-1,t("#sAdd").disabled=D.length>=12,t("#sTotal").textContent=C("אורך הרצף: {n} שניות",{
+n:fe().toFixed(1)})}function me(){K.destroy(),(K=e.mount(a,Q(),_)).select(j),K.setPlayAll($),Me(),$&&ke(),he(),at()}function pe(e){var t=j+e
+;if(!(t<0||t>=D.length)){J();var a=D[j];D[j]=D[t],D[t]=a,j=t,me()}}t("#sAdd").addEventListener("click",function(){J(),D.splice(j+1,0,{d:P(D[j].d),
+dur:D[j].dur}),j+=1,Object.assign(f,P(D[j].d)),H(),ne(),me()}),t("#sDel").addEventListener("click",function(){D.length<2||(D.splice(j,1),
+j=Math.min(j,D.length-1),Object.assign(f,P(D[j].d)),H(),ne(),me())}),t("#sLeft").addEventListener("click",function(){pe(-1)}),
+t("#sRight").addEventListener("click",function(){pe(1)}),ue.addEventListener("input",function(){var e=Math.min(120,Math.max(1,Number(ue.value)||1))
+;D[j].dur=e,K.setDur(j,e),at()}),t("#sPlay").addEventListener("click",function(){$=!$,K.setPlayAll($),
+this.textContent=C($?"■ עצירה וחזרה לסצנה הנבחרת":"▶ נגן את כל הרצף"),$?ke():Te(),he()}),t("#replay").addEventListener("click",function(){$&&ke()})
+;var ge=null,ve=null,be=null,ye=null,we=null,xe=null;function Me(){if(K)if(f.beat&&xe&&ve){var e=ve.duration;K.setBeat({amount:f.beatAmt,
+at:function(t){var a=fe(),n=e>a?a:e;return xe[Math.floor(t%n*100)]||0}})}else K.setBeat(null)}t("#beatBtn").addEventListener("click",function(){
+f.beat=!f.beat,
+this.setAttribute("aria-pressed",f.beat?"true":"false"),f.beat&&!xe?w(t("#mmsg"),C("טענו קובץ מוזיקה כדי שהפעימה תעבוד."),!0):w(t("#mmsg"),C(Se)),
+Me(),z()}),t("#beatAmt").addEventListener("input",function(e){f.beatAmt=Number(e.target.value)/100,Me(),z()})
+;var Se="המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.",Ae="הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית."
+;function Ce(){t("#mname").textContent=we?we.name+" ("+we.dur+" "+C("ש׳")+")":""}function Ee(){if(!ge){
+var e=window.AudioContext||window.webkitAudioContext;e&&(ge=new e)}return ge}function Te(){if(be){try{be.stop()}catch(e){}try{be.disconnect()
+}catch(e){}be=null}}function ke(){Te();var e=Ee();if(ve&&e){var a=e.createBufferSource(),n=e.createGain(),r=fe();a.buffer=ve,a.loop=!0,
+ve.duration>r&&(a.loopStart=0,a.loopEnd=r),n.gain.value=Number(t("#avol").value)/100,a.connect(n),n.connect(e.destination),ye=n,
+"suspended"===e.state&&e.resume(),a.start(),be=a}}function Fe(e){var a=t("#mmsg"),n=Ee();e&&(n?(w(a,C("טוען את המוזיקה...")),
+e.arrayBuffer().then(function(e){return n.decodeAudioData(e)}).then(function(n){ve=n,we={name:e.name,dur:n.duration.toFixed(0)},Ce(),
+t("#musicClear").hidden=!1,xe=function(e){var t=e.sampleRate,a=Math.min(2,e.numberOfChannels),n=Math.max(1,Math.floor(t/100)),r=Math.floor(e.length/n)
+;if(r<30)return null;var o,i,l,s=[];for(o=0;o<a;o++)s.push(e.getChannelData(o));var c=1-Math.exp(-2*Math.PI*160/t),u=[0,0],d=new Float32Array(r)
+;for(i=0;i<r;i++){var f=0,h=i*n;for(o=0;o<a;o++){var m=u[o],p=s[o];for(l=0;l<n;l++)f+=(m+=c*(p[h+l]-m))*m;u[o]=m}d[i]=Math.sqrt(f/n)}
+var g=new Float64Array(r+1),v=new Float32Array(r);for(i=0;i<r;i++)g[i+1]=g[i]+d[i];for(i=0;i<r;i++){
+var b=Math.max(0,i-25),y=i>b?(g[i]-g[b])/(i-b):d[i];v[i]=Math.max(0,d[i]-1.15*y)}
+var w=Float32Array.from(v).sort(),x=w[Math.floor(.97*w.length)]||w[w.length-1];if(!(x>1e-5))return null;var M=new Float32Array(r),S=0
+;for(i=0;i<r;i++)S=Math.max(Math.max(0,Math.min(1,v[i]/x)-.15)/.85,.9*S),M[i]=S;return M}(n),Me(),w(a,C(Se)),$&&ke()}).catch(function(){
+w(a,C("לא ניתן לפענח את קובץ השמע. נסו MP3, WAV או M4A."),!0)})):w(a,C("הדפדפן לא תומך בקבצי שמע."),!0))}function Pe(e){K.update(e),at()}
+t("#avol").addEventListener("input",function(e){ye&&(ye.gain.value=Number(e.target.value)/100)}),t("#music").addEventListener("change",function(e){
+Fe(e.target.files&&e.target.files[0])}),t("#musicClear").addEventListener("click",function(){Te(),ve=null,xe=null,Me(),t("#music").value="",we=null,
+Ce(),this.hidden=!0}),["ox","oy","rot"].forEach(function(e){t("#"+e).addEventListener("input",function(t){var a={};f[e]=Number(t.target.value),
+a[e]=f[e],Pe(a)})}),t("#posReset").addEventListener("click",function(){f.ox=0,f.oy=0,f.rot=0,H(),Pe({ox:0,oy:0,rot:0})}),
+t("#dragMode").addEventListener("click",function(){h=!h,this.setAttribute("aria-pressed",h?"true":"false"),a.style.cursor=h?"grab":"",
+a.style.touchAction=h?"none":"",K.update({interactive:!h})});var Le=null;function Oe(e,t,a){return Math.max(t,Math.min(a,e))}function Ne(){
+Le&&(Le=null,a.style.cursor=h?"grab":"",at())}a.addEventListener("pointerdown",function(e){if(h){if(Le={x:e.clientX,y:e.clientY,ox:f.ox,oy:f.oy},
+a.setPointerCapture)try{a.setPointerCapture(e.pointerId)}catch(e){}a.style.cursor="grabbing",e.preventDefault()}}),
+a.addEventListener("pointermove",function(e){if(Le){var n=a.getBoundingClientRect();f.ox=Math.round(Oe(Le.ox+(e.clientX-Le.x)/n.width*100,-50,50)),
+f.oy=Math.round(Oe(Le.oy+(e.clientY-Le.y)/n.height*100,-50,50)),t("#ox").value=f.ox,t("#oy").value=f.oy,U(),K.update({ox:f.ox,oy:f.oy})}}),
+a.addEventListener("pointerup",Ne),a.addEventListener("pointercancel",Ne),t("#hybrid").addEventListener("click",function(){f.hybrid=!f.hybrid,
+this.setAttribute("aria-pressed",f.hybrid?"true":"false"),K.update({hybrid:f.hybrid}),K.replay(),at()}),
+t("#bga").addEventListener("input",function(e){f.bgA=e.target.value,Pe({bgA:f.bgA})}),t("#bgb").addEventListener("input",function(e){
+f.bgB=e.target.value,Pe({bgB:f.bgB})}),t("#bgdim").addEventListener("input",function(e){f.bgDim=Number(e.target.value)/100,Pe({bgDim:f.bgDim})}),
+t("#bgimg").addEventListener("change",function(e){var t=e.target.files&&e.target.files[0];if(t){var a=new FileReader;a.onload=function(){
+var e=new Image;e.onload=function(){
+var t=e.naturalWidth||1280,a=e.naturalHeight||720,n=Math.min(1,1920/Math.max(t,a)),r=document.createElement("canvas")
+;r.width=Math.max(1,Math.round(t*n)),r.height=Math.max(1,Math.round(a*n)),r.getContext("2d").drawImage(e,0,0,r.width,r.height),
+f.bgImg=r.toDataURL("image/jpeg",.85),f.bgType="image",H(),ne(),K.update({bgType:"image",bgImg:f.bgImg}),at()},e.src=a.result},a.readAsDataURL(t)}}),
+t("#bgimgClear").addEventListener("click",function(){t("#bgimg").value="",f.bgImg="",f.bgType="none",H(),ne(),K.update({bgType:"none",bgImg:""}),at()
+}),t("#fontfile").addEventListener("change",function(e){var t=e.target.files&&e.target.files[0]
+;if(t)if(t.size>3145728)w(Y,C("הקובץ גדול מדי (עד 3 MB)."),!0);else{var a=new FileReader;a.onload=function(){
+var e="Custom "+t.name.replace(/\.[^.]+$/,"").replace(/[^\w ]+/g," ").trim().slice(0,24);f.fontData=a.result,f.family=e,s[e]=400,
+K.update(Object.assign({fontData:f.fontData},b())),K.replay(),w(Y,C("הגופן נטען: {name}",{name:t.name})),le=!1,H(),ne(),at()},a.onerror=function(){
+w(Y,C("לא ניתן לקרוא את קובץ הגופן."),!0)},a.readAsDataURL(t)}}),t("#fontClear").addEventListener("click",function(){t("#fontfile").value="",
+f.fontData="",f.family="Montserrat",K.update(Object.assign({fontData:""},b())),w(Y,""),H(),ne(),at()}),
+t("#fadesel").addEventListener("change",function(e){f.fade=Number(e.target.value),K.setFade(f.fade),he(),at()}),
+t("#qual").addEventListener("change",function(e){f.quality=e.target.value,K.setQuality(f.quality),at()}),document.addEventListener("input",U);var Ge=4
+;function Be(e,t,a,n,r){
+return'<div class="ctl"><label>'+t+' <span class="val" data-v="'+e+'"></span></label><input type="range" class="ls" data-k="'+e+'" min="'+a+'" max="'+n+'" step="'+r+'" aria-label="'+t+'"></div>'
+}function Re(e,t){return"delay"===e?Number(t).toFixed(1)+" "+C("ש׳"):Math.round(t)+"%"}function Ie(){var e=t("#layerList");e&&(e.innerHTML="",
+(f.layers||[]).forEach(function(t,a){var n=document.createElement("div");n.className="layer",n.dataset.j=String(a),
+n.innerHTML='<div class="row"><span class="hint"><span>שכבה</span> '+(a+2)+'</span><button class="btn lx" type="button">מחיקת השכבה</button></div><input type="text" class="lt" maxlength="120" dir="auto" aria-label="טקסט השכבה" autocomplete="off" spellcheck="false"><div class="sl"><div class="ctl"><label>אפקט השכבה</label><select class="lm" aria-label="אפקט השכבה">'+o.map(function(e,t){
+return'<option value="'+t+'">'+e+"</option>"
+}).join("")+'</select></div><div class="ctl"><label>צבעי השכבה</label><select class="lp" aria-label="צבעי השכבה">'+Object.keys(r).filter(function(e){
+return r[e].stops}).map(function(e){return'<option value="'+e+'">'+r[e].name+"</option>"
+}).join("")+'</select></div></div><div class="sl">'+Be("size","גודל הטקסט",25,95,1)+Be("ox","מיקום אופקי",-50,50,1)+Be("oy","מיקום אנכי",-50,50,1)+Be("delay","עיכוב הופעה",0,10,.1)+"</div>",
+n.querySelector(".lt").value=t.text,n.querySelector(".lm").value=String(t.mode),n.querySelector(".lp").value=t.pal,
+[["size",100*t.size],["ox",t.ox],["oy",t.oy],["delay",t.delay]].forEach(function(e){n.querySelector('.ls[data-k="'+e[0]+'"]').value=e[1],
+n.querySelector('.val[data-v="'+e[0]+'"]').textContent=Re(e[0],e[1])}),e.appendChild(n)}),"he"!==M&&k(e),
+t("#layerAdd").disabled=(f.layers||[]).length>=Ge)}function De(e){var t=e.target,a=t.closest&&t.closest(".layer");if(a){
+var n,o=Number(a.dataset.j),i=f.layers[o],l=null;if(i){if(t.classList.contains("lt")){if("change"===e.type)return;i.text=t.value.replace(d,""),l={
+text:i.text}}else if(t.classList.contains("lm"))i.mode=Number(t.value),l={mode:i.mode};else if(t.classList.contains("lp"))i.pal=t.value,l={
+stops:r[i.pal].stops.slice()};else if(t.classList.contains("ls")){n=t.dataset.k;var s=Number(t.value);"size"===n?(i.size=s/100,l={size:i.size
+}):(i[n]=s,(l={})[n]=s),a.querySelector('.val[data-v="'+n+'"]').textContent=Re(n,s)}l&&(K.updateLayer(o,l),void 0!==l.mode&&K.replay(),at())}}}
+function je(e,t){var a,n=255*(t>>10&31)/31,r=255*(t>>5&31)/31,o=255*(31&t)/31,i=0,l=1e12;for(a=0;a<e.length;a++){
+var s=e[a][0]-n,c=e[a][1]-r,u=e[a][2]-o,d=2*s*s+4*c*c+3*u*u;d<l&&(l=d,i=a)}return i}function qe(e,t){
+var a=5003,n=new Int32Array(a),r=new Int32Array(a),o=[],i=new Uint8Array(256),l=0,s=t+1,c=s,u=(1<<c)-1,d=1<<t,f=d+1,h=d+2,m=!1,p=0,g=0;function v(){
+if(l>0){o.push(l);for(var e=0;e<l;e++)o.push(i[e]);l=0}}function b(e){i[l++]=e,l>=254&&v()}function y(e){for(p&=(1<<g)-1,g>0?p|=e<<g:p=e,
+g+=c;g>=8;)b(255&p),p>>=8,g-=8;if((h>u||m)&&(m?(u=(1<<(c=s))-1,m=!1):(++c,u=12===c?4096:(1<<c)-1)),e===f){for(;g>0;)b(255&p),p>>=8,g-=8;v()}}
+function w(){n.fill(-1),h=d+2,m=!0,y(d)}var x,M=0;for(x=a;x<65536;x*=2)++M;M=8-M,n.fill(-1),y(d);var S=e[0],A=1,C=e.length;e:for(;A<C;){
+var E=e[A++],T=(E<<12)+S,k=E<<M^S;if(n[k]!==T){if(n[k]>=0){var F=a-k;0===k&&(F=1);do{if((k-=F)<0&&(k+=a),n[k]===T){S=r[k];continue e}}while(n[k]>=0)}
+y(S),S=E,h<4096?(r[k]=h++,n[k]=T):w()}else S=r[k]}return y(S),y(f),o}async function Ve(t,a,n,r,o){
+var i=Math.min(1,640/Math.max(a[0],a[1])),l=Math.max(2,Math.round(a[0]*i)),s=Math.max(2,Math.round(a[1]*i)),c=Math.max(8,Math.min(20,r,Math.floor(400/Math.max(1,n)))),u=Math.max(1,Math.round(n*c)),d=document.createElement("canvas"),h=d.getContext("2d",{
+willReadFrequently:!0}),m=e.createSeq(d,t,{fade:f.fade});await m.build(l,s,1);var p,g,v=new Uint32Array(32768),b=Math.min(u,12);for(p=0;p<b;p++){
+m.render(Math.floor(p*u/b)/c);var y=h.getImageData(0,0,l,s).data;for(g=0;g<y.length;g+=12)o&&y[g+3]<128||v[y[g]>>3<<10|y[g+1]>>3<<5|y[g+2]>>3]++}
+var w,x=o?1:0,M=function(e,t){var a,n=[];for(a=0;a<32768;a++)e[a]&&n.push(a);function r(e,t){return 0===t?e>>10&31:1===t?e>>5&31:31&e}function o(t){
+var a,n,o=[31,31,31],i=[0,0,0],l=0,s=0;for(a=0;a<t.length;a++)for(l+=e[t[a]],n=0;n<3;n++){var c=r(t[a],n);c<o[n]&&(o[n]=c),c>i[n]&&(i[n]=c)}
+for(n=1;n<3;n++)i[n]-o[n]>i[s]-o[s]&&(s=n);return{idx:t,pop:l,ch:s,range:i[s]-o[s]}}n.length||n.push(0);for(var i=[o(n)];i.length<t;){var l,s=-1,c=0
+;for(l=0;l<i.length;l++){var u=i[l];if(!(u.idx.length<2||u.range<1)){var d=u.range*Math.sqrt(u.pop);d>c&&(c=d,s=l)}}if(s<0)break;var f=i[s],h=f.ch
+;f.idx.sort(function(e,t){return r(e,h)-r(t,h)});for(var m=f.pop/2,p=0,g=0;g<f.idx.length&&p<m;)p+=e[f.idx[g]],g++
+;g=Math.max(1,Math.min(f.idx.length-1,g)),i.splice(s,1,o(f.idx.slice(0,g)),o(f.idx.slice(g)))}return i.map(function(t){var a,n,r=0,o=0,i=0
+;for(a=0;a<t.idx.length;a++)n=e[t.idx[a]],r+=(t.idx[a]>>10&31)*n,o+=(t.idx[a]>>5&31)*n,i+=(31&t.idx[a])*n
+;return[Math.round(r/t.pop*255/31),Math.round(o/t.pop*255/31),Math.round(i/t.pop*255/31)]})
+}(v,256-x),S=new Int16Array(32768).fill(-1),A=[],E=[71,73,70,56,57,97,255&l,l>>8,255&s,s>>8,247,0,0],T=new Uint8Array(768);for(E[1]=73,E[2]=70,
+w=0;w<256;w++){var k=w>=x&&M[w-x]?M[w-x]:[0,0,0];T[3*w]=k[0],T[3*w+1]=k[1],T[3*w+2]=k[2]}A.push(new Uint8Array(E),T),
+A.push(new Uint8Array([33,255,11,78,69,84,83,67,65,80,69,50,46,48,3,1,0,0,0]));var F=Math.round(100/c),P=new Uint8Array(l*s),L=new MessageChannel
+;function O(){return new Promise(function(e){L.port1.onmessage=e,L.port2.postMessage(0)})}for(p=0;p<u&&!At;p++){m.render(p/c)
+;var N=h.getImageData(0,0,l,s).data;for(g=0,w=0;g<P.length;g++,w+=4)if(o&&N[w+3]<128)P[g]=0;else{var G=N[w]>>3<<10|N[w+1]>>3<<5|N[w+2]>>3,B=S[G]
+;B<0&&(B=je(M,G),S[G]=B),P[g]=B+x}A.push(new Uint8Array([33,249,4,o?9:4,255&F,F>>8,0,0])),
+A.push(new Uint8Array([44,0,0,0,0,255&l,l>>8,255&s,s>>8,0,8])),A.push(Uint8Array.from(qe(P,8)),new Uint8Array([0])),p%2==0&&(vt.value=p/u,await O())}
+return A.push(new Uint8Array([59])),kt=""+C("GIF: {w}×{h}, {f} פריימים לשנייה. הקובץ לא כולל שמע.",{w:l,h:s,f:c}),new Blob(A,{type:"image/gif"})}
+function We(){return J(),{app:"particle-text-studio",v:2,kind:f.kind,cur:j,fade:f.fade,quality:f.quality,beat:f.beat,beatAmt:f.beatAmt,
+scenes:D.map(function(e){return{d:P(e.d),dur:e.dur}})}}function Je(e){if(!e||!Array.isArray(e.scenes)||!e.scenes.length)return!1
+;var t=e.scenes.slice(0,12).map(function(e){return{d:O(e&&e.d),dur:Math.min(120,Math.max(1,+(e&&e.dur)||5))}});return t.forEach(function(e){
+/^Custom /.test(e.d.family)&&!e.d.fontData&&(e.d.family="Montserrat"),s[e.d.family]||/^Custom /.test(e.d.family)||Ze(e.d.family,e.d.weightSel||700)}),
+D=t,j=Math.min(t.length-1,Math.max(0,0|e.cur)),"number"==typeof e.fade&&(f.fade=Math.max(0,Math.min(2,e.fade))),
+"auto"!==e.quality&&"high"!==e.quality&&"low"!==e.quality||(f.quality=e.quality),"boolean"==typeof e.beat&&(f.beat=e.beat),
+"number"==typeof e.beatAmt&&(f.beatAmt=Math.max(.2,Math.min(1,e.beatAmt))),Object.assign(f,P(D[j].d)),H(),ne(),me(),!0}function ze(e,t){
+return new Promise(function(e){try{var t=indexedDB.open("ptx-projects",1);t.onupgradeneeded=function(){t.result.createObjectStore("p",{keyPath:"name"
+})},t.onsuccess=function(){e(t.result)},t.onerror=function(){e(null)}}catch(t){e(null)}}).then(function(a){return a?new Promise(function(n){try{
+var r=a.transaction("p",e),o=t(r.objectStore("p"));r.oncomplete=function(){a.close(),n(!o||void 0===o.result||o.result)},
+r.onerror=r.onabort=function(){a.close(),n(null)}}catch(e){n(null)}}):null})}t("#layerList").addEventListener("input",De),
+t("#layerList").addEventListener("change",De),t("#layerList").addEventListener("click",function(e){
+var t=e.target.closest&&e.target.closest(".lx"),a=t&&t.closest(".layer");a&&(f.layers.splice(Number(a.dataset.j),1),Ie(),me())}),
+t("#layerAdd").addEventListener("click",function(){f.layers.length>=Ge||(f.layers.push(N({text:"NEW",mode:f.mode,pal:"custom"===f.pal?"ice":f.pal,
+size:.4,ox:0,oy:28,delay:.6})),Ie(),me())}),Ie();var He=t("#projMsg");function Ue(e){return ze("readonly",function(e){return e.getAll()
+}).then(function(a){var n=t("#projList");if(null!==a){if(a=(!0===a?[]:a).sort(function(e,t){return t.saved-e.saved}),n.innerHTML="",!a.length){
+var r=document.createElement("option");r.value="",r.textContent=C("אין פרויקטים שמורים"),n.appendChild(r)}a.forEach(function(e){
+var t=document.createElement("option");t.value=e.name,t.textContent=e.name,n.appendChild(t)}),e&&(n.value=e),
+t("#projLoad").disabled=t("#projDel").disabled=!a.length}else t("#projLocal").hidden=!0})}t("#projSave").addEventListener("click",function(){
+var e=t("#projName").value.trim().slice(0,40)||de(f.text)||C("פרויקט")+" "+(new Date).toLocaleDateString();ze("readwrite",function(t){return t.put({
+name:e,saved:Date.now(),data:We()})}).then(function(a){null!==a?(w(He,C('הפרויקט "{name}" נשמר.',{name:e})),t("#projName").value="",
+Ue(e)):w(He,C("לא ניתן היה לשמור את הפרויקט."),!0)})}),t("#projLoad").addEventListener("click",function(){var e=t("#projList").value
+;e&&ze("readonly",function(t){return t.get(e)}).then(function(t){t&&t.data&&Je(t.data)?w(He,C('הפרויקט "{name}" נפתח.',{name:e
+})):w(He,C("לא ניתן היה לשמור את הפרויקט."),!0)})}),t("#projDel").addEventListener("click",function(){var e=t("#projList").value
+;e&&ze("readwrite",function(t){return t.delete(e)}).then(function(){w(He,C("הפרויקט נמחק.")),Ue()})}),
+t("#projExport").addEventListener("click",function(){lt("particle-text-project-"+nt()+".json",JSON.stringify(We()),He)}),
+t("#projFile").addEventListener("change",function(e){var t=e.target.files&&e.target.files[0];t&&t.text().then(function(t){ct(t,He),e.target.value=""})
+}),Ue(),window.claude&&window.claude.use&&(t("#shareLink").hidden=!0),t("#shareLink").addEventListener("click",function(){J();var e=JSON.stringify({
+scenes:D.map(function(e){return{d:(t=e.d,a=P(t),["image","bgImg","fontData"].forEach(function(e){a[e]=""}),
+/^Custom /.test(a.family)&&(a.family="Montserrat"),a),dur:e.dur};var t,a}),cur:j,fade:f.fade
+}),a=btoa(unescape(encodeURIComponent(e))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""),n=location.href.split("#")[0]+"#p="+a,r=t("#cmsg")
+;if(n.length>7e3)w(r,C("הקישור ארוך מדי לשיתוף. נסו פחות סצנות."),!0);else{
+navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(n).then(function(){
+w(r,C("הקישור הועתק. הוא לא כולל תמונות וקבצי גופן."))},function(){w(r,n)}):w(r,n)}});var Ye={weightSel:0,speed:1,glow:1,shape:"round",bg:"black",
+loop:!0};function $e(e){for(var t in e)f[t]=e[t];H(),K.update(y()),K.replay(),w(Y,""),ne(),at()}function Xe(e,a){function n(e){var t=new Image
+;t.onload=function(){var e=t.naturalWidth||600,n=t.naturalHeight||600,r=Math.min(1,700/Math.max(e,n)),o=document.createElement("canvas")
+;o.width=Math.max(1,Math.round(e*r)),o.height=Math.max(1,Math.round(n*r)),o.getContext("2d").drawImage(t,0,0,o.width,o.height),$e({
+image:o.toDataURL("image/png")}),w(a,C("הלוגו נטען."))},t.onerror=function(){w(a,C("לא ניתן לקרוא את הקובץ. נסו PNG או SVG."),!0)},t.src=e}
+if(a=a||t("#imsg2"),"string"==typeof e)n(e);else{var r=new FileReader;r.onload=function(){n(r.result)},r.readAsDataURL(e)}}function Qe(e,t){var a
+;return function(){clearTimeout(a),a=setTimeout(e,t)}}[["פתיחת קולנוע",{mode:0,pal:"ice",family:"Montserrat",glow:1.1}],["סייבר ניאון",{mode:3,
+pal:"neon",family:"Orbitron",glow:1.3}],["אש",{mode:7,pal:"ember",family:"Anton",glow:1.2,loop:!1}],["זהב יוקרתי",{mode:1,pal:"gold",family:"Cinzel",
+speed:.8,loop:!1}],["מטריקס",{mode:5,pal:"matrix",family:"Share Tech Mono"}],["מסע בין כוכבים",{mode:10,pal:"aurora",family:"Unbounded",glow:1.2
+}],["מכונת כתיבה",{mode:8,pal:"mono",family:"Space Grotesk"}],["שקיעה זורמת",{mode:4,pal:"sunset",family:"Poppins"}],["מערבולת",{mode:6,pal:"neon",
+family:"Sora"}],["חשמל",{mode:9,pal:"ice",family:"Rajdhani",glow:1.4,loop:!1}],["כניסה דרמטית",{mode:15,pal:"gold",family:"Playfair Display",glow:1.1
+}],["לייזר",{mode:12,pal:"neon",family:"Orbitron",glow:1.3}],["תלת־ממד",{mode:16,pal:"ice",family:"Unbounded",glow:1.1}],["דופק",{mode:14,pal:"ember",
+family:"Montserrat",glow:1.3,loop:!1}],["שלט ניאון",{mode:19,pal:"neon",family:"Bebas Neue",glow:1.3}],["לוגו כרום",{mode:21,pal:"mono",
+family:"Archivo Black",glow:.9}],["רטרו 80",{mode:25,pal:"neon",family:"Righteous",glow:1.2}],["זכוכית",{mode:24,pal:"ice",family:"Poppins",glow:1.1
+}],["כותרת קינטית",{mode:27,pal:"sunset",family:"Montserrat",glow:1}],["כותרת בוערת",{mode:32,pal:"ember",family:"Anton",glow:1.2}],["הולוגרמה",{
+mode:40,pal:"aurora",family:"Orbitron",glow:1.2}],["שלט LED",{mode:36,pal:"neon",family:"Share Tech Mono",glow:1}]].forEach(function(e){
+var a=document.createElement("button");a.type="button",a.className="chip",a.textContent=e[0],a.addEventListener("click",function(){var t,a={}
+;for(t in Ye)a[t]=Ye[t];for(t in e[1])a[t]=e[1][t];s[a.family]||Ze(a.family,700),$e(a)}),t("#presets").appendChild(a)}),
+t("#reset").addEventListener("click",function(){(D=[{d:L(m),dur:0}])[0].dur=I(D[0].d),j=0,Object.assign(f,P(D[0].d)),f.kind="embed",H(),ne(),w(Y,""),
+me()}),t("#img").addEventListener("change",function(e){var t=e.target.files&&e.target.files[0];t&&Xe(t)}),
+t("#imgClear").addEventListener("click",function(){t("#img").value="",$e({image:""}),w(t("#imsg2"),C(Ae))});var _e=Qe(function(){
+K.update(Object.assign({text:f.text,step:f.step,size:f.size},b()))},220);t("#txt").addEventListener("input",function(e){
+var t=e.target.value.replace(d,"").split("\n").slice(0,12).join("\n"),a=c(t).replace("l","");1===a.length&&f.fscript!==a&&(f.fscript=a,oe(),ne()),
+t!==e.target.value&&(e.target.value=t),f.text=t,K.replay(),_e(),at()}),t("#den").addEventListener("input",function(e){f.step=7-Number(e.target.value),
+_e(),at()}),t("#spd").addEventListener("input",function(e){f.speed=Number(e.target.value),K.update({speed:f.speed}),at()}),
+t("#glow").addEventListener("input",function(e){f.glow=Number(e.target.value),K.update({glow:f.glow}),at()}),
+t("#size").addEventListener("input",function(e){f.size=Number(e.target.value)/100,_e(),at()}),t("#wt").addEventListener("change",function(e){
+f.weightSel=Number(e.target.value),K.update(b()),w(Y,""),at()}),["c1","c2","c3"].forEach(function(e,a){t("#"+e).addEventListener("input",function(e){
+f.custom[a]=e.target.value,"custom"===f.pal&&(K.update({stops:p()}),ne(),at())})}),t("#replay").addEventListener("click",function(){K.replay()})
+;var Ke=t("#fs");function Ze(e,t){if(s[e]=t,!te.family.querySelector('[data-v="'+e.replace(/"/g,"")+'"]')){var a=document.createElement("button")
+;a.type="button",a.className="chip fnt",a.textContent=e,a.dataset.v=e,a.style.fontFamily='"'+e+'",system-ui,sans-serif',a.style.fontWeight=t,
+a.addEventListener("click",function(){re("family",e)}),te.family.insertBefore(a,te.family.firstChild)}}function et(){
+var a=t("#gf").value.trim().replace(/["<>]/g,"");a&&(w(Y,C("טוען את {name}...",{name:a})),e.loadFont(a,f.weightSel||700).then(function(e){
+e.ok?(Ze(a,e.weight),re("family",a),w(Y,C("הגופן {name} נטען.",{name:a}))):w(Y,C('לא נמצא גופן בשם "{name}" ב-Google Fonts. בדקו את האיות.',{name:a
+}),!0)}))}document.fullscreenEnabled||(Ke.hidden=!0),Ke.addEventListener("click",function(){var e=a.requestFullscreen&&a.requestFullscreen()
+;e&&e.catch&&e.catch(function(){w(Y,C("מסך מלא לא זמין כאן. אפשר להקליט את החלון כמו שהוא."))})}),t("#gfBtn").addEventListener("click",et),
+t("#gf").addEventListener("keydown",function(e){"Enter"===e.key&&et()}),ae(t("#kinds"),"kind",[{v:"embed",html:"קטע להטמעה באתר"},{v:"page",
+html:"דף HTML מלא"},{v:"json",html:"הגדרות JSON"}]);var tt=t("#code"),at=Qe(function(){z(),he(),se(),tt.value=function(e){J()
+;var t=D.length>1,a=D.some(function(e){return(e.d.layers||[]).length}),n=t||a?{scenes:D.map(function(e){return R(e,t?e.dur:0)}),fade:f.fade
+}:y(D[0].d),r=JSON.stringify(n,null,2);if("json"===e)return r
+;var o=y(D[0].d),i=enginePack.toString().replace(/<\/script/gi,"<\\/script"),l="transparent"===o.bg?"transparent":"#000",s="var ParticleText = ("+i+')();\n\nvar pt = ParticleText.mount(document.getElementById("particle-text"), '+r+');\n\n// Later, change anything on the fly:\n// pt.update({ text: "HELLO", mode: 3 });\n// pt.replay();\n'
+;return"embed"===e?'\x3c!-- Particle text effect. Paste into an HTML / custom-code block. Needs internet for Google Fonts. --\x3e\n<div id="particle-text" style="position:relative;width:100%;aspect-ratio:2/1;background:'+l+';"></div>\n<script>\n'+s+"<\/script>\n":'<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>Particle Text</title>\n<style>html,body{margin:0;height:100%;background:'+l+'}#particle-text{position:fixed;inset:0}</style>\n</head>\n<body>\n<div id="particle-text"></div>\n<script>\n'+s+"<\/script>\n</body>\n</html>\n"
+}(f.kind)},120);function nt(){return(f.text.split("\n")[0].trim().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")||"text").toLowerCase()}
+var rt=!(window.claude&&window.claude.use),ot=null;function it(){var e=!ot&&!rt;["#savecode","#png","#vsave"].forEach(function(a){var n=t(a)
+;n.disabled=e,n.title=e?C("שמירה לקובץ לא זמינה בתצוגה הזו"):""})}function lt(e,t,a){if(rt){var n=t instanceof Blob?t:new Blob([t],{
+type:"text/plain;charset=utf-8"}),r=URL.createObjectURL(n),o=document.createElement("a");return o.href=r,o.download=e,document.body.appendChild(o),
+o.click(),o.remove(),setTimeout(function(){URL.revokeObjectURL(r)},5e3),w(a,C("הקובץ {name} הורד.",{name:e})),Promise.resolve()}return ot?ot.save({
+filename:e,data:t}).then(function(){w(a,C("הקובץ {name} נשמר.",{name:e}))},function(e){
+w(a,e&&"declined"===e.code?C("השמירה בוטלה."):C("השמירה נכשלה ({code}).",{code:e&&e.code||C("שגיאה")}),!0)
+}):(w(a,"שמירה לקובץ לא זמינה בתצוגה הזו.",!0),Promise.resolve())}window.claude&&window.claude.use&&window.claude.use("downloads").then(function(e){
+ot=e,it()},function(){});var st=t("#cmsg");function ct(e,t,a){try{var n=JSON.parse(e)
+;if(n&&"object"==typeof n&&Array.isArray(n.scenes)&&n.scenes[0]&&n.scenes[0].d&&"object"==typeof n.scenes[0].d){if(!Je(n))throw new Error("x")
+;return w(t,C("הפרויקט נפתח ({n} סצנות).",{n:Math.min(12,n.scenes.length)})),!0}
+if("object"!=typeof n||!n||!Array.isArray(n.scenes)&&"string"!=typeof n.text&&"number"!=typeof n.mode&&!n.cfg)throw new Error("x")
+;var i=(Array.isArray(n.scenes)&&n.scenes.length?n.scenes.slice(0,12):[n]).map(function(e){var t=function(e){var t=L(m)
+;if("string"==typeof e.text&&(t.text=e.text.replace(d,"").slice(0,300)),
+t.image="string"==typeof e.image&&0===e.image.indexOf("data:image/")?e.image:"","boolean"==typeof e.imgColors&&(t.imgColors=e.imgColors),
+"number"==typeof e.mode&&e.mode>=0&&e.mode<o.length&&(t.mode=e.mode),Array.isArray(e.stops)&&e.stops.length>=2){
+var a=Object.keys(r).filter(function(t){return r[t].stops&&r[t].stops.join()===e.stops.join()})[0];a?t.pal=a:(t.pal="custom",
+t.custom=[e.stops[0],e.stops[1],e.stops[2]||e.stops[1]])}return"string"==typeof e.family&&(t.family=e.family,s[e.family]||Ze(e.family,e.weight||700)),
+e.weight&&s[t.family]!==e.weight&&(t.weightSel=e.weight),["step","speed","glow","size"].forEach(function(a){"number"==typeof e[a]&&(t[a]=e[a])}),
+"round"!==e.shape&&"square"!==e.shape||(t.shape=e.shape),"black"!==e.bg&&"transparent"!==e.bg||(t.bg=e.bg),"boolean"==typeof e.loop&&(t.loop=e.loop),
+["ox","oy","rot","bgDim"].forEach(function(a){"number"==typeof e[a]&&(t[a]=e[a])}),["bgA","bgB"].forEach(function(a){
+"string"==typeof e[a]&&/^#[0-9a-f]{3,8}$/i.test(e[a])&&(t[a]=e[a])}),["none","color","gradient","image"].indexOf(e.bgType)>=0&&(t.bgType=e.bgType),
+"string"==typeof e.bgImg&&0===e.bgImg.indexOf("data:image/")&&(t.bgImg=e.bgImg),
+"string"==typeof e.fontData&&0===e.fontData.indexOf("data:")&&(t.fontData=e.fontData),"boolean"==typeof e.hybrid&&(t.hybrid=e.hybrid),t}(e.cfg||e)
+;return t.layers=Array.isArray(e.layers)?e.layers.slice(0,4).map(G):[],{d:t,dur:Math.min(120,Math.max(0,+e.dur||0))}});return i.forEach(function(e){
+e.dur||(e.dur=I(e.d))}),D=i,j=0,Object.assign(f,P(D[0].d)),"number"==typeof n.fade&&(f.fade=Math.max(0,Math.min(2,n.fade))),H(),ne(),me(),
+w(t,C("ההגדרות הוחלו ({n} סצנות).",{n:i.length})),!0}catch(e){return a||w(t,C("ה-JSON לא תקין."),!0),!1}}
+t("#copy").addEventListener("click",function(){var e=function(){w(st,C("הקוד הועתק."))},t=function(){tt.removeAttribute("readonly"),tt.focus(),
+tt.select();try{document.execCommand("copy"),e()}catch(e){w(st,C("סמנו את הקוד והעתיקו ידנית."),!0)}tt.setAttribute("readonly","")}
+;navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(tt.value).then(e,t):t()}),
+t("#savecode").addEventListener("click",function(){var e="json"===f.kind?"json":"html"
+;lt("particle-text-"+nt()+("embed"===f.kind?"-embed":"")+"."+e,tt.value,st)}),t("#impBtn").addEventListener("click",function(){
+ct(t("#imp").value,t("#imsg"))})
+;var ut=[[/[\u2018\u2019\u201B]/g,"'"],[/[\u201C\u201D\u201E]/g,'"'],[/[\u2013\u2014\u2212]/g,"-"],[/\u2026/g,"..."],[/[\u2022\u00B7]/g,"-"]]
+;function dt(e){var t=String(e).replace(/\r\n?/g,"\n");ut.forEach(function(e){t=t.replace(e[0],e[1])})
+;var a=(t=t.replace(/[ \t\u00A0\u2000-\u200A\u202F\u205F\u3000]+/g," ")).replace(d,"").split("\n").map(function(e){return e.trim()
+}).filter(function(e){return e}).slice(0,12).join("\n");return a.length>300&&(a=a.slice(0,300).trim()),{text:a,
+changed:t.replace(/\s+/g,"")!==a.replace(/\s+/g,"")}}function ft(e){var a=String(e).trim()
+;a&&(/^(<\?xml[\s\S]*?\?>\s*)?(<!--[\s\S]*?-->\s*)?<svg[\s>]/i.test(a)&&/<\/svg>\s*$/i.test(a)?Xe(new Blob([a],{type:"image/svg+xml"
+})):/^data:image\//i.test(a)?Xe(a):/^[\[{]/.test(a)&&ct(a,t("#tmsg"),!0)||function(e){var a=dt(e),n=t("#tmsg");if(!a.text)return!1;f.image&&$e({
+image:""});var r=t("#txt");r.value=a.text,r.dispatchEvent(new Event("input",{bubbles:!0})),
+w(n,a.changed?C("הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים)."):C("הטקסט הודבק."))}(e))}function ht(e){var t,a
+;for(t=0;e.items&&t<e.items.length;t++)if("file"===(a=e.items[t]).kind&&/^image\//.test(a.type))return a.getAsFile()
+;for(t=0;e.files&&t<e.files.length;t++)if(/^image\//.test(e.files[t].type))return e.files[t];return null}function mt(e){
+return e&&/^(INPUT|TEXTAREA)$/.test(e.nodeName)&&"file"!==e.type}t("#txt").addEventListener("paste",function(e){var a=e.clipboardData;if(a&&!ht(a)){
+var n=a.getData("text/plain");if(n){e.preventDefault(),e.stopPropagation()
+;var r=e.target,o=r.selectionStart,i=r.selectionEnd,l=dt(r.value.slice(0,o)+n+r.value.slice(i));r.value=l.text,r.dispatchEvent(new Event("input",{
+bubbles:!0})),w(t("#tmsg"),l.changed?C("הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים)."):C("הטקסט הודבק."))}}}),
+document.addEventListener("paste",function(e){var t=e.clipboardData;if(t){var a=ht(t);if(a)return e.preventDefault(),void Xe(a)
+;if(!e.target||!/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.nodeName)){var n=t.getData("text/plain");n&&n.trim()&&(e.preventDefault(),ft(n))}}}),
+document.addEventListener("dragover",function(e){if(!mt(e.target)){
+var t=e.dataTransfer&&e.dataTransfer.types?Array.prototype.slice.call(e.dataTransfer.types):[]
+;(t.indexOf("Files")>=0||t.indexOf("text/plain")>=0)&&(e.preventDefault(),a.classList.add("drop"))}}),
+document.addEventListener("dragleave",function(e){e.relatedTarget||a.classList.remove("drop")}),document.addEventListener("drop",function(e){
+a.classList.remove("drop");var n=e.dataTransfer;if(n&&!mt(e.target)){if(e.preventDefault(),n.files&&n.files.length)return r=n.files,
+void((!(o=r[0])||(/^image\//.test(o.type)||/\.(png|jpe?g|webp|svg|gif)$/i.test(o.name)?(Xe(o),
+0):/^audio\//.test(o.type)||/\.(mp3|wav|m4a|ogg|aac)$/i.test(o.name)?(Fe(o),
+0):/json/.test(o.type)||/\.json$/i.test(o.name)?(o.text().then(function(e){ct(e,t("#tmsg"))}),
+0):!/^text\//.test(o.type)&&!/\.txt$/i.test(o.name)||(o.text().then(ft),
+0)))&&w(t("#tmsg"),C("סוג הקובץ לא נתמך. אפשר לגרור תמונה, קובץ שמע, JSON או טקסט."),!0));var r,o,i=n.getData("text/plain");i&&ft(i)}})
+;var pt=t("#vfmt"),gt=t("#vmsg"),vt=t("#vprog"),bt=t("#vrec"),yt=t("#vsave"),wt=[],xt=!1,Mt=null,St=!1,At=!1;function Ct(){
+var e=t("#vres").value.split("x");return[Number(e[0]),Number(e[1])]}function Et(){var e=Ct();a.style.setProperty("--ar",String(e[0]/e[1]))}
+function Tt(){var e=pt.value;pt.innerHTML="",wt.forEach(function(e,t){var a=document.createElement("option");a.value=String(t),
+a.textContent=function(e){return(e.lkey?C(e.lkey,{fmt:e.fmtname}):C(e.label))+("wc-webm"===e.kind&&xt?C(" + שקיפות"):"")}(e),pt.appendChild(a)}),
+e&&pt.querySelector('option[value="'+e+'"]')&&(pt.value=e)}t("#vres").addEventListener("change",Et),Et(),function(){var e=[],t=[],a={width:1920,
+height:1080,bitrate:2e7,framerate:30};function n(e){var t={};for(var n in a)t[n]=a[n];for(n in e)t[n]=e[n];return t}
+window.VideoEncoder&&window.Mp4Muxer&&e.push(VideoEncoder.isConfigSupported(n({codec:"avc1.640033"})).then(function(e){e.supported&&t.push({o:0,
+kind:"wc-mp4",ext:"mp4",label:"MP4 (H.264), מדויק ומומלץ"})}).catch(function(){})),
+window.VideoEncoder&&window.WebMMuxer&&(e.push(VideoEncoder.isConfigSupported(n({codec:"vp09.00.51.08"})).then(function(e){e.supported&&t.push({o:1,
+kind:"wc-webm",ext:"webm",label:"WebM (VP9), מדויק"})}).catch(function(){})),e.push(VideoEncoder.isConfigSupported(n({codec:"vp09.00.51.08",
+alpha:"keep"})).then(function(e){xt=!(!e.supported||!e.config||"keep"!==e.config.alpha)}).catch(function(){}))),
+window.MediaRecorder&&[["video/mp4;codecs=avc1.42E01E","mp4"],["video/webm;codecs=vp9","webm"],["video/webm","webm"]].forEach(function(e){
+MediaRecorder.isTypeSupported(e[0])&&!t.some(function(t){return"live"===t.kind&&t.ext===e[1]})&&t.push({o:2,kind:"live",ext:e[1],mime:e[0],
+lkey:"{fmt} (הקלטה בזמן אמת, פחות מדויק)",fmtname:e[1].toUpperCase()})}),t.push({o:3,kind:"gif",ext:"gif",label:"GIF (אנימציה, בלי שמע)"}),
+Promise.all(e).then(function(){t.sort(function(e,t){return e.o-t.o}),wt=t,Tt(),wt.length||(bt.disabled=!0,
+w(gt,C("הדפדפן הזה לא תומך בהקלטת סרטון. אפשר להשתמש בהקלטת מסך."),!0))})}();var kt="";async function Ft(a,n,r,o,i,l,s){
+var c=document.createElement("canvas"),u=e.createSeq(c,n,{fade:f.fade}),d=r[0],h=r[1];await u.build(d,h,1),s&&f.beat&&xe&&u.setBeat({amount:f.beatAmt,
+at:function(e){var t=s.duration<o?e%s.duration:e;return xe[Math.floor(100*t)]||0}})
+;var m,p,g=Math.round(o*i),v=Math.round(d*h*i*.28),b=null,y=0,w=[],x=s?await async function(e){
+var t,a="wc-mp4"===e?[["mp4a.40.2","aac"],["opus","opus"]]:[["opus","A_OPUS"]];if(!window.AudioEncoder||!window.OfflineAudioContext)return null
+;for(t=0;t<a.length;t++)try{if((await AudioEncoder.isConfigSupported({codec:a[t][0],sampleRate:48e3,numberOfChannels:2,bitrate:192e3
+})).supported)return{enc:a[t][0],mux:a[t][1]}}catch(e){}return null}(a.kind):null
+;kt=s&&!x?C("הדפדפן הזה לא מקודד שמע, ולכן הסרטון נוצר בלי המוזיקה."):"";var M=x?{codec:x.mux,numberOfChannels:2,sampleRate:48e3}:null
+;if("wc-mp4"===a.kind){var S={target:new Mp4Muxer.ArrayBufferTarget,video:{codec:"avc",width:d,height:h,frameRate:i},fastStart:"in-memory"}
+;M&&(S.audio=M),m=new Mp4Muxer.Muxer(S),p="avc1.640033"}else{var A={target:new WebMMuxer.ArrayBufferTarget,video:{codec:"V_VP9",width:d,height:h,
+frameRate:i,alpha:l}};M&&(A.audio=M),m=new WebMMuxer.Muxer(A),p="vp09.00.51.08"}if(x){var E=await async function(e,a){
+var n=Math.ceil(48e3*a),r=new OfflineAudioContext(2,n,48e3),o=r.createBufferSource(),i=r.createGain(),l=Number(t("#avol").value)/100,s=Math.min(.3,a/4),c=Math.min(2,a/3)
+;return o.buffer=e,o.loop=e.duration<a,i.gain.setValueAtTime(0,0),i.gain.linearRampToValueAtTime(l,s),i.gain.setValueAtTime(l,Math.max(s,a-c)),
+i.gain.linearRampToValueAtTime(0,a),o.connect(i),i.connect(r.destination),o.start(0),r.startRendering()}(s,o),T=48e3,k=E.length,F=new AudioEncoder({
+output:function(e,t){w.push([e,t])},error:function(e){b=e}});F.configure({codec:x.enc,sampleRate:T,numberOfChannels:2,bitrate:192e3})
+;for(var P=0;P<k;P+=T){var L=Math.min(T,k-P),O=new Float32Array(2*L);O.set(E.getChannelData(0).subarray(P,P+L),0),
+O.set(E.getChannelData(1).subarray(P,P+L),L);var N=new AudioData({format:"f32-planar",sampleRate:T,numberOfFrames:L,numberOfChannels:2,
+timestamp:Math.round(P/T*1e6),data:O});F.encode(N),N.close()}await F.flush()}function G(e){
+for(;y<w.length&&w[y][0].timestamp<=e;)m.addAudioChunk(w[y][0],w[y][1]),y++}var B=new VideoEncoder({output:function(e,t){m.addVideoChunk(e,t)},
+error:function(e){b=e}}),R={codec:p,width:d,height:h,bitrate:v,framerate:i};l&&(R.alpha="keep"),B.configure(R);var I=new MessageChannel;function D(){
+return new Promise(function(e){I.port1.onmessage=e,I.port2.postMessage(0)})}for(var j=0;j<g&&!At;j++){if(b)throw b;u.render(j/i)
+;var q=new VideoFrame(c,{timestamp:Math.round(1e6*j/i),duration:Math.round(1e6/i)});for(B.encode(q,{keyFrame:j%(2*i)==0}),q.close(),
+G(1e6*j/i);B.encodeQueueSize>6;)await D();j%3==0&&(vt.value=j/g,await D())}if(await B.flush(),b)throw b;return G(1e15),m.finalize(),
+new Blob([m.target.buffer],{type:"wc-mp4"===a.kind?"video/mp4":"video/webm"})}function Pt(){var t=Ct(),a=document.createElement("canvas"),n=y()
+;n.interactive=!1,n.loop=!1;var r=e.create(a,n);return r.build(t[0],t[1],1).then(function(){return r.render(3.6),new Promise(function(e){
+a.toBlob(e,"image/png")})})}function Lt(e){M=e;try{localStorage.setItem("ptx-lang",e)}catch(e){}var a=document.querySelector("main.wrap");a.lang=e,
+a.dir=x[e].dir,document.documentElement.lang=e,document.documentElement.dir=x[e].dir,k(document.body),document.title=C("סטודיו אפקטי טקסט"),
+["#fmsg","#vmsg","#pmsg","#cmsg","#imsg","#tmsg","#projMsg"].forEach(function(e){w(t(e),"")}),le=!1,w(t("#mmsg"),C(Se)),w(t("#imsg2"),C(Ae)),
+t("#sPlay").textContent=C($?"■ עצירה וחזרה לסצנה הנבחרת":"▶ נגן את כל הרצף"),bt.textContent=C(St?"עצירה וסיום":"הקלטת סרטון"),Ce(),Tt(),it(),H(),he(),
+se(),Ue(t("#projList").value),Array.prototype.forEach.call(t("#langs").children,function(t){
+t.setAttribute("aria-pressed",t.getAttribute("lang")===e?"true":"false")})}bt.addEventListener("click",async function(){if(St)At=!0;else{
+var a=wt[Number(pt.value)];if(a){J();var n=Ct(),r=Number(t("#vfps").value),o=D.length>1,i=D.every(function(e){return"transparent"===e.d.bg
+}),l=i&&("wc-webm"===a.kind&&xt||"gif"===a.kind),s=D.map(function(e){var t=y(e.d);t.interactive=!1,t.bg=l?"transparent":"black";var a={cfg:t,
+dur:o?e.dur:0},n=B(e.d);return n.length&&(a.layers=n),a}),c=fe();St=!0,At=!1,Mt=null,yt.hidden=!0,vt.hidden=!1,vt.value=0,
+bt.textContent=C("עצירה וסיום"),w(gt,"live"===a.kind?C("מקליט בזמן אמת... השאירו את הלשונית פתוחה."):C("מצייר ומקודד פריים אחרי פריים..."));try{
+var u=t("#vdur").value,d="loop"===u?c:Number(u);kt="",ve&&"live"===a.kind&&(kt=C('הקלטה בזמן אמת לא כוללת מוזיקה. בחרו פורמט "מדויק" כדי לצרף אותה.'))
+;var h="gif"===a.kind?await Ve(s,n,d,r,l):"live"===a.kind?await function(t,a,n,r){return new Promise(function(o,i){
+var l=document.createElement("canvas");l.style.cssText="position:fixed;left:-99999px;top:0;width:8px;height:8px",document.body.appendChild(l)
+;var s=e.createSeq(l,a,{fade:f.fade});s.build(n[0],n[1],1).then(function(){var e=l.captureStream(30),a=[],c=new MediaRecorder(e,{mimeType:t.mime,
+videoBitsPerSecond:Math.round(n[0]*n[1]*30*.25)});c.ondataavailable=function(e){e.data&&e.data.size&&a.push(e.data)},c.onerror=function(e){
+i(e.error||new Error("recorder"))},c.onstop=function(){l.parentNode&&l.parentNode.removeChild(l),o(new Blob(a,{type:t.mime.split(";")[0]}))},
+s.render(0),c.start(250);var u=performance.now();!function e(t){var a=(t-u)/1e3;if(At||a>=r)try{c.stop()}catch(e){}else s.render(a),vt.value=a/r,
+requestAnimationFrame(e)}(performance.now())},i)})}(a,s,n,d):await Ft(a,s,n,d,r,l,ve);if(!h.size)throw new Error("empty");Mt={blob:h,
+name:"particle-text-"+nt()+"."+a.ext},yt.hidden=!1;var m=i&&!l?C("הרקע נשמר שחור, כי הפורמט הזה לא תומך בשקיפות."):""
+;w(gt,[C('הסרטון מוכן ({mb} MB, {s} שניות). לחצו על "שמירת הקובץ".',{mb:(h.size/1048576).toFixed(1),s:d.toFixed(1)}),m,kt].filter(Boolean).join(" "))
+}catch(e){w(gt,C("ההקלטה נכשלה: {err}. נסו גודל קטן יותר או פורמט אחר.",{err:e&&e.message||e}),!0)}finally{St=!1,bt.textContent=C("הקלטת סרטון"),
+vt.hidden=!0}}}}),yt.addEventListener("click",function(){Mt&&lt(Mt.name,Mt.blob,gt)}),t("#png").addEventListener("click",function(){var e=t("#pmsg")
+;w(e,C("מכין תמונה...")),Pt().then(function(t){t?lt("particle-text-"+nt()+".png",t,e):w(e,C("יצירת התמונה נכשלה."),!0)})}),
+window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write||(t("#pngCopy").hidden=!0),t("#pngCopy").addEventListener("click",function(){
+var e=t("#pmsg");w(e,C("מכין תמונה..."));try{navigator.clipboard.write([new ClipboardItem({"image/png":Pt().then(function(e){
+if(!e)throw new Error("png");return e})})]).then(function(){w(e,C("התמונה הועתקה ללוח."))},function(){
+w(e,C("העתקת תמונה ללוח לא נתמכת כאן. אפשר לשמור את הקובץ."),!0)})}catch(t){w(e,C("העתקת תמונה ללוח לא נתמכת כאן. אפשר לשמור את הקובץ."),!0)}}),
+Object.keys(x).forEach(function(e){var a=document.createElement("button");a.type="button",a.className="chip",a.setAttribute("lang",e),
+a.setAttribute("data-notr",""),a.textContent=x[e].name,a.addEventListener("click",function(){Lt(e)}),t("#langs").appendChild(a)}),it(),ne(),Lt(M),at()
+}();
+</script>
+<script>
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "particle-text-studio",
+  "private": true,
+  "type": "module",
+  "description": "Particle and solid-font text effects for video and websites. Static PWA, no runtime dependencies.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:dev": "node scripts/build.mjs --dev",
+    "test": "node tests/smoke.mjs",
+    "check-fonts": "python3 scripts/check-fonts.py"
+  },
+  "devDependencies": {
+    "html-minifier-terser": "^7.2.0",
+    "playwright": "^1.63.0",
+    "terser": "^5.51.2"
+  }
+}

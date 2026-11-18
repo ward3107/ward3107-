@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05070d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>/*__CSS__*/</style>
+<title>סטודיו אפקטי טקסט</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap">
+<style>/*__CSS_MAIN__*/</style>
+
+</head>
+<body>
+<main class="wrap" lang="he" dir="rtl">
+  <header>
+    <div class="langbar"><div class="seg" id="langs" role="group" aria-label="שפת הממשק"></div></div>
+    <h1>סטודיו אפקטי טקסט</h1>
+    <p class="lede">כתבו טקסט בעברית, בערבית, ברוסית או באנגלית, בחרו אפקט, צבעים וגופן, ואז ייצאו סרטון, תמונה או קוד לאתר. האפקט בנוי מחלקיקים אמיתיים, ולכן האותיות נשארות חדות וללא עיוותים.</p>
+  </header>
+
+  <div class="app">
+  <div class="preview">
+  <div id="stage" class="stage" dir="ltr"></div>
+  <div class="bar">
+    <button id="replay" class="btn primary" type="button">הפעלה מחדש</button>
+    <button id="fs" class="btn" type="button">מסך מלא</button>
+    <button id="reset" class="btn" type="button">איפוס הגדרות</button>
+    <span class="hint">העבירו עכבר או אצבע מעל האותיות כדי לפזר את החלקיקים.</span>
+  </div>
+  <p class="hint" style="margin:0">אפשר להדביק (Ctrl+V) טקסט, תמונה או לוגו, SVG או הגדרות JSON מכל מקום בדף, וגם לגרור לכאן קבצים.</p>
+
+  </div>
+  <aside class="side">
+  <section class="card" aria-label="רצף סצנות">
+    <h2>רצף סצנות</h2>
+    <p class="note">כל סצנה היא עיצוב שלם משלה: טקסט או לוגו, אפקט, צבעים וגופן. כך אפשר לבנות פתיחה עם כמה כותרות ברצף. בחרו סצנה כדי לערוך אותה בהגדרות שמתחת, והרצף כולו מיוצא כסרטון אחד או כקוד אחד.</p>
+    <div class="seg" id="scenes" role="group" aria-label="הסצנות"></div>
+    <div class="row">
+      <button id="sAdd" class="btn" type="button">＋ סצנה חדשה</button>
+      <button id="sDel" class="btn" type="button">מחיקת הסצנה</button>
+      <button id="sLeft" class="btn" type="button" aria-label="העברת הסצנה אחורה">הקדמה</button>
+      <button id="sRight" class="btn" type="button" aria-label="העברת הסצנה קדימה">דחייה</button>
+      <label for="sdur" class="lbl">אורך הסצנה (שניות)</label>
+      <input id="sdur" type="number" min="1" max="120" step="0.5" value="6" style="width:90px">
+    </div>
+    <div class="row">
+      <button id="sPlay" class="btn primary" type="button">▶ נגן את כל הרצף</button>
+      <span id="sTotal" class="hint"></span>
+    </div>
+    <hr class="divider">
+    <div class="ctl">
+      <label for="music">מוזיקת רקע (אופציונלי, MP3 / WAV / M4A)</label>
+      <div class="row">
+        <input id="music" type="file" accept="audio/*" style="max-width:100%">
+        <button id="musicClear" class="btn" type="button" hidden>הסרה</button>
+        <span id="mname" class="hint"></span>
+      </div>
+      <div class="row"><label for="avol" class="lbl">עוצמה <span id="v-avol" class="val"></span></label><input id="avol" type="range" min="0" max="100" step="5" value="80" style="max-width:220px"></div>
+      <div class="row"><button id="beatBtn" class="chip" type="button" aria-pressed="false">פעימה לפי המוזיקה</button><label for="beatAmt" class="lbl">עוצמת הפעימה <span id="v-beatAmt" class="val"></span></label><input id="beatAmt" type="range" min="20" max="100" step="5" value="60" style="max-width:200px"></div>
+      <span class="hint">הטקסט פועם ומבזיק בקצב הבס של המוזיקה. עובד בתצוגת הרצף ובסרטון, לא בקוד לאתר.</span>
+      <div class="grid" style="margin-top:6px">
+        <div class="ctl"><label for="fadesel">מעבר בין סצנות</label><select id="fadesel"><option value="0">חיתוך ישר</option><option value="0.5">דהייה קצרה (0.5 שנ׳)</option><option value="1">דהייה ארוכה (1 שנ׳)</option></select></div>
+        <div class="ctl"><label for="qual">ביצועים</label><select id="qual"><option value="auto">אוטומטי</option><option value="high">איכות גבוהה</option><option value="low">חסכוני (למכשירים איטיים)</option></select></div>
+      </div>
+      <span id="mmsg" class="msg" role="status">המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.</span>
+    </div>
+    <hr class="divider">
+    <div class="ctl" id="projBox">
+      <span class="lbl">פרויקטים שמורים</span>
+      <div id="projLocal" class="ctl">
+        <div class="row"><input id="projName" type="text" maxlength="40" placeholder="שם הפרויקט" aria-label="שם הפרויקט" autocomplete="off" style="max-width:220px"><button id="projSave" class="btn primary" type="button">שמירת פרויקט</button></div>
+        <div class="row"><select id="projList" aria-label="הפרויקטים השמורים" style="width:auto;max-width:240px"></select><button id="projLoad" class="btn" type="button">פתיחה</button><button id="projDel" class="btn" type="button">מחיקה</button></div>
+      </div>
+      <div class="row"><button id="projExport" class="btn" type="button">שמירת קובץ פרויקט</button><input id="projFile" type="file" accept=".json,application/json" aria-label="פתיחת קובץ פרויקט" style="max-width:100%"></div>
+      <span id="projMsg" class="msg" role="status"></span>
+      <span class="hint">הפרויקטים נשמרים בדפדפן הזה, כולל תמונות, לוגו וגופנים. כדי לעבור למחשב אחר או לגבות, שמרו קובץ פרויקט ופתחו אותו שם.</span>
+    </div>
+  </section>
+
+  <section class="card" aria-label="עיצוב">
+    <h2>עיצוב</h2>
+    <div class="grid">
+      <div class="ctl span-all">
+        <label for="txt">הטקסט (עברית, ערבית, רוסית או אנגלית, עד 300 תווים)</label>
+        <textarea id="txt" rows="3" maxlength="300" dir="auto" autocomplete="off" spellcheck="false">VFX</textarea>
+        <span id="tmsg" class="msg" role="status"></span>
+      </div>
+      <div class="ctl span-all" id="layersBox">
+        <span class="lbl">שכבות טקסט נוספות</span>
+        <p class="note">אפשר להוסיף לסצנה עוד טקסטים שמופיעים יחד עם הטקסט הראשי, כל אחד עם אפקט, צבעים, גודל, מיקום ועיכוב הופעה משלו, למשל כותרת וכתובית מתחתיה.</p>
+        <div id="layerList"></div>
+        <div class="row"><button id="layerAdd" class="btn" type="button">＋ שכבת טקסט</button></div>
+      </div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-pre">תבניות מוכנות</span>
+        <div class="seg" id="presets" role="group" aria-labelledby="l-pre"></div>
+      </div>
+      <div class="ctl span-all">
+        <label for="img">או לוגו / תמונה במקום טקסט</label>
+        <div class="row">
+          <input id="img" type="file" accept="image/png,image/svg+xml,image/jpeg,image/webp" style="max-width:100%">
+          <button id="imgClear" class="btn" type="button" hidden>הסרת הלוגו</button>
+          <span id="imgName" class="hint"></span>
+        </div>
+        <div class="seg" id="imgcols" role="group" aria-label="צבעי הלוגו" hidden></div>
+        <span id="imsg2" class="msg" role="status">הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית.</span>
+      </div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-mode">אפקט</span>
+        <div class="seg" id="modes" role="group" aria-labelledby="l-mode"></div>
+      </div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-pal">צבעים</span>
+        <div class="seg" id="pals" role="group" aria-labelledby="l-pal"></div>
+        <div class="colors" id="custom" hidden>
+          <input id="c1" type="color" value="#ff2d95" aria-label="צבע ראשון">
+          <input id="c2" type="color" value="#7a5cff" aria-label="צבע שני">
+          <input id="c3" type="color" value="#00e5ff" aria-label="צבע שלישי">
+          <span class="hint">שלושה צבעים שעוברים זה לזה</span>
+        </div>
+      </div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-font">גופן (Google Fonts)</span>
+        <div class="seg" id="fscripts" role="group" aria-label="סינון גופנים לפי כתב"></div>
+        <div class="fontlist seg" id="fonts" role="group" aria-labelledby="l-font" dir="ltr"></div>
+        <div class="row">
+          <input id="gf" type="text" placeholder="או כתבו שם גופן מ-Google Fonts, למשל Rubik Glitch" aria-label="שם גופן מ-Google Fonts" autocomplete="off" spellcheck="false">
+          <button id="gfBtn" class="btn" type="button">טעינת גופן</button>
+          <label for="wt" class="lbl">עובי</label>
+          <select id="wt" style="width:auto">
+            <option value="0">ברירת מחדל</option>
+            <option value="400">רגיל 400</option>
+            <option value="700">מודגש 700</option>
+            <option value="900">כבד 900</option>
+          </select>
+        </div>
+        <label for="fontfile" class="lbl" style="margin-top:6px">גופן משלכם (TTF / OTF / WOFF)</label>
+        <div class="row"><input id="fontfile" type="file" accept=".ttf,.otf,.woff,.woff2,font/*" style="max-width:100%"><button id="fontClear" class="btn" type="button" hidden>הסרת הגופן</button></div>
+        <span id="fmsg" class="msg" role="status"></span>
+      </div>
+      <div class="ctl"><label for="den">צפיפות חלקיקים <span id="v-den" class="val"></span></label><input id="den" type="range" min="1" max="5" step="1" value="4"></div>
+      <div class="ctl"><label for="spd">מהירות <span id="v-spd" class="val"></span></label><input id="spd" type="range" min="0.4" max="2" step="0.1" value="1"></div>
+      <div class="ctl"><label for="glow">עוצמת זוהר <span id="v-glow" class="val"></span></label><input id="glow" type="range" min="0" max="1.6" step="0.1" value="1"></div>
+      <div class="ctl"><label for="size">גודל הטקסט <span id="v-size" class="val"></span></label><input id="size" type="range" min="35" max="92" step="1" value="76"></div>
+      <div class="ctl"><label for="ox">מיקום אופקי <span id="v-ox" class="val"></span></label><input id="ox" type="range" min="-50" max="50" step="1" value="0"></div>
+      <div class="ctl"><label for="oy">מיקום אנכי <span id="v-oy" class="val"></span></label><input id="oy" type="range" min="-50" max="50" step="1" value="0"></div>
+      <div class="ctl"><label for="rot">סיבוב <span id="v-rot" class="val"></span></label><input id="rot" type="range" min="-45" max="45" step="1" value="0"></div>
+      <div class="ctl"><span class="lbl">מיקום וסיבוב</span><div class="row"><button id="posReset" class="btn" type="button">מרכוז</button><button id="dragMode" class="chip" type="button" aria-pressed="false">גרירה בתצוגה</button></div></div>
+      <div class="ctl span-all" id="hybridRow" hidden><button id="hybrid" class="chip" type="button" aria-pressed="false">בסיום, הטקסט מתפרק לחלקיקים</button></div>
+      <div class="ctl span-all">
+        <span class="lbl" id="l-bgt">רקע מאחורי הטקסט</span>
+        <div class="seg" id="bgtypes" role="group" aria-labelledby="l-bgt"></div>
+        <div class="colors" id="bgcolors" hidden><input id="bga" type="color" value="#0b1020" aria-label="צבע הרקע"><input id="bgb" type="color" value="#1b2a6b" aria-label="צבע שני לרקע"></div>
+        <div class="row" id="bgimgrow" hidden><input id="bgimg" type="file" accept="image/*" aria-label="תמונת רקע" style="max-width:100%"><button id="bgimgClear" class="btn" type="button" hidden>הסרת הרקע</button></div>
+        <div class="ctl" id="bgdimrow" hidden><label for="bgdim">הכהיית הרקע <span id="v-bgdim" class="val"></span></label><input id="bgdim" type="range" min="0" max="85" step="5" value="35"></div>
+      </div>
+      <div class="ctl"><span class="lbl" id="l-shape">צורת חלקיק</span><div class="seg" id="shapes" role="group" aria-labelledby="l-shape"></div></div>
+      <div class="ctl"><span class="lbl" id="l-bg">רקע</span><div class="seg" id="bgs" role="group" aria-labelledby="l-bg"></div></div>
+      <div class="ctl"><span class="lbl" id="l-loop">התנהגות</span><div class="seg" id="loops" role="group" aria-labelledby="l-loop"></div></div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="ייצוא">
+    <h2>ייצוא</h2>
+    <div class="grid">
+      <div class="block">
+        <h3 class="sub">סרטון</h3>
+        <div class="ctl"><label for="vfmt">פורמט</label><select id="vfmt"></select></div>
+        <div class="ctl"><label for="vres">גודל</label>
+          <select id="vres">
+            <option value="1920x1080">1920×1080 (יוטיוב, אתר)</option>
+            <option value="1280x720">1280×720</option>
+            <option value="1080x1920">1080×1920 (ריילס, טיקטוק, סטורי)</option>
+            <option value="1080x1080">1080×1080 (פוסט מרובע)</option>
+            <option value="3840x2160">3840×2160 (4K)</option>
+          </select></div>
+        <div class="ctl"><label for="vfps">קצב פריימים</label>
+          <select id="vfps"><option value="30">30 פריימים לשנייה</option><option value="60">60 פריימים לשנייה (חלק יותר)</option></select></div>
+        <div class="ctl"><label for="vdur">אורך</label>
+          <select id="vdur">
+            <option value="loop">כל הרצף (אורך הסצנות)</option>
+            <option value="5">5 שניות</option>
+            <option value="10">10 שניות</option>
+            <option value="15">15 שניות</option>
+            <option value="30">30 שניות</option>
+          </select></div>
+        <div class="row">
+          <button id="vrec" class="btn primary" type="button">הקלטת סרטון</button>
+          <button id="vsave" class="btn" type="button" hidden>שמירת הקובץ</button>
+        </div>
+        <progress id="vprog" value="0" max="1" hidden></progress>
+        <span id="vmsg" class="msg" role="status"></span>
+      </div>
+      <div class="block">
+        <h3 class="sub">תמונה</h3>
+        <p class="note">תמונת PNG בגודל שנבחר בסרטון. התצוגה למעלה מקבלת את אותו יחס מסך, כך שמה שרואים הוא מה שמקבלים. עם רקע "שקוף" מתקבל קובץ עם שקיפות לעיצוב.</p>
+        <div class="row"><button id="png" class="btn" type="button">שמירת PNG</button><button id="pngCopy" class="btn" type="button">העתקת תמונה</button></div>
+        <span id="pmsg" class="msg" role="status"></span>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="block">
+      <h3 class="sub">קוד לאתר</h3>
+      <p class="note">הקוד עצמאי ולא צריך שום ספרייה. "קטע להטמעה" מתאים ל-Wix, Webflow, וורדפרס ובלוק HTML מותאם. "דף HTML מלא" נפתח ישר בדפדפן. את ה-JSON אפשר לשמור כדי לשחזר את ההגדרות.</p>
+      <div class="seg" id="kinds" role="group" aria-label="סוג הקוד"></div>
+      <textarea id="code" readonly spellcheck="false" aria-label="הקוד לייצוא"></textarea>
+      <div class="row">
+        <button id="copy" class="btn primary" type="button">העתקה</button>
+        <button id="savecode" class="btn" type="button">שמירה כקובץ</button>
+        <button id="shareLink" class="btn" type="button">העתקת קישור לשיתוף</button>
+        <span id="cmsg" class="msg" role="status"></span>
+      </div>
+      <details>
+        <summary>טעינת הגדרות שמורות (JSON)</summary>
+        <div class="block" style="margin-top:10px">
+          <textarea id="imp" spellcheck="false" aria-label="הדביקו כאן JSON של הגדרות" style="min-height:110px"></textarea>
+          <div class="row"><button id="impBtn" class="btn" type="button">החלה</button><span id="imsg" class="msg" role="status"></span></div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <p class="note">להקלטה ידנית אפשר גם להשתמש במסך מלא עם הקלטת מסך של המחשב. סרטון על רקע שחור אפשר להניח מעל וידאו אחר בעורך עם מצב מיזוג Screen או Add, והשחור נעלם.</p>
+  </aside>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.3/build/mp4-muxer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/webm-muxer@5.1.3/build/webm-muxer.js"></script>
+<script>
+/*__ENGINE__*/
+/*__APP__*/
+</script>
+<script>
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+}
+</script>
+</body>
+</html>
