@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap">
-<style>:root{color-scheme:dark;--bg:#05070d;--surface:#0b101a;--line:#1b2538;--fg:#e8eefb;--muted:#8c99b3;--accent:#4cc9ff;--accent-ink:#04121c;--font-ui:"Rubik",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font-family:var(--font-ui);font-size:15px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}.wrap{max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:16px}h1{margin:0;font-size:clamp(24px, 4vw, 34px);font-weight:700;letter-spacing:-.01em;text-wrap:balance}h2{margin:0;font-size:18px;font-weight:700}.lede{margin:4px 0 0;color:var(--muted);max-width:62ch}.stage{position:relative;width:min(100%,calc(76vh * var(--ar,1.7778)));aspect-ratio:var(--ar,1.7778);margin-inline:auto;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden;touch-action:pan-y}.stage.transp{background:repeating-conic-gradient(#10172a 0 25%,#0a0f1c 0 50%) 0 0/24px 24px}.stage:fullscreen{aspect-ratio:auto;width:100vw;height:100vh;margin:0;border:0;border-radius:0}.app{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,440px);gap:20px;align-items:start}.preview{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px;min-width:0}.side{display:flex;flex-direction:column;gap:16px;min-width:0}@media (max-width:959px){.app{grid-template-columns:minmax(0,1fr)}.preview{top:0;z-index:20;background:var(--bg);padding-block:8px}.stage{width:min(100%,calc(36vh * var(--ar,1.7778)))}}.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.hint{color:var(--muted);font-size:13px}.card{display:flex;flex-direction:column;gap:20px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px}.grid{display:grid;gap:20px 24px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.ctl{display:flex;flex-direction:column;gap:8px;min-width:0}.ctl label,.lbl{font-size:13px;color:var(--muted);font-weight:500}.span-all{grid-column:1/-1}input[type=text],select,textarea{width:100%;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:inherit}#txt{min-height:0;resize:none;font:600 20px/1.3 var(--font-ui);padding:10px 12px;unicode-bidi:plaintext;text-align:start}textarea{font:12.5px/1.5 var(--mono);direction:ltr;text-align:left;resize:vertical;min-height:190px}input[type=range]{width:100%;accent-color:var(--accent)}input[type=color]{width:44px;height:34px;padding:2px;background:var(--bg);border:1px solid var(--line);border-radius:8px;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.seg{display:flex;flex-wrap:wrap;gap:8px}.chip{display:inline-flex;align-items:center;gap:8px;background:0 0;color:var(--fg);font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:7px 12px}.chip:hover{border-color:#31405c}.chip[aria-pressed=true]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}.swatch{width:34px;height:12px;border-radius:3px;flex:none}.fontlist{max-height:178px;overflow-y:auto;padding:2px;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--bg)}.chip.scene.playing{box-shadow:0 0 0 2px var(--accent)}.langbar{display:flex;margin-inline-start:auto}.chip[lang]{padding:5px 11px;font-size:14px}.stage.drop{outline:2px dashed var(--accent);outline-offset:-6px}.chip.fnt{font-size:16px;line-height:1.2;padding:6px 11px;direction:ltr}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.row input[type=text]{flex:1 1 200px;direction:ltr}.colors{display:flex;gap:8px;align-items:center}.btn{font:500 15px/1 var(--font-ui);cursor:pointer;border-radius:8px;padding:11px 18px;background:0 0;color:var(--fg);border:1px solid #31405c}.btn:hover:not(:disabled){border-color:var(--fg)}.btn:disabled{opacity:.45;cursor:not-allowed}.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}.btn.primary:hover:not(:disabled){filter:brightness(1.08)}.msg{color:var(--muted);font-size:13px;min-height:1.4em}.msg.err{color:#ff8a8a}progress{width:100%;height:8px;accent-color:var(--accent)}.sub{margin:0;font-size:14px;font-weight:700}.block{display:flex;flex-direction:column;gap:12px;min-width:0}.divider{border:0;border-top:1px solid var(--line);margin:0}.note{margin:0;color:var(--muted);font-size:13px;max-width:72ch}details summary{cursor:pointer;color:var(--muted);font-size:13px}</style>
+<style>:root{color-scheme:dark;--bg:#05070d;--surface:#0b101a;--line:#1b2538;--fg:#e8eefb;--muted:#8c99b3;--accent:#4cc9ff;--accent-ink:#04121c;--font-ui:"Rubik",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font-family:var(--font-ui);font-size:15px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}.wrap{max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:16px}h1{margin:0;font-size:clamp(24px, 4vw, 34px);font-weight:700;letter-spacing:-.01em;text-wrap:balance}h2{margin:0;font-size:18px;font-weight:700}.lede{margin:4px 0 0;color:var(--muted);max-width:62ch}.stage{position:relative;width:min(100%,calc(76vh * var(--ar,1.7778)));aspect-ratio:var(--ar,1.7778);margin-inline:auto;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden;touch-action:pan-y}.stage.transp{background:repeating-conic-gradient(#10172a 0 25%,#0a0f1c 0 50%) 0 0/24px 24px}.stage:fullscreen{aspect-ratio:auto;width:100vw;height:100vh;margin:0;border:0;border-radius:0}.app{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,440px);gap:20px;align-items:start}.preview{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px;min-width:0}.side{display:flex;flex-direction:column;gap:16px;min-width:0}@media (max-width:959px){.app{grid-template-columns:minmax(0,1fr)}.preview{top:0;z-index:20;background:var(--bg);padding-block:8px}.stage{width:min(100%,calc(36vh * var(--ar,1.7778)))}}.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.hint{color:var(--muted);font-size:13px}.card{display:flex;flex-direction:column;gap:20px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px}.grid{display:grid;gap:20px 24px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.ctl{display:flex;flex-direction:column;gap:8px;min-width:0}.ctl label,.lbl{font-size:13px;color:var(--muted);font-weight:500}.span-all{grid-column:1/-1}input[type=text],select,textarea{width:100%;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:inherit}#txt{min-height:0;resize:vertical;font:600 20px/1.3 var(--font-ui);padding:10px 12px;unicode-bidi:plaintext;text-align:start}textarea{font:12.5px/1.5 var(--mono);direction:ltr;text-align:left;resize:vertical;min-height:190px}input[type=range]{width:100%;accent-color:var(--accent)}input[type=color]{width:44px;height:34px;padding:2px;background:var(--bg);border:1px solid var(--line);border-radius:8px;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.seg{display:flex;flex-wrap:wrap;gap:8px}.chip{display:inline-flex;align-items:center;gap:8px;background:0 0;color:var(--fg);font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:7px 12px}.chip:hover{border-color:#31405c}.chip[aria-pressed=true]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}.swatch{width:34px;height:12px;border-radius:3px;flex:none}.fontlist{max-height:178px;overflow-y:auto;padding:2px;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--bg)}.chip.scene.playing{box-shadow:0 0 0 2px var(--accent)}.langbar{display:flex;margin-inline-start:auto}.chip[lang]{padding:5px 11px;font-size:14px}.stage.drop{outline:2px dashed var(--accent);outline-offset:-6px}.chip.fnt{font-size:16px;line-height:1.2;padding:6px 11px;direction:ltr}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.row input[type=text]{flex:1 1 200px;direction:ltr}.colors{display:flex;gap:8px;align-items:center}.btn{font:500 15px/1 var(--font-ui);cursor:pointer;border-radius:8px;padding:11px 18px;background:0 0;color:var(--fg);border:1px solid #31405c}.btn:hover:not(:disabled){border-color:var(--fg)}.btn:disabled{opacity:.45;cursor:not-allowed}.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}.btn.primary:hover:not(:disabled){filter:brightness(1.08)}.msg{color:var(--muted);font-size:13px;min-height:1.4em}.msg.err{color:#ff8a8a}progress{width:100%;height:8px;accent-color:var(--accent)}.sub{margin:0;font-size:14px;font-weight:700}.block{display:flex;flex-direction:column;gap:12px;min-width:0}.divider{border:0;border-top:1px solid var(--line);margin:0}.note{margin:0;color:var(--muted);font-size:13px;max-width:72ch}details summary{cursor:pointer;color:var(--muted);font-size:13px}</style>
 
 </head>
 <body>
@@ -69,8 +69,8 @@
     <h2>עיצוב</h2>
     <div class="grid">
       <div class="ctl span-all">
-        <label for="txt">הטקסט (עברית, ערבית, רוסית או אנגלית, עד 3 שורות)</label>
-        <textarea id="txt" rows="2" maxlength="60" dir="auto" autocomplete="off" spellcheck="false">VFX</textarea>
+        <label for="txt">הטקסט (עברית, ערבית, רוסית או אנגלית, עד 300 תווים)</label>
+        <textarea id="txt" rows="3" maxlength="300" dir="auto" autocomplete="off" spellcheck="false">VFX</textarea>
         <span id="tmsg" class="msg" role="status"></span>
       </div>
       <div class="ctl span-all">
@@ -211,7 +211,7 @@ r("https://fonts.googleapis.com/css2?family="+a+":wght@"+t+"&display=swap",funct
 if(!t.ok)return t;var a=t.weight+' 64px "'+e+'"',r=new Promise(function(e){setTimeout(e,2500)})
 ;return Promise.race([document.fonts.load(a,n||"AaBb0123"),r]).then(function(){return t},function(){return t})})}function b(i,c){var b,w={}
 ;for(b in o)w[b]=o[b];for(b in c||{})w[b]=c[b]
-;var y,M,x,S,E,A,k,F,P,N,C,T,L,O,G,R,V,J,W=i.getContext("2d"),B=0,D=0,H=1,I=1,z=0,j=2,q=0,U=-9999,Y=-9999,$=[],X=!1,K=[],_=[],Z="",Q=new Int32Array(292),ee=new Int32Array(292),te=new Float32Array(12)
+;var y,M,x,S,E,A,k,F,P,N,C,T,O,L,G,R,V,J,W=i.getContext("2d"),B=0,D=0,H=1,I=1,z=0,j=2,q=0,U=-9999,Y=-9999,$=[],X=!1,K=[],_=[],Z="",Q=new Int32Array(292),ee=new Int32Array(292),te=new Float32Array(12)
 ;function ne(e,t){var n,a,r,o,i=[],s=[];for(a=0;a<D;a+=t)for(n=0;n<B;n+=t)r=Math.min(B-1,n+Math.random()*t|0),
 e[4*((o=Math.min(D-1,a+Math.random()*t|0))*B+r)+3]>110&&(i.push(r),s.push(o));return[i,s]}return{cfg:w,build:function(e,t,n){var a=++q;B=e,D=t,H=n||1,
 I=Math.max(.4,B/1e3),i.width=Math.round(B*H),i.height=Math.round(D*H),K=[];var r,o=i.width,c=i.height;for(r=0;r<4;r++){o=Math.max(1,o>>1),
@@ -219,33 +219,36 @@ c=Math.max(1,c>>1);var u=document.createElement("canvas");u.width=o,u.height=c,K
 ok:!0,weight:w.weight}):v(w.family,w.weight,w.text),m=w.image?(d=w.image,s[d]||(s[d]=new Promise(function(e){var t=new Image;t.onload=function(){e(t)
 },t.onerror=function(){e(null)},t.src=d})),s[d]):Promise.resolve(null);return Promise.all([f,m]).then(function(e){var t=e[0],n=e[1]
 ;if(a!==q)return null;var r=String(w.text).split("\n").map(function(e){return e.trim()}).filter(function(e){return e
-}).slice(0,3),o='"'+w.family+'", system-ui, sans-serif',i=document.createElement("canvas");i.width=B,i.height=D;var s=i.getContext("2d",{
+}).slice(0,12),o='"'+w.family+'", system-ui, sans-serif',i=document.createElement("canvas");i.width=B,i.height=D;var s=i.getContext("2d",{
 willReadFrequently:!0});if(n){var c=Math.min(B*w.size/n.width,.78*D/n.height);s.drawImage(n,(B-n.width*c)/2,(D-n.height*c)/2,n.width*c,n.height*c)
-}else if(r.length){var u=r.length,d=1;s.font=t.weight+" 100px "+o,r.forEach(function(e){d=Math.max(d,s.measureText(e).width)})
-;var f=Math.min(B*w.size*100/d,1===u?.55*D:.8*D/(1.1*u));s.font=t.weight+" "+f+"px "+o,s.textAlign="center",s.textBaseline="alphabetic",
-s.fillStyle="#fff";var m=s.measureText("H").actualBoundingBoxAscent||.72*f,h=1.12*f;r.forEach(function(e,t){s.direction=l.test(e)?"rtl":"ltr",
-s.fillText(e,B/2,D/2+(t-(u-1)/2)*h+m/2)})}var p=s.getImageData(0,0,B,D).data;if(n){var g=document.createElement("canvas");g.width=g.height=48
-;var v=g.getContext("2d",{willReadFrequently:!0});v.drawImage(n,0,0,48,48);var b,W=v.getImageData(0,0,48,48).data,H=!0
-;for(b=3;b<W.length;b+=4)if(W[b]<245){H=!1;break}if(H)for(b=0;b<p.length;b+=4)if(p[b+3]>0){var U=p[b]-W[0],Y=p[b+1]-W[1],K=p[b+2]-W[2]
-;U*U+Y*Y+K*K<4800&&(p[b+3]=0)}}var _=Math.max(1.4,w.step*I),Z=ne(p,_);Z[0].length>3e4&&(Z=ne(p,_*=Math.sqrt(Z[0].length/3e4))),z=Z[0].length,
-y=new Float32Array(z),M=new Float32Array(z),x=new Float32Array(z),S=new Float32Array(z),E=new Float32Array(z),A=new Float32Array(z),
-k=new Float32Array(z),F=new Float32Array(z),P=new Float32Array(z),N=new Float32Array(z),C=new Float32Array(z),T=new Uint8Array(z),
-L=new Float32Array(z),O=new Float32Array(z),G=new Float32Array(z),R=new Uint16Array(z),V=new Uint32Array(z),J=new Uint8Array(z)
-;var Q,ee=1e9,te=-1e9,ae=1e9,re=-1e9;for(Q=0;Q<z;Q++){var oe=Z[0][Q],ie=Z[1][Q];oe<ee&&(ee=oe),oe>te&&(te=oe),ie<ae&&(ae=ie),ie>re&&(re=ie)}
-var se=Math.max(1,te-ee),le=Math.max(1,re-ae),ce=B/2,ue=D/2;for(Q=0;Q<z;Q++){y[Q]=Z[0][Q],M[Q]=Z[1][Q],x[Q]=(y[Q]-ee)/se,S[Q]=(M[Q]-ae)/le,
-E[Q]=Math.random(),A[Q]=Math.random(),F[Q]=Math.random(),P[Q]=Math.random(),k[Q]=.6+.9*Math.random(),T[Q]=Q%3
-;var de=Math.atan2(M[Q]-ue,y[Q]-ce)+.9*(Math.random()-.5);N[Q]=Math.cos(de),C[Q]=Math.sin(de)}if(X=!1,$=[],n&&z){var fe,me=[],he=Math.max(1,z/4e3|0)
-;for(Q=0;Q<z;Q+=he)fe=4*((0|M[Q])*B+(0|y[Q])),me.push([p[fe],p[fe+1],p[fe+2]]);var pe,ge=function(e,t){for(var n=[e];n.length<t;){var a=-1,r=0,o=0
-;if(n.forEach(function(e,t){if(!(e.length<2)){var n,i=[255,255,255],s=[0,0,0];for(e.forEach(function(e){for(n=0;n<3;n++)e[n]<i[n]&&(i[n]=e[n]),
-e[n]>s[n]&&(s[n]=e[n])}),n=0;n<3;n++){var l=(s[n]-i[n])*e.length;l>r&&(r=l,a=t,o=n)}}}),a<0)break;var i=n[a];i.sort(function(e,t){return e[o]-t[o]})
-;var s=i.length>>1;n.splice(a,1,i.slice(0,s),i.slice(s))}return n.map(function(e){var t=[0,0,0],n=e.length||1;return e.forEach(function(e){t[0]+=e[0],
-t[1]+=e[1],t[2]+=e[2]}),[Math.round(t[0]/n),Math.round(t[1]/n),Math.round(t[2]/n)]})}(me,32);for(Q=0;Q<z;Q++){fe=4*((0|M[Q])*B+(0|y[Q]))
-;var ve=0,be=1e9;for(pe=0;pe<ge.length;pe++){var we=p[fe]-ge[pe][0],ye=p[fe+1]-ge[pe][1],Me=p[fe+2]-ge[pe][2],xe=we*we+ye*ye+Me*Me;xe<be&&(be=xe,
-ve=pe)}J[Q]=ve}ge.forEach(function(e){[1,.55,.22].forEach(function(t){
-$.push("rgb("+Math.round(e[0]*t)+","+Math.round(e[1]*t)+","+Math.round(e[2]*t)+")")})}),X=!0}return j=.62*_,{ok:t.ok,count:z}})},render:function(o){
-var s="transparent"===w.bg;if(W.setTransform(1,0,0,1,0,0),W.globalCompositeOperation="source-over",W.globalAlpha=1,
-s?W.clearRect(0,0,i.width,i.height):(W.fillStyle="#000",W.fillRect(0,0,i.width,i.height)),z){w.stops.join(",")!==Z&&function(){
-var e,n,a=w.stops.map(g),r=[];for(a.length<2&&a.push(a[0]||[255,255,255]),e=a.length,n=0;n<t;n++){
+}else if(r.length){var u=B*w.size,d=1;s.font=t.weight+" 100px "+o,r.forEach(function(e){d=Math.max(d,s.measureText(e).width)})
+;var f=Math.min(100*u/d,1===r.length?.55*D:.8*D/(1.1*r.length));if(f<.16*D&&r.some(function(e){return e.indexOf(" ")>0})){for(var m={},h=function(e){
+return void 0!==m[e]?m[e]:m[e]=s.measureText(e).width},p=function(e){var t=[];return r.forEach(function(n){var a="";n.split(" ").forEach(function(n){
+var r=a?a+" "+n:n;!a||h(r)*e/100<=u?a=r:(t.push(a),a=n)}),a&&t.push(a)}),t},g=.3*D,v=p(g);g>.03*D;){if((v=p(g)).every(function(e){
+return h(e)*g/100<=1.001*u})&&v.length*g*1.12<=.82*D)break;g*=.94}r=v,f=g}var b=r.length;s.font=t.weight+" "+f+"px "+o,s.textAlign="center",
+s.textBaseline="alphabetic",s.fillStyle="#fff";var W=s.measureText("H").actualBoundingBoxAscent||.72*f,H=1.12*f;r.forEach(function(e,t){
+s.direction=l.test(e)?"rtl":"ltr",s.fillText(e,B/2,D/2+(t-(b-1)/2)*H+W/2)})}var U=s.getImageData(0,0,B,D).data;if(n){
+var Y=document.createElement("canvas");Y.width=Y.height=48;var K=Y.getContext("2d",{willReadFrequently:!0});K.drawImage(n,0,0,48,48)
+;var _,Z=K.getImageData(0,0,48,48).data,Q=!0;for(_=3;_<Z.length;_+=4)if(Z[_]<245){Q=!1;break}if(Q)for(_=0;_<U.length;_+=4)if(U[_+3]>0){
+var ee=U[_]-Z[0],te=U[_+1]-Z[1],ae=U[_+2]-Z[2];ee*ee+te*te+ae*ae<4800&&(U[_+3]=0)}}var re=Math.max(1.4,w.step*I),oe=ne(U,re)
+;oe[0].length>3e4&&(oe=ne(U,re*=Math.sqrt(oe[0].length/3e4))),z=oe[0].length,y=new Float32Array(z),M=new Float32Array(z),x=new Float32Array(z),
+S=new Float32Array(z),E=new Float32Array(z),A=new Float32Array(z),k=new Float32Array(z),F=new Float32Array(z),P=new Float32Array(z),
+N=new Float32Array(z),C=new Float32Array(z),T=new Uint8Array(z),O=new Float32Array(z),L=new Float32Array(z),G=new Float32Array(z),
+R=new Uint16Array(z),V=new Uint32Array(z),J=new Uint8Array(z);var ie,se=1e9,le=-1e9,ce=1e9,ue=-1e9;for(ie=0;ie<z;ie++){var de=oe[0][ie],fe=oe[1][ie]
+;de<se&&(se=de),de>le&&(le=de),fe<ce&&(ce=fe),fe>ue&&(ue=fe)}var me=Math.max(1,le-se),he=Math.max(1,ue-ce),pe=B/2,ge=D/2;for(ie=0;ie<z;ie++){
+y[ie]=oe[0][ie],M[ie]=oe[1][ie],x[ie]=(y[ie]-se)/me,S[ie]=(M[ie]-ce)/he,E[ie]=Math.random(),A[ie]=Math.random(),F[ie]=Math.random(),
+P[ie]=Math.random(),k[ie]=.6+.9*Math.random(),T[ie]=ie%3;var ve=Math.atan2(M[ie]-ge,y[ie]-pe)+.9*(Math.random()-.5);N[ie]=Math.cos(ve),
+C[ie]=Math.sin(ve)}if(X=!1,$=[],n&&z){var be,we=[],ye=Math.max(1,z/4e3|0);for(ie=0;ie<z;ie+=ye)be=4*((0|M[ie])*B+(0|y[ie])),
+we.push([U[be],U[be+1],U[be+2]]);var Me,xe=function(e,t){for(var n=[e];n.length<t;){var a=-1,r=0,o=0;if(n.forEach(function(e,t){if(!(e.length<2)){
+var n,i=[255,255,255],s=[0,0,0];for(e.forEach(function(e){for(n=0;n<3;n++)e[n]<i[n]&&(i[n]=e[n]),e[n]>s[n]&&(s[n]=e[n])}),n=0;n<3;n++){
+var l=(s[n]-i[n])*e.length;l>r&&(r=l,a=t,o=n)}}}),a<0)break;var i=n[a];i.sort(function(e,t){return e[o]-t[o]});var s=i.length>>1
+;n.splice(a,1,i.slice(0,s),i.slice(s))}return n.map(function(e){var t=[0,0,0],n=e.length||1;return e.forEach(function(e){t[0]+=e[0],t[1]+=e[1],
+t[2]+=e[2]}),[Math.round(t[0]/n),Math.round(t[1]/n),Math.round(t[2]/n)]})}(we,32);for(ie=0;ie<z;ie++){be=4*((0|M[ie])*B+(0|y[ie]));var Se=0,Ee=1e9
+;for(Me=0;Me<xe.length;Me++){var Ae=U[be]-xe[Me][0],ke=U[be+1]-xe[Me][1],Fe=U[be+2]-xe[Me][2],Pe=Ae*Ae+ke*ke+Fe*Fe;Pe<Ee&&(Ee=Pe,Se=Me)}J[ie]=Se}
+xe.forEach(function(e){[1,.55,.22].forEach(function(t){$.push("rgb("+Math.round(e[0]*t)+","+Math.round(e[1]*t)+","+Math.round(e[2]*t)+")")})}),X=!0}
+return j=.62*re,{ok:t.ok,count:z}})},render:function(o){var s="transparent"===w.bg;if(W.setTransform(1,0,0,1,0,0),
+W.globalCompositeOperation="source-over",W.globalAlpha=1,s?W.clearRect(0,0,i.width,i.height):(W.fillStyle="#000",W.fillRect(0,0,i.width,i.height)),z){
+w.stops.join(",")!==Z&&function(){var e,n,a=w.stops.map(g),r=[];for(a.length<2&&a.push(a[0]||[255,255,255]),e=a.length,n=0;n<t;n++){
 var o=n/t*e,i=Math.floor(o)%e,s=(i+1)%e,l=o-Math.floor(o);r.push([0,1,2].map(function(e){return a[i][e]+(a[s][e]-a[i][e])*l}))}_=[],
 [1,.55,.22].forEach(function(e){r.forEach(function(t){_.push("rgb("+Math.round(t[0]*e)+","+Math.round(t[1]*e)+","+Math.round(t[2]*e)+")")})}),
 _.push("rgb(255,40,60)","rgb(40,255,90)","rgb(50,90,255)"),Z=w.stops.join(",")}();var l,c,v=0|w.mode,b=r[v]||r[0],q=b.out,ne=w.imgColors&&X
@@ -256,9 +259,9 @@ var me=y[c],he=M[c],pe=1,ge=1,ve=-1,be=0,we=E[c],ye=A[c],Me=x[c],xe=S[c],Se=F[c]
 var Ae=u((l-.7*ye)/1.9),ke=1-d(Ae),Fe=u((l-q-1.7*Me-.4*ye)/2.3),Pe=Fe*Fe*Fe;me+=-(120+480*we)*I*ke+(80+520*Se)*I*Pe,
 he+=260*(Ee-.5)*I*ke+(300*(Se-.5)-50)*I*Pe+30*Math.sin(2.2*l+40*we)*I*Pe,pe=Math.min(1,2*Ae)*(1-Fe*Fe);break;case 1:var Ne=u((l-.7*ye)/1.8),Ce=1-d(Ne)
 ;me+=-(120+480*we)*I*Ce+.7*Math.sin(3.1*o+50*we),he+=260*(Ee-.5)*I*Ce+.7*Math.cos(2.7*o+70*we),pe=Math.min(1,2*Ne),
-ge=1+.7*Math.max(0,Math.sin(3*o-8*Me));break;case 2:var Te;Te=l<q?1-m(u((l-.5*ye)/1.8)):d(u((l-q-.25*ye)/1.2));var Le=(150+600*Se)*I
-;me+=N[c]*Le*Te+10*Math.sin(1.3*o+60*we)*I*Te,he+=C[c]*Le*Te+10*Math.cos(1.1*o+80*we)*I*Te,pe=1-.4*Te;break;case 3:
-var Oe=u(6*(l-.9*xe)),Ge=u(5*(l-q-.7*xe));pe=Oe*(1-Ge),me+=170*(we-.5)*I*(1-Oe+Ge);var Re=Math.min(11,Math.max(0,he/D*12|0));me+=te[Re],
+ge=1+.7*Math.max(0,Math.sin(3*o-8*Me));break;case 2:var Te;Te=l<q?1-m(u((l-.5*ye)/1.8)):d(u((l-q-.25*ye)/1.2));var Oe=(150+600*Se)*I
+;me+=N[c]*Oe*Te+10*Math.sin(1.3*o+60*we)*I*Te,he+=C[c]*Oe*Te+10*Math.cos(1.1*o+80*we)*I*Te,pe=1-.4*Te;break;case 3:
+var Le=u(6*(l-.9*xe)),Ge=u(5*(l-q-.7*xe));pe=Le*(1-Ge),me+=170*(we-.5)*I*(1-Le+Ge);var Re=Math.min(11,Math.max(0,he/D*12|0));me+=te[Re],
 le>0&&(me+=((ve=T[c])-1)*le),pe*=.88+.12*Math.sin(40*o+30*xe);break;case 4:
 var Ve=u((l-Me-.2*ye)/1.4),Je=1-d(Ve),We=u((l-q-Me-.2*ye)/1.4),Be=We*We,De=y[c]/I*.018+2.6*o,He=Ve*(1-We)
 ;he+=(80+220*Se)*I*(Je+Be)+(12*Math.sin(De)+6*Math.sin(.5*De+o))*I*He,pe=Math.min(1,2*Ve)*(1-Be),ge=1+.6*Math.max(0,Math.sin(De))*He;break;case 5:
@@ -275,11 +278,11 @@ we<.12+.45*(1-xe)){var ft=h(o*(.18+.35*ye)+7.3*Se);he-=ft*ft*(120+220*Ee)*I*ut,m
 ge=1-.5*ft,be=.3*ft}else pe*=.82+.18*Math.sin(9*o+60*we),ge=.95+.15*Math.sin(5*o+50*Se)}if(oe){var mt=me-U,ht=he-Y,pt=mt*mt+ht*ht;if(pt<se){
 var gt=Math.sqrt(pt)||1,vt=1-gt/ie,bt=vt*vt*ie*.9;me+=mt/gt*bt,he+=ht/gt*bt}}var wt=.75*Me+.16*o*b.cs+.18*we+be
 ;1===v&&(wt+=.18*Math.sin(7*o+40*we)+.12*Math.sin(2.3*o-6*Me)),wt-=Math.floor(wt)
-;var yt=pe>.66?0:pe>.33?1:2,Mt=ve>=0?192+ve:ne?n+3*J[c]+yt:(wt*t|0)+t*yt;R[c]=Mt,Q[Mt+1]++,L[c]=me,O[c]=he,
+;var yt=pe>.66?0:pe>.33?1:2,Mt=ve>=0?192+ve:ne?n+3*J[c]+yt:(wt*t|0)+t*yt;R[c]=Mt,Q[Mt+1]++,O[c]=me,L[c]=he,
 G[c]=pe<.04?0:j*k[c]*(.5+.5*pe)*(.75+.25*Math.sin(o*(4+6*we)+100*we))*ge}for(c=0;c<a;c++)Q[c+1]+=Q[c];for(c=0;c<=a;c++)ee[c]=Q[c]
 ;for(c=0;c<z;c++)V[ee[R[c]]++]=c;W.globalCompositeOperation="lighter";var xt,St,Et="square"!==w.shape,At=-1;for(Et&&W.beginPath(),
 xt=0;xt<z;xt++)if(c=V[xt],!(G[c]<=0))if(R[c]!==At&&(Et&&At>=0&&(W.fill(),W.beginPath()),At=R[c],W.fillStyle=At>=n?$[At-n]:_[At]),St=G[c]*H,Et){
-var kt=L[c]*H,Ft=O[c]*H,Pt=.5*St;W.moveTo(kt+Pt,Ft),W.arc(kt,Ft,Pt,0,e)}else W.fillRect(L[c]*H-St/2,O[c]*H-St/2,St,St);if(Et&&At>=0&&W.fill(),
+var kt=O[c]*H,Ft=L[c]*H,Pt=.5*St;W.moveTo(kt+Pt,Ft),W.arc(kt,Ft,Pt,0,e)}else W.fillRect(O[c]*H-St/2,L[c]*H-St/2,St,St);if(Et&&At>=0&&W.fill(),
 w.glow>0){var Nt,Ct=i;for(Nt=0;Nt<K.length;Nt++)K[Nt].x.globalCompositeOperation="copy",K[Nt].x.drawImage(Ct,0,0,K[Nt].c.width,K[Nt].c.height),
 Ct=K[Nt].c;W.globalAlpha=Math.min(1,.7*w.glow),W.drawImage(K[1].c,0,0,i.width,i.height),W.globalAlpha=Math.min(1,.6*w.glow),
 W.drawImage(K[3].c,0,0,i.width,i.height)}W.globalAlpha=1,W.globalCompositeOperation="source-over"}},setPointer:function(e,t){U=e,Y=t},
@@ -316,7 +319,7 @@ loadFont:v}};!function(){var e=enginePack(),t=function(e){return document.queryS
 "■ עצירה וחזרה לסצנה הנבחרת":"■ إيقاف والعودة إلى المشهد المحدد","מוזיקת רקע (אופציונלי, MP3 / WAV / M4A)":"موسيقى خلفية (اختياري، MP3 / WAV / M4A)",
 "הסרה":"إزالة","עוצמה":"مستوى الصوت",
 "המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.":"تُضاف الموسيقى إلى الفيديو المُصدَّر مع تصاعد تدريجي في البداية وتلاشٍ في النهاية، وتُشغَّل أيضًا في معاينة التسلسل.",
-"עיצוב":"التصميم","הטקסט (עברית, ערבית, רוסית או אנגלית, עד 3 שורות)":"النص (عبرية أو عربية أو روسية أو إنجليزية، حتى 3 أسطر)",
+"עיצוב":"التصميم","הטקסט (עברית, ערבית, רוסית או אנגלית, עד 300 תווים)":"النص (عبرية أو عربية أو روسية أو إنجليزية، حتى 300 حرف)",
 "תבניות מוכנות":"قوالب جاهزة","או לוגו / תמונה במקום טקסט":"أو شعار / صورة بدل النص","הסרת הלוגו":"إزالة الشعار","צבעי הלוגו":"ألوان الشعار",
 "הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית.":"يتحول الشعار إلى جسيمات بألوانه الأصلية أو بألوان اللوحة. يُفضَّل PNG أو SVG بخلفية شفافة، وإن لم تكن هناك شفافية تُزال الخلفية تلقائيًا.",
 "אפקט":"التأثير","צבעים":"الألوان","צבע ראשון":"اللون الأول","צבע שני":"اللون الثاني","צבע שלישי":"اللون الثالث",
@@ -370,7 +373,7 @@ loadFont:v}};!function(){var e=enginePack(),t=function(e){return document.queryS
 "ההקלטה נכשלה: {err}. נסו גודל קטן יותר או פורמט אחר.":"فشل التسجيل: {err}. جرّب حجمًا أصغر أو صيغة أخرى.","מכין תמונה...":"جارٍ تحضير الصورة...",
 "יצירת התמונה נכשלה.":"فشل إنشاء الصورة.","העתקת תמונה":"نسخ الصورة","התמונה הועתקה ללוח.":"نُسخت الصورة إلى الحافظة.",
 "העתקת תמונה ללוח לא נתמכת כאן. אפשר לשמור את הקובץ.":"نسخ الصورة إلى الحافظة غير مدعوم هنا. يمكنك حفظ الملف.","הטקסט הודבק.":"تم لصق النص.",
-"הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 3 שורות ו-60 תווים).":"تم لصق النص. أُزيلت بعض الأحرف أو قُصَّ النص (حتى 3 أسطر و60 حرفًا).",
+"הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים).":"تم لصق النص. أُزيلت بعض الأحرف أو قُصَّ النص (حتى 12 سطرًا و300 حرف).",
 "אפשר להדביק (Ctrl+V) טקסט, תמונה או לוגו, SVG או הגדרות JSON מכל מקום בדף, וגם לגרור לכאן קבצים.":"يمكنك لصق (Ctrl+V) نص أو صورة أو شعار أو SVG أو إعدادات JSON في أي مكان بالصفحة، كما يمكنك سحب الملفات وإفلاتها هنا.",
 "סוג הקובץ לא נתמך. אפשר לגרור תמונה, קובץ שמע, JSON או טקסט.":"نوع الملف غير مدعوم. يمكنك سحب صورة أو ملف صوت أو JSON أو نص."},ru:{
 "סטודיו אפקטי טקסט":"Студия текстовых эффектов",
@@ -384,7 +387,7 @@ loadFont:v}};!function(){var e=enginePack(),t=function(e){return document.queryS
 "▶ נגן את כל הרצף":"▶ Воспроизвести всю последовательность","■ עצירה וחזרה לסצנה הנבחרת":"■ Остановить и вернуться к выбранной сцене",
 "מוזיקת רקע (אופציונלי, MP3 / WAV / M4A)":"Фоновая музыка (необязательно, MP3 / WAV / M4A)","הסרה":"Удалить","עוצמה":"Громкость",
 "המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.":"Музыка добавляется в экспортируемое видео с плавным нарастанием в начале и затуханием в конце, а также играет при просмотре последовательности.",
-"עיצוב":"Дизайн","הטקסט (עברית, ערבית, רוסית או אנגלית, עד 3 שורות)":"Текст (иврит, арабский, русский или английский, до 3 строк)",
+"עיצוב":"Дизайн","הטקסט (עברית, ערבית, רוסית או אנגלית, עד 300 תווים)":"Текст (иврит, арабский, русский или английский, до 300 символов)",
 "תבניות מוכנות":"Готовые шаблоны","או לוגו / תמונה במקום טקסט":"Или логотип / изображение вместо текста","הסרת הלוגו":"Убрать логотип",
 "צבעי הלוגו":"Цвета логотипа",
 "הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית.":"Логотип превращается в частицы — в исходных цветах или в цветах палитры. Лучше всего PNG или SVG с прозрачным фоном; если прозрачности нет, фон удаляется автоматически.",
@@ -445,7 +448,7 @@ loadFont:v}};!function(){var e=enginePack(),t=function(e){return document.queryS
 "התמונה הועתקה ללוח.":"Изображение скопировано в буфер обмена.",
 "העתקת תמונה ללוח לא נתמכת כאן. אפשר לשמור את הקובץ.":"Копирование изображения в буфер обмена здесь не поддерживается. Можно сохранить файл.",
 "הטקסט הודבק.":"Текст вставлен.",
-"הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 3 שורות ו-60 תווים).":"Текст вставлен. Часть символов удалена или текст сокращён (до 3 строк и 60 символов).",
+"הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים).":"Текст вставлен. Часть символов удалена или текст сокращён (до 12 строк и 300 символов).",
 "אפשר להדביק (Ctrl+V) טקסט, תמונה או לוגו, SVG או הגדרות JSON מכל מקום בדף, וגם לגרור לכאן קבצים.":"Нажмите Ctrl+V в любом месте страницы, чтобы вставить текст, изображение или логотип, SVG или настройки JSON. Файлы можно перетащить сюда.",
 "סוג הקובץ לא נתמך. אפשר לגרור תמונה, קובץ שמע, JSON או טקסט.":"Тип файла не поддерживается. Можно перетащить изображение, аудио, JSON или текст."},
 en:{"סטודיו אפקטי טקסט":"Text Effects Studio",
@@ -459,7 +462,7 @@ en:{"סטודיו אפקטי טקסט":"Text Effects Studio",
 "■ עצירה וחזרה לסצנה הנבחרת":"■ Stop and return to the selected scene",
 "מוזיקת רקע (אופציונלי, MP3 / WAV / M4A)":"Background music (optional, MP3 / WAV / M4A)","הסרה":"Remove","עוצמה":"Volume",
 "המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.":"The music is added to the exported video with a fade in at the start and a fade out at the end, and also plays while you preview the sequence.",
-"עיצוב":"Design","הטקסט (עברית, ערבית, רוסית או אנגלית, עד 3 שורות)":"Text (Hebrew, Arabic, Russian or English, up to 3 lines)",
+"עיצוב":"Design","הטקסט (עברית, ערבית, רוסית או אנגלית, עד 300 תווים)":"Text (Hebrew, Arabic, Russian or English, up to 300 characters)",
 "תבניות מוכנות":"Presets","או לוגו / תמונה במקום טקסט":"Or a logo / image instead of text","הסרת הלוגו":"Remove logo","צבעי הלוגו":"Logo colors",
 "הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית.":"The logo turns into particles, in its original colors or the palette colors. PNG or SVG with a transparent background works best; without transparency the background is removed automatically.",
 "אפקט":"Effect","צבעים":"Colors","צבע ראשון":"First color","צבע שני":"Second color","צבע שלישי":"Third color",
@@ -516,7 +519,7 @@ en:{"סטודיו אפקטי טקסט":"Text Effects Studio",
 "התמונה הועתקה ללוח.":"The image was copied to the clipboard.",
 "העתקת תמונה ללוח לא נתמכת כאן. אפשר לשמור את הקובץ.":"Copying an image to the clipboard isn't supported here. You can save the file instead.",
 "הטקסט הודבק.":"Text pasted.",
-"הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 3 שורות ו-60 תווים).":"Text pasted. Some characters were removed or the text was shortened (up to 3 lines and 60 characters).",
+"הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים).":"Text pasted. Some characters were removed or the text was shortened (up to 12 lines and 300 characters).",
 "אפשר להדביק (Ctrl+V) טקסט, תמונה או לוגו, SVG או הגדרות JSON מכל מקום בדף, וגם לגרור לכאן קבצים.":"Press Ctrl+V anywhere on the page to paste text, an image or logo, SVG, or settings JSON. You can also drag files here.",
 "סוג הקובץ לא נתמך. אפשר לגרור תמונה, קובץ שמע, JSON או טקסט.":"Unsupported file type. You can drop an image, audio, JSON or text file."}},r={ice:{
 name:"קרח",accent:"#4cc9ff",stops:["#1f6bff","#4cc9ff","#e2f8ff","#5a7dff"]},neon:{name:"ניאון",accent:"#ff4de0",
@@ -548,17 +551,17 @@ return void 0===e?void 0:JSON.parse(JSON.stringify(e))}function N(e){var t={};re
 function C(e){var t=N(m);return e&&"object"==typeof e&&F.forEach(function(n){
 void 0!==e[n]&&typeof e[n]==typeof t[n]&&("pal"!==n||r[e[n]])&&("mode"!==n||e[n]>=0&&e[n]<o.length)&&(t[n]=P(e[n]))}),t}function T(t){
 var n=e.create(document.createElement("canvas"),b(t)).recDuration()/t.speed;return t.loop||(n=Math.min(n,5)),Math.max(2.5,Math.round(2*n)/2)}
-var L=[],O=0;try{var G=JSON.parse(localStorage.getItem("ptx-v2")||localStorage.getItem("ptx-v1")||"null")
+var O=[],L=0;try{var G=JSON.parse(localStorage.getItem("ptx-v2")||localStorage.getItem("ptx-v1")||"null")
 ;G&&"object"==typeof G&&("string"==typeof G.kind&&(f.kind=G.kind),Array.isArray(G.scenes)&&G.scenes.length?(G.scenes.slice(0,12).forEach(function(e){
-L.push({d:C(e&&e.d),dur:Math.min(120,Math.max(1,+(e&&e.dur)||5))})}),O=Math.min(L.length-1,Math.max(0,0|G.cur))):L.push({d:C(G),dur:0}))}catch(e){}
-function R(){L[O].d=N(f)}function V(){t("#txt").value=f.text,t("#den").value=7-f.step,t("#spd").value=f.speed,t("#glow").value=f.glow,
+O.push({d:C(e&&e.d),dur:Math.min(120,Math.max(1,+(e&&e.dur)||5))})}),L=Math.min(O.length-1,Math.max(0,0|G.cur))):O.push({d:C(G),dur:0}))}catch(e){}
+function R(){O[L].d=N(f)}function V(){t("#txt").value=f.text,t("#den").value=7-f.step,t("#spd").value=f.speed,t("#glow").value=f.glow,
 t("#size").value=Math.round(100*f.size),t("#wt").value=String(f.weightSel),["c1","c2","c3"].forEach(function(e,n){t("#"+e).value=f.custom[n]}),
 t("#imgName").textContent=f.image?E("לוגו נטען"):"",t("#imgClear").hidden=!f.image,t("#imgcols").hidden=!f.image,t("#txt").disabled=!!f.image,
-t("#txt").style.opacity=f.image?.45:1}L.length||L.push({d:N(m),dur:0}),Object.assign(f,P(L[O].d)),L.forEach(function(e){e.dur||(e.dur=T(e.d))}),V()
-;var J=t("#fmsg"),W=!1,B=-1;function D(){return L.map(function(e){return{cfg:b(e.d),dur:e.dur}})}var H={onBuilt:function(e){
+t("#txt").style.opacity=f.image?.45:1}O.length||O.push({d:N(m),dur:0}),Object.assign(f,P(O[L].d)),O.forEach(function(e){e.dur||(e.dur=T(e.d))}),V()
+;var J=t("#fmsg"),W=!1,B=-1;function D(){return O.map(function(e){return{cfg:b(e.d),dur:e.dur}})}var H={onBuilt:function(e){
 e.ok?K():w(J,E('הגופן "{name}" לא נמצא ב-Google Fonts, מוצג גופן גיבוי.',{name:g(f).family}),!0)},onScene:function(e){B=e,
 Array.prototype.forEach.call(document.querySelectorAll("#scenes .chip"),function(t,n){t.classList.toggle("playing",W&&n===e)})}},I=e.mount(n,D(),H)
-;I.select(O),I.setPlayAll(!1);var z={};function j(e,t,n){z[t]=e,n.forEach(function(n){var a=document.createElement("button");a.type="button",
+;I.select(L),I.setPlayAll(!1);var z={};function j(e,t,n){z[t]=e,n.forEach(function(n){var a=document.createElement("button");a.type="button",
 a.className="chip"+(n.cls?" "+n.cls:""),a.innerHTML=n.html,a.dataset.v=String(n.v),n.style&&(a.style.cssText=n.style),n.title&&(a.title=n.title,
 a.setAttribute("aria-label",n.title)),a.addEventListener("click",function(){U(t,n.v)}),e.appendChild(a)})}function q(){
 Object.keys(z).forEach(function(e){var t=String("family"===e?f.family:f[e]);Array.prototype.forEach.call(z[e].children,function(e){
@@ -580,19 +583,19 @@ var $=new IntersectionObserver(function(t){t.forEach(function(t){t.isIntersectin
 e.loadFont(t.target.dataset.v,l[t.target.dataset.v]||700))})},{root:t("#fonts"),rootMargin:"120px"})
 ;Array.prototype.forEach.call(z.family.children,function(e){$.observe(e)})}else i.forEach(function(t,n){setTimeout(function(){e.loadFont(t[0],t[1])
 },600+140*n)});Y();var X=!1;function K(){var e=g(f);e.sub?(w(J,E("הגופן {a} לא תומך בכתב של הטקסט, ולכן מוצג {b}.",{a:f.family,b:e.family})),
-X=!0):X&&(w(J,""),X=!1)}l[f.family]||Me(f.family,f.weightSel||700);var _=t("#scenes"),Z=t("#sdur");function Q(){return L.reduce(function(e,t){
-return e+t.dur},0)}function ee(){_.innerHTML="",L.forEach(function(e,t){var n=t===O?f:e.d,a=document.createElement("button");a.type="button",
-a.className="chip scene",a.dataset.i=String(t),a.setAttribute("aria-pressed",t===O?"true":"false"),
+X=!0):X&&(w(J,""),X=!1)}l[f.family]||Me(f.family,f.weightSel||700);var _=t("#scenes"),Z=t("#sdur");function Q(){return O.reduce(function(e,t){
+return e+t.dur},0)}function ee(){_.innerHTML="",O.forEach(function(e,t){var n=t===L?f:e.d,a=document.createElement("button");a.type="button",
+a.className="chip scene",a.dataset.i=String(t),a.setAttribute("aria-pressed",t===L?"true":"false"),
 a.textContent=t+1+" · "+(n.image?E("לוגו"):function(e){return(e||"").split("\n")[0].trim()}(n.text)||E("ריק"))+" · "+e.dur+" "+E("ש׳"),
-W&&t===B&&a.classList.add("playing"),a.addEventListener("click",function(){!function(e){if(e===O)return;R(),O=e,Object.assign(f,P(L[e].d)),
-I.select(e),V(),q(),w(J,""),ee(),Ee()}(t)}),_.appendChild(a)}),document.activeElement!==Z&&(Z.value=L[O].dur),t("#sDel").disabled=L.length<2,
-t("#sLeft").disabled=0===O,t("#sRight").disabled=O===L.length-1,t("#sAdd").disabled=L.length>=12,t("#sTotal").textContent=E("אורך הרצף: {n} שניות",{
-n:Q().toFixed(1)})}function te(){I.destroy(),(I=e.mount(n,D(),H)).select(O),I.setPlayAll(W),W&&me(),ee(),Ee()}function ne(e){var t=O+e
-;if(!(t<0||t>=L.length)){R();var n=L[O];L[O]=L[t],L[t]=n,O=t,te()}}t("#sAdd").addEventListener("click",function(){R(),L.splice(O+1,0,{d:P(L[O].d),
-dur:L[O].dur}),O+=1,Object.assign(f,P(L[O].d)),V(),q(),te()}),t("#sDel").addEventListener("click",function(){L.length<2||(L.splice(O,1),
-O=Math.min(O,L.length-1),Object.assign(f,P(L[O].d)),V(),q(),te())}),t("#sLeft").addEventListener("click",function(){ne(-1)}),
+W&&t===B&&a.classList.add("playing"),a.addEventListener("click",function(){!function(e){if(e===L)return;R(),L=e,Object.assign(f,P(O[e].d)),
+I.select(e),V(),q(),w(J,""),ee(),Ee()}(t)}),_.appendChild(a)}),document.activeElement!==Z&&(Z.value=O[L].dur),t("#sDel").disabled=O.length<2,
+t("#sLeft").disabled=0===L,t("#sRight").disabled=L===O.length-1,t("#sAdd").disabled=O.length>=12,t("#sTotal").textContent=E("אורך הרצף: {n} שניות",{
+n:Q().toFixed(1)})}function te(){I.destroy(),(I=e.mount(n,D(),H)).select(L),I.setPlayAll(W),W&&me(),ee(),Ee()}function ne(e){var t=L+e
+;if(!(t<0||t>=O.length)){R();var n=O[L];O[L]=O[t],O[t]=n,L=t,te()}}t("#sAdd").addEventListener("click",function(){R(),O.splice(L+1,0,{d:P(O[L].d),
+dur:O[L].dur}),L+=1,Object.assign(f,P(O[L].d)),V(),q(),te()}),t("#sDel").addEventListener("click",function(){O.length<2||(O.splice(L,1),
+L=Math.min(L,O.length-1),Object.assign(f,P(O[L].d)),V(),q(),te())}),t("#sLeft").addEventListener("click",function(){ne(-1)}),
 t("#sRight").addEventListener("click",function(){ne(1)}),Z.addEventListener("input",function(){var e=Math.min(120,Math.max(1,Number(Z.value)||1))
-;L[O].dur=e,I.setDur(O,e),Ee()}),t("#sPlay").addEventListener("click",function(){W=!W,I.setPlayAll(W),
+;O[L].dur=e,I.setDur(L,e),Ee()}),t("#sPlay").addEventListener("click",function(){W=!W,I.setPlayAll(W),
 this.textContent=E(W?"■ עצירה וחזרה לסצנה הנבחרת":"▶ נגן את כל הרצף"),W?me():fe(),ee()}),t("#replay").addEventListener("click",function(){W&&me()})
 ;var ae=null,re=null,oe=null,ie=null,se=null,le="המוזיקה נכנסת לסרטון המיוצא בהתחלה ובסיום עם עלייה וירידה הדרגתית, ומתנגנת גם בתצוגת הרצף.",ce="הלוגו הופך לחלקיקים, בצבעיו המקוריים או בצבעי הפלטה. עדיף PNG או SVG עם רקע שקוף, ואם אין שקיפות הרקע יוסר אוטומטית."
 ;function ue(){t("#mname").textContent=se?se.name+" ("+se.dur+" "+E("ש׳")+")":""}function de(){if(!ae){
@@ -616,11 +619,11 @@ speed:.8,loop:!1}],["מטריקס",{mode:5,pal:"matrix",family:"Share Tech Mono"
 }],["מכונת כתיבה",{mode:8,pal:"mono",family:"Space Grotesk"}],["שקיעה זורמת",{mode:4,pal:"sunset",family:"Poppins"}],["מערבולת",{mode:6,pal:"neon",
 family:"Sora"}],["חשמל",{mode:9,pal:"ice",family:"Rajdhani",glow:1.4,loop:!1}]].forEach(function(e){var n=document.createElement("button")
 ;n.type="button",n.className="chip",n.textContent=e[0],n.addEventListener("click",function(){var t,n={};for(t in pe)n[t]=pe[t]
-;for(t in e[1])n[t]=e[1][t];l[n.family]||Me(n.family,700),ge(n)}),t("#presets").appendChild(n)}),t("#reset").addEventListener("click",function(){(L=[{
-d:N(m),dur:0}])[0].dur=T(L[0].d),O=0,Object.assign(f,P(L[0].d)),f.kind="embed",V(),q(),w(J,""),te()}),t("#img").addEventListener("change",function(e){
+;for(t in e[1])n[t]=e[1][t];l[n.family]||Me(n.family,700),ge(n)}),t("#presets").appendChild(n)}),t("#reset").addEventListener("click",function(){(O=[{
+d:N(m),dur:0}])[0].dur=T(O[0].d),L=0,Object.assign(f,P(O[0].d)),f.kind="embed",V(),q(),w(J,""),te()}),t("#img").addEventListener("change",function(e){
 var t=e.target.files&&e.target.files[0];t&&ve(t)}),t("#imgClear").addEventListener("click",function(){t("#img").value="",ge({image:""}),
 w(t("#imsg2"),E(ce))});var we=be(function(){I.update(Object.assign({text:f.text,step:f.step,size:f.size},v()))},220)
-;t("#txt").addEventListener("input",function(e){var t=e.target.value.replace(d,"").split("\n").slice(0,3).join("\n"),n=c(t).replace("l","")
+;t("#txt").addEventListener("input",function(e){var t=e.target.value.replace(d,"").split("\n").slice(0,12).join("\n"),n=c(t).replace("l","")
 ;1===n.length&&f.fscript!==n&&(f.fscript=n,Y(),q()),t!==e.target.value&&(e.target.value=t),f.text=t,I.replay(),we(),Ee()}),
 t("#den").addEventListener("input",function(e){f.step=7-Number(e.target.value),we(),Ee()}),t("#spd").addEventListener("input",function(e){
 f.speed=Number(e.target.value),I.update({speed:f.speed}),Ee()}),t("#glow").addEventListener("input",function(e){f.glow=Number(e.target.value),
@@ -636,12 +639,12 @@ w(J,E("הגופן {name} נטען.",{name:n}))):w(J,E('לא נמצא גופן ב
 document.fullscreenEnabled||(ye.hidden=!0),ye.addEventListener("click",function(){var e=n.requestFullscreen&&n.requestFullscreen()
 ;e&&e.catch&&e.catch(function(){w(J,E("מסך מלא לא זמין כאן. אפשר להקליט את החלון כמו שהוא."))})}),t("#gfBtn").addEventListener("click",xe),
 t("#gf").addEventListener("keydown",function(e){"Enter"===e.key&&xe()}),j(t("#kinds"),"kind",[{v:"embed",html:"קטע להטמעה באתר"},{v:"page",
-html:"דף HTML מלא"},{v:"json",html:"הגדרות JSON"}]);var Se=t("#code"),Ee=be(function(){!function(){R();var e={kind:f.kind,cur:O,
-scenes:L.map(function(e){return{d:e.d,dur:e.dur}})};try{localStorage.setItem("ptx-v2",JSON.stringify(e))}catch(t){try{
+html:"דף HTML מלא"},{v:"json",html:"הגדרות JSON"}]);var Se=t("#code"),Ee=be(function(){!function(){R();var e={kind:f.kind,cur:L,
+scenes:O.map(function(e){return{d:e.d,dur:e.dur}})};try{localStorage.setItem("ptx-v2",JSON.stringify(e))}catch(t){try{
 e.scenes=e.scenes.map(function(e){var t=P(e.d);return t.image="",{d:t,dur:e.dur}}),localStorage.setItem("ptx-v2",JSON.stringify(e))}catch(e){}}}(),
-ee(),K(),Se.value=function(e){R();var t=L.length>1,n=t?L.map(function(e){return{cfg:b(e.d),dur:e.dur}}):b(L[0].d),a=JSON.stringify(t&&"json"===e?{
+ee(),K(),Se.value=function(e){R();var t=O.length>1,n=t?O.map(function(e){return{cfg:b(e.d),dur:e.dur}}):b(O[0].d),a=JSON.stringify(t&&"json"===e?{
 scenes:n}:n,null,2);if("json"===e)return a
-;var r=b(L[0].d),o=enginePack.toString().replace(/<\/script/gi,"<\\/script"),i="transparent"===r.bg?"transparent":"#000",s="var ParticleText = ("+o+')();\n\nvar pt = ParticleText.mount(document.getElementById("particle-text"), '+a+');\n\n// Later, change anything on the fly:\n// pt.update({ text: "HELLO", mode: 3 });\n// pt.replay();\n'
+;var r=b(O[0].d),o=enginePack.toString().replace(/<\/script/gi,"<\\/script"),i="transparent"===r.bg?"transparent":"#000",s="var ParticleText = ("+o+')();\n\nvar pt = ParticleText.mount(document.getElementById("particle-text"), '+a+');\n\n// Later, change anything on the fly:\n// pt.update({ text: "HELLO", mode: 3 });\n// pt.replay();\n'
 ;return"embed"===e?'\x3c!-- Particle text effect. Paste into an HTML / custom-code block. Needs internet for Google Fonts. --\x3e\n<div id="particle-text" style="position:relative;width:100%;aspect-ratio:2/1;background:'+i+';"></div>\n<script>\n'+s+"<\/script>\n":'<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>Particle Text</title>\n<style>html,body{margin:0;height:100%;background:'+i+'}#particle-text{position:fixed;inset:0}</style>\n</head>\n<body>\n<div id="particle-text"></div>\n<script>\n'+s+"<\/script>\n</body>\n</html>\n"
 }(f.kind)},120);function Ae(){return(f.text.split("\n")[0].trim().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")||"text").toLowerCase()}
 var ke=!(window.claude&&window.claude.use),Fe=null;function Pe(){var e=!Fe&&!ke;["#savecode","#png","#vsave"].forEach(function(n){var a=t(n)
@@ -651,39 +654,39 @@ o.click(),o.remove(),setTimeout(function(){URL.revokeObjectURL(r)},5e3),w(n,E("�
 filename:e,data:t}).then(function(){w(n,E("הקובץ {name} נשמר.",{name:e}))},function(e){
 w(n,e&&"declined"===e.code?E("השמירה בוטלה."):E("השמירה נכשלה ({code}).",{code:e&&e.code||E("שגיאה")}),!0)
 }):(w(n,"שמירה לקובץ לא זמינה בתצוגה הזו.",!0),Promise.resolve())}window.claude&&window.claude.use&&window.claude.use("downloads").then(function(e){
-Fe=e,Pe()},function(){});var Ce=t("#cmsg");function Te(e){var t=N(m);if("string"==typeof e.text&&(t.text=e.text.replace(d,"").slice(0,60)),
+Fe=e,Pe()},function(){});var Ce=t("#cmsg");function Te(e){var t=N(m);if("string"==typeof e.text&&(t.text=e.text.replace(d,"").slice(0,300)),
 t.image="string"==typeof e.image&&0===e.image.indexOf("data:image/")?e.image:"","boolean"==typeof e.imgColors&&(t.imgColors=e.imgColors),
 "number"==typeof e.mode&&e.mode>=0&&e.mode<o.length&&(t.mode=e.mode),Array.isArray(e.stops)&&e.stops.length>=2){
 var n=Object.keys(r).filter(function(t){return r[t].stops&&r[t].stops.join()===e.stops.join()})[0];n?t.pal=n:(t.pal="custom",
 t.custom=[e.stops[0],e.stops[1],e.stops[2]||e.stops[1]])}return"string"==typeof e.family&&(t.family=e.family,l[e.family]||Me(e.family,e.weight||700)),
 e.weight&&l[t.family]!==e.weight&&(t.weightSel=e.weight),["step","speed","glow","size"].forEach(function(n){"number"==typeof e[n]&&(t[n]=e[n])}),
 "round"!==e.shape&&"square"!==e.shape||(t.shape=e.shape),"black"!==e.bg&&"transparent"!==e.bg||(t.bg=e.bg),"boolean"==typeof e.loop&&(t.loop=e.loop),t
-}function Le(e,t,n){try{var a=JSON.parse(e)
+}function Oe(e,t,n){try{var a=JSON.parse(e)
 ;if("object"!=typeof a||!a||!Array.isArray(a.scenes)&&"string"!=typeof a.text&&"number"!=typeof a.mode&&!a.cfg)throw new Error("x")
 ;var r=(Array.isArray(a.scenes)&&a.scenes.length?a.scenes.slice(0,12):[a]).map(function(e){return{d:Te(e.cfg||e),
-dur:Math.min(120,Math.max(0,+e.dur||0))}});return r.forEach(function(e){e.dur||(e.dur=T(e.d))}),L=r,O=0,Object.assign(f,P(L[0].d)),V(),q(),te(),
+dur:Math.min(120,Math.max(0,+e.dur||0))}});return r.forEach(function(e){e.dur||(e.dur=T(e.d))}),O=r,L=0,Object.assign(f,P(O[0].d)),V(),q(),te(),
 w(t,E("ההגדרות הוחלו ({n} סצנות).",{n:r.length})),!0}catch(e){return n||w(t,E("ה-JSON לא תקין."),!0),!1}}
 t("#copy").addEventListener("click",function(){var e=function(){w(Ce,E("הקוד הועתק."))},t=function(){Se.removeAttribute("readonly"),Se.focus(),
 Se.select();try{document.execCommand("copy"),e()}catch(e){w(Ce,E("סמנו את הקוד והעתיקו ידנית."),!0)}Se.setAttribute("readonly","")}
 ;navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(Se.value).then(e,t):t()}),
 t("#savecode").addEventListener("click",function(){var e="json"===f.kind?"json":"html"
 ;Ne("particle-text-"+Ae()+("embed"===f.kind?"-embed":"")+"."+e,Se.value,Ce)}),t("#impBtn").addEventListener("click",function(){
-Le(t("#imp").value,t("#imsg"))})
-;var Oe=[[/[\u2018\u2019\u201B]/g,"'"],[/[\u201C\u201D\u201E]/g,'"'],[/[\u2013\u2014\u2212]/g,"-"],[/\u2026/g,"..."],[/[\u2022\u00B7]/g,"-"]]
-;function Ge(e){var t=String(e).replace(/\r\n?/g,"\n");Oe.forEach(function(e){t=t.replace(e[0],e[1])})
+Oe(t("#imp").value,t("#imsg"))})
+;var Le=[[/[\u2018\u2019\u201B]/g,"'"],[/[\u201C\u201D\u201E]/g,'"'],[/[\u2013\u2014\u2212]/g,"-"],[/\u2026/g,"..."],[/[\u2022\u00B7]/g,"-"]]
+;function Ge(e){var t=String(e).replace(/\r\n?/g,"\n");Le.forEach(function(e){t=t.replace(e[0],e[1])})
 ;var n=(t=t.replace(/[ \t\u00A0\u2000-\u200A\u202F\u205F\u3000]+/g," ")).replace(d,"").split("\n").map(function(e){return e.trim()
-}).filter(function(e){return e}).slice(0,3).join("\n");return n.length>60&&(n=n.slice(0,60).trim()),{text:n,
+}).filter(function(e){return e}).slice(0,12).join("\n");return n.length>300&&(n=n.slice(0,300).trim()),{text:n,
 changed:t.replace(/\s+/g,"")!==n.replace(/\s+/g,"")}}function Re(e){var n=String(e).trim()
 ;n&&(/^(<\?xml[\s\S]*?\?>\s*)?(<!--[\s\S]*?-->\s*)?<svg[\s>]/i.test(n)&&/<\/svg>\s*$/i.test(n)?ve(new Blob([n],{type:"image/svg+xml"
-})):/^data:image\//i.test(n)?ve(n):/^[\[{]/.test(n)&&Le(n,t("#tmsg"),!0)||function(e){var n=Ge(e),a=t("#tmsg");if(!n.text)return!1;f.image&&ge({
+})):/^data:image\//i.test(n)?ve(n):/^[\[{]/.test(n)&&Oe(n,t("#tmsg"),!0)||function(e){var n=Ge(e),a=t("#tmsg");if(!n.text)return!1;f.image&&ge({
 image:""});var r=t("#txt");r.value=n.text,r.dispatchEvent(new Event("input",{bubbles:!0})),
-w(a,n.changed?E("הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 3 שורות ו-60 תווים)."):E("הטקסט הודבק."))}(e))}function Ve(e){var t,n
+w(a,n.changed?E("הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים)."):E("הטקסט הודבק."))}(e))}function Ve(e){var t,n
 ;for(t=0;e.items&&t<e.items.length;t++)if("file"===(n=e.items[t]).kind&&/^image\//.test(n.type))return n.getAsFile()
 ;for(t=0;e.files&&t<e.files.length;t++)if(/^image\//.test(e.files[t].type))return e.files[t];return null}function Je(e){
 return e&&/^(INPUT|TEXTAREA)$/.test(e.nodeName)&&"file"!==e.type}t("#txt").addEventListener("paste",function(e){var n=e.clipboardData;if(n&&!Ve(n)){
 var a=n.getData("text/plain");if(a){e.preventDefault(),e.stopPropagation()
 ;var r=e.target,o=r.selectionStart,i=r.selectionEnd,s=Ge(r.value.slice(0,o)+a+r.value.slice(i));r.value=s.text,r.dispatchEvent(new Event("input",{
-bubbles:!0})),w(t("#tmsg"),s.changed?E("הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 3 שורות ו-60 תווים)."):E("הטקסט הודבק."))}}}),
+bubbles:!0})),w(t("#tmsg"),s.changed?E("הטקסט הודבק. חלק מהתווים הוסרו או שהטקסט קוצר (עד 12 שורות ו-300 תווים)."):E("הטקסט הודבק."))}}}),
 document.addEventListener("paste",function(e){var t=e.clipboardData;if(t){var n=Ve(t);if(n)return e.preventDefault(),void ve(n)
 ;if(!e.target||!/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.nodeName)){var a=t.getData("text/plain");a&&a.trim()&&(e.preventDefault(),Re(a))}}}),
 document.addEventListener("dragover",function(e){if(!Je(e.target)){
@@ -693,7 +696,7 @@ document.addEventListener("dragleave",function(e){e.relatedTarget||n.classList.r
 n.classList.remove("drop");var a=e.dataTransfer;if(a&&!Je(e.target)){if(e.preventDefault(),a.files&&a.files.length)return r=a.files,
 void((!(o=r[0])||(/^image\//.test(o.type)||/\.(png|jpe?g|webp|svg|gif)$/i.test(o.name)?(ve(o),
 0):/^audio\//.test(o.type)||/\.(mp3|wav|m4a|ogg|aac)$/i.test(o.name)?(he(o),
-0):/json/.test(o.type)||/\.json$/i.test(o.name)?(o.text().then(function(e){Le(e,t("#tmsg"))}),
+0):/json/.test(o.type)||/\.json$/i.test(o.name)?(o.text().then(function(e){Oe(e,t("#tmsg"))}),
 0):!/^text\//.test(o.type)&&!/\.txt$/i.test(o.name)||(o.text().then(Re),
 0)))&&w(t("#tmsg"),E("סוג הקובץ לא נתמך. אפשר לגרור תמונה, קובץ שמע, JSON או טקסט."),!0));var r,o,i=a.getData("text/plain");i&&Re(i)}})
 ;var We=t("#vfmt"),Be=t("#vmsg"),De=t("#vprog"),He=t("#vrec"),Ie=t("#vsave"),ze=[],je=!1,qe=null,Ue=!1,Ye=!1;function $e(){
@@ -725,13 +728,13 @@ var a=Math.ceil(48e3*n),r=new OfflineAudioContext(2,a,48e3),o=r.createBufferSour
 i.gain.linearRampToValueAtTime(0,n),o.connect(i),i.connect(r.destination),o.start(0),r.startRendering()}(l,o),k=48e3,F=A.length,P=new AudioEncoder({
 output:function(e,t){w.push([e,t])},error:function(e){v=e}});P.configure({codec:y.enc,sampleRate:k,numberOfChannels:2,bitrate:192e3})
 ;for(var N=0;N<F;N+=k){var C=Math.min(k,F-N),T=new Float32Array(2*C);T.set(A.getChannelData(0).subarray(N,N+C),0),
-T.set(A.getChannelData(1).subarray(N,N+C),C);var L=new AudioData({format:"f32-planar",sampleRate:k,numberOfFrames:C,numberOfChannels:2,
-timestamp:Math.round(N/k*1e6),data:T});P.encode(L),L.close()}await P.flush()}function O(e){
+T.set(A.getChannelData(1).subarray(N,N+C),C);var O=new AudioData({format:"f32-planar",sampleRate:k,numberOfFrames:C,numberOfChannels:2,
+timestamp:Math.round(N/k*1e6),data:T});P.encode(O),O.close()}await P.flush()}function L(e){
 for(;b<w.length&&w[b][0].timestamp<=e;)m.addAudioChunk(w[b][0],w[b][1]),b++}var G=new VideoEncoder({output:function(e,t){m.addVideoChunk(e,t)},
 error:function(e){v=e}}),R={codec:h,width:d,height:f,bitrate:g,framerate:i};s&&(R.alpha="keep"),G.configure(R);var V=new MessageChannel;function J(){
 return new Promise(function(e){V.port1.onmessage=e,V.port2.postMessage(0)})}for(var W=0;W<p&&!Ye;W++){if(v)throw v;u.render(W/i)
 ;var B=new VideoFrame(c,{timestamp:Math.round(1e6*W/i),duration:Math.round(1e6/i)});for(G.encode(B,{keyFrame:W%(2*i)==0}),B.close(),
-O(1e6*W/i);G.encodeQueueSize>6;)await J();W%3==0&&(De.value=W/p,await J())}if(await G.flush(),v)throw v;return O(1e15),m.finalize(),
+L(1e6*W/i);G.encodeQueueSize>6;)await J();W%3==0&&(De.value=W/p,await J())}if(await G.flush(),v)throw v;return L(1e15),m.finalize(),
 new Blob([m.target.buffer],{type:"wc-mp4"===n.kind?"video/mp4":"video/webm"})}function Qe(){var t=$e(),n=document.createElement("canvas"),a=b()
 ;a.interactive=!1,a.loop=!1;var r=e.create(n,a);return r.build(t[0],t[1],1).then(function(){return r.render(3.6),new Promise(function(e){
 n.toBlob(e,"image/png")})})}function et(e){M=e;try{localStorage.setItem("ptx-lang",e)}catch(e){}var n=document.querySelector("main.wrap");n.lang=e,
@@ -746,9 +749,9 @@ document.title=E("סטודיו אפקטי טקסט"),["#fmsg","#vmsg","#pmsg","#
 w(t("#imsg2"),E(ce)),t("#sPlay").textContent=E(W?"■ עצירה וחזרה לסצנה הנבחרת":"▶ נגן את כל הרצף"),He.textContent=E(Ue?"עצירה וסיום":"הקלטת סרטון"),
 ue(),Ke(),Pe(),V(),ee(),K(),Array.prototype.forEach.call(t("#langs").children,function(t){
 t.setAttribute("aria-pressed",t.getAttribute("lang")===e?"true":"false")})}He.addEventListener("click",async function(){if(Ue)Ye=!0;else{
-var n=ze[Number(We.value)];if(n){R();var a=$e(),r=Number(t("#vfps").value),o=L.length>1,i=L.every(function(e){return"transparent"===e.d.bg
-}),s=i&&"wc-webm"===n.kind&&je,l=L.map(function(e){var t=b(e.d);return t.interactive=!1,t.bg=s?"transparent":"black",{cfg:t,dur:o?e.dur:0}
-}),c=L.reduce(function(e,t){return e+t.dur},0);Ue=!0,Ye=!1,qe=null,Ie.hidden=!0,De.hidden=!1,De.value=0,He.textContent=E("עצירה וסיום"),
+var n=ze[Number(We.value)];if(n){R();var a=$e(),r=Number(t("#vfps").value),o=O.length>1,i=O.every(function(e){return"transparent"===e.d.bg
+}),s=i&&"wc-webm"===n.kind&&je,l=O.map(function(e){var t=b(e.d);return t.interactive=!1,t.bg=s?"transparent":"black",{cfg:t,dur:o?e.dur:0}
+}),c=O.reduce(function(e,t){return e+t.dur},0);Ue=!0,Ye=!1,qe=null,Ie.hidden=!0,De.hidden=!1,De.value=0,He.textContent=E("עצירה וסיום"),
 w(Be,"live"===n.kind?E("מקליט בזמן אמת... השאירו את הלשונית פתוחה."):E("מצייר ומקודד פריים אחרי פריים..."));try{
 var u=t("#vdur").value,d="loop"===u?c:Number(u);_e="",re&&"live"===n.kind&&(_e=E('הקלטה בזמן אמת לא כוללת מוזיקה. בחרו פורמט "מדויק" כדי לצרף אותה.'))
 ;var f="live"===n.kind?await function(t,n,a,r){return new Promise(function(o,i){var s=document.createElement("canvas")
